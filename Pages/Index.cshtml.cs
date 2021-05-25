@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using SNACKIS___Webb.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +12,23 @@ namespace SNACKIS___Webb.Pages
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
+        private readonly Services.IGateway _gateway;
+     
 
-        public IndexModel(ILogger<IndexModel> logger)
+
+        public List<Categories> Categories;
+
+      
+
+        public IndexModel(ILogger<IndexModel> logger, Services.IGateway gateway)
         {
             _logger = logger;
+            _gateway = gateway;
         }
 
-        public void OnGet()
+        public async Task OnGetAsync()
         {
-
+            Categories = await _gateway.GetAllCategories();
         }
     }
 }

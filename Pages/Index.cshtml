@@ -8,6 +8,12 @@
    <h1>Welcome to forum "Snackis"</h1>
 </div>
 
+
+
+@foreach (var cat in Model.Categories)
+{
+    <h1>@cat.Title</h1>
+}
 <div class="media">
     <img src="" class="mr-3" alt="">
     <div class="media-body">
