@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using SNACKIS___Webb.Models;
 using SNACKIS___Webb.Services;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,13 @@ namespace SNACKIS___Webb.Gateway
             var response = await _httpClient.GetAsync(_configuration["SnackisApi"]);
             string apiResponse = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<List<Categories>>(apiResponse);
+        }
+
+        public async Task<List<Post>> GetAllPosts()
+        {
+            var response = await _httpClient.GetAsync(_configuration["SnackisApi1"]);
+            string apiResponse = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<List<Post>>(apiResponse);
         }
     }
 }

@@ -5,7 +5,7 @@
 }
 
 <div class="text-center">
-   <h1>Welcome to forum "Snackis"</h1>
+    <h1>Welcome to forum "Snackis"</h1>
 </div>
 
 
@@ -13,7 +13,13 @@
 @foreach (var cat in Model.Categories)
 {
     <h1>@cat.Title</h1>
+    @foreach (var post in Model.Posts)
+    {
+        <p>@post.Title</p>
+    }
+
 }
+
 <div class="media">
     <img src="" class="mr-3" alt="">
     <div class="media-body">
