@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SNACKIS___Webb.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
@@ -12,8 +13,8 @@ namespace SNACKIS___Webb.Models
         public string Id { get; set; }
         [JsonPropertyName("userid")]
         public string UserId { get; set; }
-        [JsonPropertyName("subcategoryid")]
-        public string SubCategoryId { get; set; }
+        [JsonPropertyName("categoryid")]
+        public string CategoryId { get; set; }
         [JsonPropertyName("title")]
         public string Title { get; set; }
         [JsonPropertyName("content")]
@@ -22,8 +23,8 @@ namespace SNACKIS___Webb.Models
         public DateTime Date { get; set; }
         [JsonPropertyName("isreported")]
         public bool IsReported { get; set; }
-        [JsonPropertyName("subcategory")]
-        public virtual SubCategory SubCategory { get; set; }
+        [JsonPropertyName("categories")]
+        public virtual Categories Categories { get; set; }
         [JsonPropertyName("user")]
         public virtual User User { get; set; }
     }

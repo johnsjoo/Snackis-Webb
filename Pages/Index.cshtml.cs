@@ -18,18 +18,20 @@ namespace SNACKIS___Webb.Pages
 
         public List<Categories> Categories;
         public List<Post> Posts { get; set; }
-
+       
 
         public IndexModel(ILogger<IndexModel> logger, Services.IGateway gateway)
         {
             _logger = logger;
             _gateway = gateway;
+            
         }
 
         public async Task OnGetAsync()
         {
             Categories = await _gateway.GetAllCategories();
             Posts = await _gateway.GetAllPosts();
+            
         }
     }
 }

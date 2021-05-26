@@ -32,5 +32,6 @@ namespace SNACKIS___Webb.Gateway
             string apiResponse = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<List<Post>>(apiResponse);
         }
+        
     }
 }
