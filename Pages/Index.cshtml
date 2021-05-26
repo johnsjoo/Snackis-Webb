@@ -93,7 +93,8 @@
                 <div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
                     @foreach (var item in Model.Posts)
                     {
-                        
+
+                     
 
                         <div class="card mb-2">
                             <div class="card-body p-2 p-sm-3">
@@ -103,9 +104,8 @@
                                         <h6><a href="#" data-toggle="collapse" data-target=".forum-content" class="text-body">@item.Title</a></h6>
                                         <p class="text-secondary">
                                             @item.Content
-                                            @item.UserId
                                         </p>
-                                        
+
 
                                         <p class="text-muted"><a href="javascript:void(0)"></a> <span class="text-secondary font-weight-bold"></span></p>
                                     </div>
@@ -116,7 +116,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                     }
                 </div>
                 <!-- /Forum List -->
