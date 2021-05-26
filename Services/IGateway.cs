@@ -10,6 +10,7 @@ namespace SNACKIS___Webb.Services
     {
         Task<List<Categories>> GetAllCategories();
         Task<List<Post>> GetAllPosts();
-       
+     
+
     }
 }
