@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SNACKIS___Webb.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,6 @@ namespace SNACKIS___Webb
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient<Gateway.Gateway>();
-
             services.AddTransient<Services.IGateway, Gateway.Gateway>();
             services.AddRazorPages();
         }

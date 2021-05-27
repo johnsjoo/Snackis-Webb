@@ -14,10 +14,12 @@ namespace SNACKIS___Webb.Gateway
     {
         private readonly IConfiguration _configuration;
         private readonly HttpClient _httpClient;
+        
         public Gateway(IConfiguration configuration, HttpClient httpClient)
         {
             _configuration = configuration;
             _httpClient = httpClient;
+            
         }
         public async Task<List<Categories>> GetAllCategories()
         {
