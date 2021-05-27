@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace SNACKIS___Webb.Services
 {
-    public interface IGateway
+    public interface IAuthGateway
     {
-        Task<List<Categories>> GetAllCategories();
-        Task<List<Post>> GetAllPosts();
-     
+        Task<User> LoginUser();
     }
 }

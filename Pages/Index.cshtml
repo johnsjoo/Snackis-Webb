@@ -1,16 +1,13 @@
 ﻿@page
 @model IndexModel
+@using SNACKIS___Webb.Tools;
 @{
     ViewData["Title"] = "Home page";
+    bool returnTokenValue = TokenChecker.UserStatus;
+
+
+
 }
-
-
-
-@*@foreach (var post in Model.Posts)
-{
-    <p>@post.Title</p>
-}*@
-
 
 
 
@@ -21,6 +18,15 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css" integrity="sha256-46r060N2LrChLLb5zowXQ72/iKKNiw/lAmygmHExk/o=" crossorigin="anonymous" />
 <div class="container">
+    @if (returnTokenValue == true)
+    {
+        @if (ToolBox.ActiveRole == "root")
+        {
+            <p>Välkommen @TokenChecker.UserName</p>
+        }
+
+    }
+
     <div class="main-body p-0">
         <div class="inner-wrapper">
             <!-- Inner sidebar -->
@@ -47,16 +53,16 @@
                                         <div class="simplebar-content" style="padding: 16px;">
                                             <nav class="nav nav-pills nav-gap-y-1 flex-column">
                                                 @*<a href="javascript:void(0)" class="nav-link nav-link-faded has-icon active">All Threads</a>
-        <a href="javascript:void(0)" class="nav-link nav-link-faded has-icon">Popular this week</a>
-        <a href="javascript:void(0)" class="nav-link nav-link-faded has-icon">Popular all time</a>
-        <a href="javascript:void(0)" class="nav-link nav-link-faded has-icon">Solved</a>
-        <a href="javascript:void(0)" class="nav-link nav-link-faded has-icon">Unsolved</a>
-        <a href="javascript:void(0)" class="nav-link nav-link-faded has-icon">No replies yet</a>*@
+                                                    <a href="javascript:void(0)" class="nav-link nav-link-faded has-icon">Popular this week</a>
+                                                    <a href="javascript:void(0)" class="nav-link nav-link-faded has-icon">Popular all time</a>
+                                                    <a href="javascript:void(0)" class="nav-link nav-link-faded has-icon">Solved</a>
+                                                    <a href="javascript:void(0)" class="nav-link nav-link-faded has-icon">Unsolved</a>
+                                                    <a href="javascript:void(0)" class="nav-link nav-link-faded has-icon">No replies yet</a>*@
 
                                                 @foreach (var cat in Model.Categories)
-                                                 {
+                                                {
                                                     <a href="#" class="nav-link nav-link-faded has-icon">@cat.Title</a>
-                                                 }
+                                                }
                                             </nav>
                                         </div>
                                     </div>
@@ -94,7 +100,7 @@
                     @foreach (var item in Model.Posts)
                     {
 
-                     
+
                         <div>@item.User.fullName</div>
                         <div class="card mb-2">
                             <div class="card-body p-2 p-sm-3">

@@ -25,8 +25,18 @@ namespace SNACKIS___Webb
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient<Gateway.Gateway>();
+            
+            services.AddTransient<Services.IAuthGateway, Gateway.AuthGateway>();
             services.AddTransient<Services.IGateway, Gateway.Gateway>();
+            services.AddTransient<Tools.UserApi>();
             services.AddRazorPages();
+
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = ".GGwebshop.Session";
+                options.IdleTimeout = TimeSpan.FromMinutes(10);
+                options.Cookie.IsEssential = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,7 +59,7 @@ namespace SNACKIS___Webb
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();

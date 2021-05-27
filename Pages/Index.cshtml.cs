@@ -18,17 +18,9 @@ namespace SNACKIS___Webb.Pages
         private readonly ILogger<IndexModel> _logger;
         private readonly Services.IGateway _gateway;
        
-
-
-
-
         public List<Categories> Categories;
         [BindProperty(SupportsGet =true)]
         public List<Post> Posts { get; set; }
-
-      
-
-
 
         public IndexModel(ILogger<IndexModel> logger, Services.IGateway gateway)
         {
