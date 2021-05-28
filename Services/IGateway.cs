@@ -8,7 +8,7 @@ namespace SNACKIS___Webb.Services
 {
     public interface IGateway
     {
-        Task<List<Categories>> GetAllCategories();
+        Task<List<Category>> GetAllCategories();
         Task<List<Post>> GetAllPosts();
      
     }

@@ -23,8 +23,8 @@ namespace SNACKIS___Webb.Models
         public DateTime Date { get; set; }
         [JsonPropertyName("isreported")]
         public bool IsReported { get; set; }
-        [JsonPropertyName("categories")]
-        public virtual Categories Categories { get; set; }
+        [JsonPropertyName("category")]
+        public virtual Category Categories { get; set; }
         [JsonPropertyName("user")]
         public virtual User User { get; set; }
     }

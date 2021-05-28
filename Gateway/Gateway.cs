@@ -21,11 +21,11 @@ namespace SNACKIS___Webb.Gateway
             _httpClient = httpClient;
             
         }
-        public async Task<List<Categories>> GetAllCategories()
+        public async Task<List<Category>> GetAllCategories()
         {
             var response = await _httpClient.GetAsync(_configuration["SnackisApi"]);
             string apiResponse = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<List<Categories>>(apiResponse);
+            return JsonSerializer.Deserialize<List<Category>>(apiResponse);
         }
 
         public async Task<List<Post>> GetAllPosts()
