@@ -34,9 +34,10 @@
                                 <div class="form-group">
                                     <label>Password</label>
                                     <input asp-for="Password" type="password" class="form-control form-control-lg"   placeholder="Enter your password">
-                                    <small>
-                                        @*<a href="pages-reset-password.html">Forgot password?</a>*@
-                                    </small>
+                                    @if (!string.IsNullOrEmpty(Model.Message))
+                                    {
+                                        <p class="alert-danger">@Model.Message</p>
+                                    }
                                 </div>
                                 @*<div>
                                         <div class="custom-control custom-checkbox align-items-center">
