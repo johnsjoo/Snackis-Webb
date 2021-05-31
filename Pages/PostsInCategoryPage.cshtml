@@ -1,15 +1,7 @@
 ﻿@page
-@model IndexModel
-@using SNACKIS___Webb.Tools;
+@model SNACKIS___Webb.Pages.PostsInCategoryPageModel
 @{
-    ViewData["Title"] = "Home page";
-    bool returnTokenValue = TokenChecker.UserStatus;
-
-
-
 }
-
-
 
 
 <head>
@@ -18,7 +10,7 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css" integrity="sha256-46r060N2LrChLLb5zowXQ72/iKKNiw/lAmygmHExk/o=" crossorigin="anonymous" />
 <div class="container">
-    
+
     <div class="main-body p-0">
         <div class="inner-wrapper">
             <!-- Inner sidebar -->
@@ -35,11 +27,11 @@
                                     <div class="simplebar-content-wrapper" style="height: 100%; overflow: hidden scroll;">
                                         <div class="simplebar-content" style="padding: 16px;">
                                             <nav class="nav nav-pills nav-gap-y-1 flex-column">
-                                                
+
 
                                                 @foreach (var cat in Model.Categories)
                                                 {
-                                                    @*<button id="java" value="java" onclick="CatIdUrl();" class="nav-link nav-link-faded has-icon">@cat.Title</button>*@
+                                                    <a href="" onclick="CatIdUrl()" class="nav-link nav-link-faded has-icon">@cat.Title</a>
                                                 }
                                             </nav>
                                         </div>
@@ -58,37 +50,36 @@
             <!-- Inner main -->
             <div class="inner-main">
                 <!-- Inner main header -->
-                
                 <!-- /Inner main header -->
                 <!-- Inner main body -->
                 <!-- Forum List -->
                 <div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
                     @foreach (var item in Model.Posts)
                     {
-                        
-                        
-                            <div>@item.User.fullName</div>
-                            <div class="card mb-2">
-                                <div class="card-body p-2 p-sm-3">
-                                    <div class="media forum-item">
-                                        <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-circle" width="50" alt="User" /></a>
-                                        <div class="media-body">
-                                            <h6><a href="#" data-toggle="collapse" data-target=".forum-content" class="text-body">@item.Title</a></h6>
-                                            <p class="text-secondary">
-                                                @item.Content
-                                            </p>
 
 
-                                            <p class="text-muted"><a href="javascript:void(0)"></a> <span class="text-secondary font-weight-bold"></span></p>
-                                        </div>
-                                        <div class="text-muted small text-center align-self-center">
-                                            <span class="d-none d-sm-inline-block"><i class="far fa-eye"></i> 70</span>
-                                            <span><i class="far fa-comment ml-2"></i> 3</span>
-                                        </div>
+                        <div>@item.User.fullName</div>
+                        <div class="card mb-2">
+                            <div class="card-body p-2 p-sm-3">
+                                <div class="media forum-item">
+                                    <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-circle" width="50" alt="User" /></a>
+                                    <div class="media-body">
+                                        <h6><a href="#" data-toggle="collapse" data-target=".forum-content" class="text-body">@item.Title</a></h6>
+                                        <p class="text-secondary">
+                                            @item.Content
+                                        </p>
+
+
+                                        <p class="text-muted"><a href="javascript:void(0)"></a> <span class="text-secondary font-weight-bold"></span></p>
+                                    </div>
+                                    <div class="text-muted small text-center align-self-center">
+                                        <span class="d-none d-sm-inline-block"><i class="far fa-eye"></i> 70</span>
+                                        <span><i class="far fa-comment ml-2"></i> 3</span>
                                     </div>
                                 </div>
                             </div>
-                        
+                        </div>
+
 
                     }
                 </div>

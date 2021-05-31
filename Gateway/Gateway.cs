@@ -34,6 +34,20 @@ namespace SNACKIS___Webb.Gateway
             string apiResponse = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<List<Post>>(apiResponse);
         }
-       
+        public async Task<List<Post>> GetPostsByCatId(string catId) 
+        {
+            var response = await _httpClient.GetAsync(_configuration["GetPostsBycatId"] + "/" + catId);
+            string apiResponse = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<List<Post>>(apiResponse);
+        }
+
+        public async Task<List<PostDiscussion>> GetAllPostDiscussions() 
+        {
+            var response = await _httpClient.GetAsync(_configuration["GetAllDiscPosts"]);
+            string apiResponse = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<List<PostDiscussion>>(apiResponse);
+        }
+
+
     }
 }

@@ -10,6 +10,10 @@ namespace SNACKIS___Webb.Services
     {
         Task<List<Category>> GetAllCategories();
         Task<List<Post>> GetAllPosts();
-     
+
+        Task<List<Post>> GetPostsByCatId(string catId);
+
+       // Task<List<PostDiscussion>> GetAllPostDiscussions();
+
     }
 }

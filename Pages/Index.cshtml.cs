@@ -22,6 +22,11 @@ namespace SNACKIS___Webb.Pages
         [BindProperty(SupportsGet =true)]
         public List<Post> Posts { get; set; }
 
+        public List<PostDiscussion> PostDiscussions { get; set; }
+
+        [BindProperty(SupportsGet =true)]
+        public string CatId { get; set; }
+
         public IndexModel(ILogger<IndexModel> logger, Services.IGateway gateway)
         {
             _logger = logger;
@@ -31,8 +36,22 @@ namespace SNACKIS___Webb.Pages
 
         public async Task OnGetAsync()
         {
+
             Categories = await _gateway.GetAllCategories();
             Posts = await _gateway.GetAllPosts();
+
+           
+            
+            //Funkar ej
+            //if (!string.IsNullOrEmpty(CatId))
+            //{
+            //    return RedirectToPage("/PostsInCategoryPage");
+            //}
+            //return Page();
+            
+            
+            
+            //PostDiscussions = await _gateway.GetAllPostDiscussions();
         }
     }
 }
