@@ -10,6 +10,8 @@ namespace SNACKIS___Webb.Pages.User
 {
     public class LogOutModel : PageModel
     {
+       
+
         public IActionResult OnGet()
         {
 

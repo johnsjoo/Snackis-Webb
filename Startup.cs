@@ -24,11 +24,12 @@ namespace SNACKIS___Webb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddHttpClient<Gateway.Gateway>();
-            
             services.AddTransient<Services.IAuthGateway, Gateway.AuthGateway>();
             services.AddTransient<Services.IGateway, Gateway.Gateway>();
             services.AddTransient<Tools.UserApi>();
+
             services.AddRazorPages();
 
             services.AddSession(options =>
