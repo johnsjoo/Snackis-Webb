@@ -35,12 +35,13 @@
                                     <div class="simplebar-content-wrapper" style="height: 100%; overflow: hidden scroll;">
                                         <div class="simplebar-content" style="padding: 16px;">
                                             <nav class="nav nav-pills nav-gap-y-1 flex-column">
-                                                
+
 
                                                 @foreach (var cat in Model.Categories)
                                                 {
-                                                    <button id="categories" value="@cat.Id" onclick="CatIdUrl();" class="nav-link nav-link-faded has-icon">@cat.Title</button>
+                                                    <button class="btn btn-info my-2 my-sm-0" value="@cat.Id" id="CatId" onclick="setUrl();">@cat.Title</button>
                                                 }
+
                                             </nav>
                                         </div>
                                     </div>
