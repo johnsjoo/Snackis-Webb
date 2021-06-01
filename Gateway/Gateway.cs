@@ -41,6 +41,7 @@ namespace SNACKIS___Webb.Gateway
             return JsonSerializer.Deserialize<List<Post>>(apiResponse);
         }
 
+        //Kanske kan passa in Id.
         public async Task<List<PostDiscussion>> GetAllPostDiscussions() 
         {
             var response = await _httpClient.GetAsync(_configuration["GetAllDiscPosts"]);
