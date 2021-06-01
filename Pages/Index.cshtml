@@ -39,7 +39,7 @@
 
                                                 @foreach (var cat in Model.Categories)
                                                 {
-                                                    @*<button id="java" value="java" onclick="CatIdUrl();" class="nav-link nav-link-faded has-icon">@cat.Title</button>*@
+                                                    <button id="categories" value="@cat.Id" onclick="CatIdUrl();" class="nav-link nav-link-faded has-icon">@cat.Title</button>
                                                 }
                                             </nav>
                                         </div>

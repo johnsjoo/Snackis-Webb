@@ -4,5 +4,5 @@
 // Write your JavaScript code.
 
 function CatIdUrl() {
-    window.location.href = 'PostsInCategoryPage/' + document.getElementById('java').value;
+    window.location.href = 'PostsInCategoryPage/' + document.getElementById('categories').value;
 }
