@@ -12,9 +12,9 @@
 <div class="container">
 
     <div class="main-body p-0">
-        <div class="inner-wrapper">
+        <div class="inner-wrapper ">
             <!-- Inner sidebar -->
-            <div class="inner-sidebar">
+            <div class="inner-sidebar text-center">
                 <h3>Kategorier</h3>
                 <!-- /Inner sidebar header -->
                 <!-- Inner sidebar body -->
@@ -31,7 +31,7 @@
 
                                                 @foreach (var cat in Model.Categories)
                                                 {
-                                                    <a href="" onclick="CatIdUrl()" class="nav-link nav-link-faded has-icon">@cat.Title</a>
+                                                    <a class="btn btn-info" asp-page="/PostsInCategoryPage" asp-route-CatId="@cat.Id" class="forum-item-title">@cat.Title</a><br />
                                                 }
                                             </nav>
                                         </div>
@@ -58,9 +58,11 @@
                     {
 
 
-                        <div>@item.User.fullName</div>
+                        @*<div>@item.User.fullName</div>*@
+                        
                         <div class="card mb-2">
                             <div class="card-body p-2 p-sm-3">
+                                <p>@item.Date</p>
                                 <div class="media forum-item">
                                     <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-circle" width="50" alt="User" /></a>
                                     <div class="media-body">
@@ -83,6 +85,7 @@
 
                     }
                 </div>
+                <a class="btn btn-info" style="max-height : 100px ; max-width :200px ; align-content : center" href="/Index">Tillbaka</a>
                 <!-- /Forum List -->
                 <!-- Forum Detail -->
                 <div class="inner-main-body p-2 p-sm-3 collapse forum-content">

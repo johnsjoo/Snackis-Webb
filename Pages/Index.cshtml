@@ -22,7 +22,7 @@
     <div class="main-body p-0">
         <div class="inner-wrapper">
             <!-- Inner sidebar -->
-            <div class="inner-sidebar">
+            <div class="inner-sidebar text-center">
                 <h3>Kategorier</h3>
                 <!-- /Inner sidebar header -->
                 <!-- Inner sidebar body -->
@@ -39,8 +39,8 @@
 
                                                 @foreach (var cat in Model.Categories)
                                                 {
-                                                   //Nu funkar Id iaf.
-                                                    <a href="/PostsInCategoryPage/@cat.Id" class="btn btn-primary" id="CatId" onclick="setUrl();" >@cat.Title</a>
+                                                    //Nu funkar Id iaf.
+                                                    <a class="btn btn-info" asp-page="/PostsInCategoryPage" asp-route-CatId="@cat.Id" class="forum-item-title">@cat.Title</a><br />
                                                     @*<button class="btn btn-info my-2 my-sm-0" value="@cat.Id" id="CatId" onclick="setUrl();">@cat.Title</button>*@
                                                 }
 
@@ -70,9 +70,11 @@
                     {
                         
                         
-                            <div>@item.User.fullName</div>
+                            
                             <div class="card mb-2">
                                 <div class="card-body p-2 p-sm-3">
+                                    <p>@item.User.fullName<small>@item.Date</small></p>
+                                    
                                     <div class="media forum-item">
                                         <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-circle" width="50" alt="User" /></a>
                                         <div class="media-body">
