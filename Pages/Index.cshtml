@@ -39,7 +39,9 @@
 
                                                 @foreach (var cat in Model.Categories)
                                                 {
-                                                    <button class="btn btn-info my-2 my-sm-0" value="@cat.Id" id="CatId" onclick="setUrl();">@cat.Title</button>
+                                                   //Nu funkar Id iaf.
+                                                    <a href="/PostsInCategoryPage/@cat.Id" class="btn btn-primary" id="CatId" onclick="setUrl();" >@cat.Title</a>
+                                                    @*<button class="btn btn-info my-2 my-sm-0" value="@cat.Id" id="CatId" onclick="setUrl();">@cat.Title</button>*@
                                                 }
 
                                             </nav>
