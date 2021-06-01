@@ -14,7 +14,7 @@
             <div class="d-table-cell align-middle">
 
                 <div class="text-center mt-4">
-                    <h1 class="h2">Welcome back</h1>
+                    <h1 class="h2">Välkommen tillbaka</h1>
                     <p class="lead">
                         Sign in to your account to continue
                     </p>
@@ -28,26 +28,20 @@
                             </div>
                             <form method="post">
                                 <div class="form-group">
-                                    <label>Username</label>
-                                    <input asp-for="UserName" class="form-control form-control-lg"  placeholder="Enter your username">
+                                    <label>Användarnamn</label>
+                                    <input asp-for="UserName" class="form-control form-control-lg"  placeholder="Skriv ditt användernamn">
                                 </div>
                                 <div class="form-group">
-                                    <label>Password</label>
-                                    <input asp-for="Password" type="password" class="form-control form-control-lg"   placeholder="Enter your password">
+                                    <label>Lösenord</label>
+                                    <input asp-for="Password" type="password" class="form-control form-control-lg"   placeholder="Skriv ditt lösenord">
                                     @if (!string.IsNullOrEmpty(Model.Message))
                                     {
                                         <p class="alert-danger">@Model.Message</p>
                                     }
                                 </div>
-                                @*<div>
-                                        <div class="custom-control custom-checkbox align-items-center">
-                                            <input type="checkbox" class="custom-control-input" value="remember-me" name="remember-me" checked="">
-                                            <label class="custom-control-label text-small">Remember me next time</label>
-                                        </div>
-                                    </div>*@
+                     
                                 <div class="text-center mt-3">
                                     <button href="index.html" class="btn btn-lg btn-primary" type="submit">Sign in</button>
-                                    <!-- <button type="submit" class="btn btn-lg btn-primary">Sign in</button> -->
                                 </div>
                             </form>
                         </div>
