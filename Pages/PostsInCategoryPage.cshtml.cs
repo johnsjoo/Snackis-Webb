@@ -27,7 +27,7 @@ namespace SNACKIS___Webb.Pages
         public List<Post> UserInPosts { get; set; }
         public async Task OnGet()
         {
-            UserInPosts = await _gateway.GetAllPosts();
+           
             Posts = await _gateway.GetPostsByCatId(CatId);
             Categories = await _gateway.GetAllCategories();
         }
