@@ -8,6 +8,6 @@ namespace SNACKIS___Webb.Services
 {
     public interface IAuthGateway
     {
-        Task<User> LoginUser();
+        Task<User> GetLoggedInUser(string Id);
     }
 }

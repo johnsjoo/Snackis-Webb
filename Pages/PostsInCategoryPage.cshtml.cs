@@ -23,8 +23,11 @@ namespace SNACKIS___Webb.Pages
         public string CatId { get; set; }
         public List<Post> Posts { get; set; }
         public List<Category> Categories { get; set; }
+
+        public List<Post> UserInPosts { get; set; }
         public async Task OnGet()
         {
+           
             Posts = await _gateway.GetPostsByCatId(CatId);
             Categories = await _gateway.GetAllCategories();
         }

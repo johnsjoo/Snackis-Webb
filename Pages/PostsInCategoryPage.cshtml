@@ -56,13 +56,14 @@
                 <div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
                     @foreach (var item in Model.Posts)
                     {
+                       
 
 
-                        @*<div>@item.User.fullName</div>*@
+                         
                         
                         <div class="card mb-2">
                             <div class="card-body p-2 p-sm-3">
-                                <p>@item.Date</p>
+                                <p>@item.User.userName<small>@item.Date</small></p>
                                 <div class="media forum-item">
                                     <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-circle" width="50" alt="User" /></a>
                                     <div class="media-body">
@@ -82,6 +83,7 @@
                             </div>
                         </div>
 
+                        
 
                     }
                 </div>
