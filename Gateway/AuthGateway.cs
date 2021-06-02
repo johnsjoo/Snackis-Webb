@@ -25,12 +25,10 @@ namespace SNACKIS___Webb.Gateway
 
         }
 
-        public async Task<User> GetLoggedInUser()
+        public async Task<User> GetLoggedInUser(string Id)
         {
-
             //Använd code behind istället.
-           
-            var response = await _httpClient.GetAsync(_configuration["GetLoggedInUser"]);
+            var response = await _httpClient.GetAsync(_configuration["GetLoggedInUser"]+"/"+Id);
             string apiResponse = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<User>(apiResponse);
         }
