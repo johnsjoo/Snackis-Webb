@@ -16,19 +16,19 @@ namespace SNACKIS___Webb.Gateway
     {
 
         private readonly IConfiguration _configuration;
-        private readonly HttpClient _httpClient;
+        private readonly HttpClient _client;
 
         public AuthGateway(IConfiguration configuration, HttpClient httpClient)
         {
             _configuration = configuration;
-            _httpClient = httpClient;
+            _client = httpClient;
 
         }
 
         public async Task<User> GetLoggedInUser(string Id)
         {
-            //Använd code behind istället.
-            var response = await _httpClient.GetAsync(_configuration["GetLoggedInUser"]+"/"+Id);
+            
+            var response = await _client.GetAsync(_configuration["GetLoggedInUser"]+"/"+Id);
             string apiResponse = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<User>(apiResponse);
         }

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;
 using SNACKIS___Webb.Models;
 using SNACKIS___Webb.Services;
+using SNACKIS___Webb.Tools;
 
 namespace SNACKIS___Webb.Pages.User
 {
@@ -18,19 +19,20 @@ namespace SNACKIS___Webb.Pages.User
         private readonly IAuthGateway _authgateway;
         private readonly HttpClient _client;
         private readonly IConfiguration _configuration;
-        public UserPageModel(IAuthGateway authgateway, HttpClient client, IConfiguration configuration)
+        private readonly UserApi _api;
+        public UserPageModel(IAuthGateway authgateway, HttpClient client, IConfiguration configuration, UserApi api)
         {
             _authgateway = authgateway;
             _client = client;
             _configuration = configuration;
+            _api = api;
         }
-
 
         public string Id { get; set; }
         public UserLoginResponseModel User { get; set; }
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
-
+            
             byte[] tokenByte;
             HttpContext.Session.TryGetValue(ToolBox.TokenName, out tokenByte);
             string token = Encoding.ASCII.GetString(tokenByte);
@@ -38,32 +40,28 @@ namespace SNACKIS___Webb.Pages.User
 
             if (!String.IsNullOrEmpty(token))
             {
-                //User = await _authgateway.GetLoggedInUser(Id);
-
-                _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", $"bearer {token}");
+                HttpClient client = _api.Initial();
+              
+                _client.DefaultRequestHeaders.Accept.Clear();
+                _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
+               
                 var response = await _client.GetAsync(_configuration["GetLoggedInUser"] + "/" + Id);
                 string apiResponse = await response.Content.ReadAsStringAsync();
 
-                
+                var model = UserLoginResponseModel.FromJsonSingle(apiResponse);
+                User = model;
+
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    //var model = UserLoginResponseModel.FromJsonSingle();
-                    //User = model;
                     
+                    return Page();
                 }
                 else
                 {
-                   
+                    return NotFound();
                 }
             }
-           // return Page();
-
-
-
-
-            
+            return Page();
         }
-
-
     }
 }
