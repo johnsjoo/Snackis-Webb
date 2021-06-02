@@ -26,6 +26,7 @@ namespace SNACKIS___Webb
         {
 
             services.AddHttpClient<Gateway.Gateway>();
+            services.AddHttpClient<Services.IAuthGateway, Gateway.AuthGateway>();
             services.AddTransient<Services.IAuthGateway, Gateway.AuthGateway>();
             services.AddTransient<Services.IGateway, Gateway.Gateway>();
             services.AddTransient<Tools.UserApi>();
