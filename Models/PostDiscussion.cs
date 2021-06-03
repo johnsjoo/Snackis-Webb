@@ -8,6 +8,20 @@ namespace SNACKIS___Webb.Models
 {
     public class PostDiscussion
     {
+        //[JsonPropertyName("id")]
+        //public string Id { get; set; }
+        //[JsonPropertyName("userid")]
+        //public string UserId { get; set; }
+        //[JsonPropertyName("postid")]
+        //public string PostId { get; set; }
+        //[JsonPropertyName("date")]
+        //public DateTime Date { get; set; }
+        //[JsonPropertyName("isreported")]
+        //public bool IsReported { get; set; }
+        //[JsonPropertyName("user")]
+        //public virtual User User { get; set; }
+
+
         [JsonPropertyName("id")]
         public string Id { get; set; }
         [JsonPropertyName("userid")]
@@ -22,5 +36,8 @@ namespace SNACKIS___Webb.Models
         public bool IsReported { get; set; }
         [JsonPropertyName("user")]
         public virtual User User { get; set; }
+        [JsonPropertyName("post")]
+        public virtual Post Post { get; set; }
+
     }
 }

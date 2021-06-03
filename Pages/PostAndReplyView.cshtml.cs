@@ -16,7 +16,7 @@ namespace SNACKIS___Webb.Pages
         {
             _gateway = gateway;
         }
-
+        [BindProperty(SupportsGet = true)]
         public string PostId { get; set; }
 
         [BindProperty]
@@ -24,8 +24,13 @@ namespace SNACKIS___Webb.Pages
 
         public async Task<IActionResult> OnGetAsync()
         {
-            ClickedPost = await _gateway.GetPostById(PostId);
-            IActionResult ac = await OnGetAsync();
+            if (!string.IsNullOrEmpty(PostId))
+            {
+                ClickedPost = await _gateway.GetPostById(PostId);
+                
+                return Page();
+            }
+            
             return Page();
         }
     }
