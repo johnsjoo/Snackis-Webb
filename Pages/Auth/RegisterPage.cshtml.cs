@@ -36,7 +36,7 @@ namespace SNACKIS___Webb.Pages.Auth
         public async Task<IActionResult> OnPostAsync()
         {
             await _authGateway.RegisterNewUser(NewUser);
-            return RedirectToPage("/Pages/Index");
+            return RedirectToPage("/Index");
             
         }
 
