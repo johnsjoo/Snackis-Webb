@@ -24,7 +24,7 @@ namespace SNACKIS___Webb.Pages
         public List<Post> Posts { get; set; }
         public List<Category> Categories { get; set; }
 
-        public List<Post> UserInPosts { get; set; }
+        
         public async Task OnGet()
         {
            

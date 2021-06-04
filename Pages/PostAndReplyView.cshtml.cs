@@ -19,15 +19,16 @@ namespace SNACKIS___Webb.Pages
         [BindProperty(SupportsGet = true)]
         public string PostId { get; set; }
 
-        [BindProperty]
+        [BindProperty(SupportsGet =true)]
         public Post ClickedPost { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
             if (!string.IsNullOrEmpty(PostId))
             {
-                ClickedPost = await _gateway.GetPostById(PostId);
                 
+                ClickedPost = await _gateway.GetPostById(PostId);
+  
                 return Page();
             }
             
