@@ -39,7 +39,7 @@
 
                                                 @foreach (var cat in Model.Categories)
                                                 {
-                                                    //Nu funkar Id iaf.
+                                                    
                                                     <a class="btn btn-info" asp-page="/PostsInCategoryPage" asp-route-CatId="@cat.Id" class="forum-item-title">@cat.Title</a><br />
                                                     @*<button class="btn btn-info my-2 my-sm-0" value="@cat.Id" id="CatId" onclick="setUrl();">@cat.Title</button>*@
                                                 }

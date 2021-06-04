@@ -20,19 +20,19 @@ namespace SNACKIS___Webb.Pages.User
         private readonly HttpClient _client;
         private readonly IConfiguration _configuration;
         private readonly UserApi _api;
-        public UserPageModel(IAuthGateway authgateway, HttpClient client, IConfiguration configuration, UserApi api)
+        public UserPageModel(IAuthGateway authgateway, HttpClient client, IConfiguration configuration)
         {
             _authgateway = authgateway;
             _client = client;
             _configuration = configuration;
-            _api = api;
+           
         }
 
-        public string Id { get; set; }
+       
         public UserLoginResponseModel User { get; set; }
+
         public async Task<IActionResult> OnGetAsync()
         {
-            
             byte[] tokenByte;
             HttpContext.Session.TryGetValue(ToolBox.TokenName, out tokenByte);
             string token = Encoding.ASCII.GetString(tokenByte);
@@ -40,8 +40,6 @@ namespace SNACKIS___Webb.Pages.User
 
             if (!String.IsNullOrEmpty(token))
             {
-                HttpClient client = _api.Initial();
-              
                 _client.DefaultRequestHeaders.Accept.Clear();
                 _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
                
@@ -53,7 +51,6 @@ namespace SNACKIS___Webb.Pages.User
 
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    
                     return Page();
                 }
                 else

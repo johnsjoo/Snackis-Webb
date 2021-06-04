@@ -1,0 +1,29 @@
+﻿@page
+@model SNACKIS___Webb.Pages.PostAndReplyViewModel
+@{
+}
+<div class="media">
+    <img src="..." class="mr-3" alt="...">
+    <div class="media-body">
+        <h5 class="mt-0">@Model.ClickedPost.Title</h5>
+        <p>@Model.ClickedPost.Content</p>
+
+            @foreach (var item in Model.ClickedPost.PostDiscussions)
+            {
+                <div class="media mt-3">
+                    <div class="row">
+                        <a class="mr-3" href="#">
+                            <img src="..." alt="...">
+                        </a>
+                        <div class="media-body">
+                            <h5 class="mt-0">@item.User.userName</h5>
+                            <p>@item.Discussion</p>
+                        </div>
+                    </div>
+                </div>
+            }
+           
+        
+    </div>
+    
+</div>

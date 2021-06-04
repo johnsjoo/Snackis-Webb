@@ -31,7 +31,7 @@
 
                                                 @foreach (var cat in Model.Categories)
                                                 {
-                                                    <a class="btn btn-info" asp-page="/PostsInCategoryPage" asp-route-CatId="@cat.Id" class="forum-item-title">@cat.Title</a><br />
+                                                    <a asp-page="/PostsInCategoryPage" asp-route-CatId="@cat.Id" class="forum-item-title">@cat.Title</a><br />
                                                 }
                                             </nav>
                                         </div>
@@ -67,13 +67,14 @@
                                 <div class="media forum-item">
                                     <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-circle" width="50" alt="User" /></a>
                                     <div class="media-body">
-                                        <h6><a href="#" data-toggle="collapse" data-target=".forum-content" class="text-body">@item.Title</a></h6>
+                                        @*<h6><a href="#" data-toggle="collapse" data-target=".forum-content" class="text-body">@item.Title</a></h6>*@
+                                       <a  asp-page="/PostAndReplyView" asp-route-PostId="@item.Id" class="forum-item-title">@item.Title</a><br />
                                         <p class="text-secondary">
                                             @item.Content
                                         </p>
 
 
-                                        <p class="text-muted"><a href="javascript:void(0)"></a> <span class="text-secondary font-weight-bold"></span></p>
+                                        
                                     </div>
                                     <div class="text-muted small text-center align-self-center">
                                         <span class="d-none d-sm-inline-block"><i class="far fa-eye"></i> 70</span>

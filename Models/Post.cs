@@ -27,5 +27,7 @@ namespace SNACKIS___Webb.Models
         public virtual Category Categories { get; set; }
         [JsonPropertyName("user")]
         public virtual User User { get; set; }
+        [JsonPropertyName("postdiscussion")]
+        public ICollection<PostDiscussion> PostDiscussions { get; set; }
     }
 }

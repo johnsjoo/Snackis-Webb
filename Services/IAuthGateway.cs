@@ -9,5 +9,8 @@ namespace SNACKIS___Webb.Services
     public interface IAuthGateway
     {
         Task<User> GetLoggedInUser(string Id);
+        Task<RegisterModel> RegisterNewUser(RegisterModel user);
+
+
     }
 }
