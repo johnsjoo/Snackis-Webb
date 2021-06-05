@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -47,6 +48,13 @@ namespace SNACKIS___Webb.Gateway
             string apiResponse = await response.Content.ReadAsStringAsync();
             var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<Post>(apiResponse);
             return obj;
+        }
+
+        public async Task<Post> CreateNewPost(Post post) 
+        {
+            var response = await _httpClient.PostAsJsonAsync(_configuration["CreateNewPost"], post);
+            Post returnValue = await response.Content.ReadFromJsonAsync<Post>();
+            return returnValue;
         }
      
     }

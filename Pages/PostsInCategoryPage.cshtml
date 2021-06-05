@@ -1,6 +1,7 @@
 ﻿@page
 @model SNACKIS___Webb.Pages.PostsInCategoryPageModel
 @{
+    bool loggedIn = Tools.TokenChecker.UserStatus;
 }
 
 
@@ -31,7 +32,7 @@
 
                                                 @foreach (var cat in Model.Categories)
                                                 {
-                                                    <a class="btn btn-info" asp-page="/PostsInCategoryPage" asp-route-CatId="@cat.Id" class="forum-item-title">@cat.Title</a><br />
+                                                    <a class="btn btn-info" asp-page="/PostsInCategoryPage" asp-route-CatId="@cat.Id">@cat.Title</a><br />
                                                 }
                                             </nav>
                                         </div>
@@ -56,11 +57,7 @@
                 <div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
                     @foreach (var item in Model.Posts)
                     {
-                       
 
-
-                         
-                        
                         <div class="card mb-2">
                             <div class="card-body p-2 p-sm-3">
                                 <p>@item.User.userName<small>@item.Date</small></p>
@@ -68,13 +65,10 @@
                                     <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-circle" width="50" alt="User" /></a>
                                     <div class="media-body">
                                         @*<h6><a href="#" data-toggle="collapse" data-target=".forum-content" class="text-body">@item.Title</a></h6>*@
-                                       <a  asp-page="/PostAndReplyView" asp-route-PostId="@item.Id" class="forum-item-title">@item.Title</a><br />
+                                        <a asp-page="/PostAndReplyView" asp-route-PostId="@item.Id" class="forum-item-title">@item.Title</a><br />
                                         <p class="text-secondary">
                                             @item.Content
                                         </p>
-
-
-                                        
                                     </div>
                                     <div class="text-muted small text-center align-self-center">
                                         <span class="d-none d-sm-inline-block"><i class="far fa-eye"></i> 70</span>
@@ -84,10 +78,13 @@
                             </div>
                         </div>
 
-                        
-
                     }
                 </div>
+
+                @if (loggedIn)
+                {
+                    <a asp-page="/NewPostView" asp-route-NewCatId="@Model.CatId" class="btn btn-info">Skapa ny tråd</a>
+                }
                 <a class="btn btn-info" style="max-height : 100px ; max-width :200px ; align-content : center" href="/Index">Tillbaka</a>
                 <!-- /Forum List -->
                 <!-- Forum Detail -->

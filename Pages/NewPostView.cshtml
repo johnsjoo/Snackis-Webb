@@ -1,0 +1,34 @@
+﻿@page
+@model SNACKIS___Webb.Pages.NewPostViewModel
+@{
+}
+
+
+
+<form asp-page-handler="Post">
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+
+<div class="form-group" style="visibility: hidden">
+    <input asp-for="NewCatId" class="form-control" value="@Model.NewCatId" />
+    <span asp-validation-for="NewPost.CategoryId" class="text-danger"></span>
+</div>
+
+
+
+<div class="form-group">
+    <label class="control-label">Titel</label>
+    <input asp-for="NewPost.Title" class="form-control" autocomplete="off" />
+    <span asp-validation-for="NewPost.Title" class="text-danger"></span>
+</div>
+
+
+
+<div class="form-group">
+    <label class="control-label">Inläggstext</label>
+    <textarea autocomplete="off" asp-for="NewPost.Content" class="form-control"></textarea>
+    <span asp-validation-for="NewPost.Content" class="text-danger"></span>
+</div>
+<button class="btn btn-dark" type="submit">Skapa</button>
+</form>

@@ -15,7 +15,7 @@ namespace SNACKIS___Webb.Services
 
         Task<Post> GetPostById(string PostId);
 
-        
+        Task<Post> CreateNewPost(Post post);
 
     }
 }
