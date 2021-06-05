@@ -25,11 +25,17 @@ namespace SNACKIS___Webb.Pages
         public List<Category> Categories { get; set; }
 
         
-        public async Task OnGet()
+        public async Task OnGetAsync()
         {
-           
-            Posts = await _gateway.GetPostsByCatId(CatId);
+            if (!string.IsNullOrEmpty(CatId))
+            {
+                Posts = await _gateway.GetPostsByCatId(CatId);
+            }
             Categories = await _gateway.GetAllCategories();
+        }
+        public async Task OnPostAsync() 
+        {
+
         }
     }
 }

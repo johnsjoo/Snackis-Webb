@@ -31,7 +31,7 @@
 
                                                 @foreach (var cat in Model.Categories)
                                                 {
-                                                    <a asp-page="/PostsInCategoryPage" asp-route-CatId="@cat.Id" class="forum-item-title">@cat.Title</a><br />
+                                                    <a class="btn btn-info" asp-page="/PostsInCategoryPage" asp-route-CatId="@cat.Id" class="forum-item-title">@cat.Title</a><br />
                                                 }
                                             </nav>
                                         </div>
