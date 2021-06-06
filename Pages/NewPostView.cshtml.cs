@@ -16,8 +16,6 @@ namespace SNACKIS___Webb.Pages
 {
     public class NewPostViewModel : PageModel
     {
-
-
         private readonly IGateway _gateway;
         private readonly HttpClient _client;
         private readonly IConfiguration _configuration;
@@ -74,11 +72,7 @@ namespace SNACKIS___Webb.Pages
                 return Page();
             }
 
-
-
-
-           
-           
         }
+
     }
 }

@@ -50,11 +50,11 @@ namespace SNACKIS___Webb.Gateway
             return obj;
         }
 
-        public async Task<Post> CreateNewPost(Post post)
+        public async Task<HttpResponseMessage> CreateNewPost(Post post)
         {
             var response = await _httpClient.PostAsJsonAsync(_configuration["CreateNewPost"], post);
-            Post returnValue = await response.Content.ReadFromJsonAsync<Post>();
-            return returnValue;
+            // Post returnValue = await response.Content.ReadFromJsonAsync<Post>();
+            return response;
         }
 
     }
