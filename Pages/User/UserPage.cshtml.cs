@@ -28,7 +28,6 @@ namespace SNACKIS___Webb.Pages.User
            
         }
 
-       
         public UserLoginResponseModel User { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
@@ -45,6 +44,7 @@ namespace SNACKIS___Webb.Pages.User
                
                 var response = await _client.GetAsync(_configuration["GetLoggedInUser"] + "/" + Id);
                 string apiResponse = await response.Content.ReadAsStringAsync();
+
 
                 var model = UserLoginResponseModel.FromJsonSingle(apiResponse);
                 User = model;
