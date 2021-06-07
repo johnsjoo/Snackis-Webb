@@ -15,6 +15,8 @@ namespace SNACKIS___Webb.Models
 
         [JsonProperty("username")]
         public string Username { get; set; }
+        [JsonProperty("image")]
+        public string Image { get; set; }
 
         [JsonProperty("email")]
         public string Email { get; set; }

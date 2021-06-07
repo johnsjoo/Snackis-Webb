@@ -47,7 +47,7 @@ namespace SNACKIS___Webb.Pages.User
 
                 var model = UserLoginResponseModel.FromJsonSingle(apiResponse);
                 User = model;
-
+                
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     return Page();
