@@ -13,6 +13,7 @@ namespace SNACKIS___Webb.Models
     {
         public string fullName { get; set; }
         public string id { get; set; }
+        public string Image { get; set; }
         public string userName { get; set; }
         public string normalizedUserName { get; set; }
         public string email { get; set; }

@@ -15,7 +15,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="m-sm-4">
-                            <form method="post">
+                            <form method="post" enctype="multipart/form-data">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <div class="form-group">
                                     <label asp-for="NewUser.FullName">Namn</label>
@@ -33,10 +33,16 @@
                                     <label asp-for="NewUser.Email">Mejl</label>
                                     <input class="form-control form-control-lg" asp-for="NewUser.Email" placeholder="Mejl">
                                 </div>
+                                <div class="form-group ">
+                                    <label>Välj bild</label>
+                                    <input asp-for="UploadFile" class="form-control border-0 bg-light" type="file" />
+                                    <span asp-validation-for="UploadFile" class="text-danger"></span>
+                                </div>
                                 <div class="text-center mt-3">
                                     <input type="submit" value="Registrera" class="btn btn-primary" />
                                 </div>
                             </form>
+                            
                         </div>
                     </div>
                 </div>
