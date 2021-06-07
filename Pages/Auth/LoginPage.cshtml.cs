@@ -24,9 +24,9 @@ namespace SNACKIS___Webb.Pages.Auth
         [BindProperty]
         public string Password { get; set; }
         public string Message { get; set; }
-        public string MessageMail { get; set; }
-        public string StoredID { get; set; }
-        public string SessionInfoToken { get; private set; }
+        //public string MessageMail { get; set; }
+        //public string StoredID { get; set; }
+        //public string SessionInfoToken { get; private set; }
 
 
         public LoginPageModel(UserApi api)

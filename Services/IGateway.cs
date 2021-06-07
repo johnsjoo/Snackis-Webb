@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace SNACKIS___Webb.Services
@@ -15,7 +16,7 @@ namespace SNACKIS___Webb.Services
 
         Task<Post> GetPostById(string PostId);
 
-        
+        Task<HttpResponseMessage> CreateNewPost(Post post);
 
     }
 }

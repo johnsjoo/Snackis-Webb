@@ -35,7 +35,7 @@ namespace SNACKIS___Webb
 
             services.AddSession(options =>
             {
-                options.Cookie.Name = ".GGwebshop.Session";
+                options.Cookie.Name = ".Snackis.Session";
                 options.IdleTimeout = TimeSpan.FromMinutes(10);
                 options.Cookie.IsEssential = true;
             });

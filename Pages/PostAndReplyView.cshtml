@@ -7,7 +7,8 @@
     <div class="media-body">
         <h5 class="mt-0">@Model.ClickedPost.Title</h5>
         <p>@Model.ClickedPost.Content</p>
-
+        @if (Model.ClickedPost.PostDiscussions != null)
+        {
             @foreach (var item in Model.ClickedPost.PostDiscussions)
             {
                 <div class="media mt-3">
@@ -22,8 +23,11 @@
                     </div>
                 </div>
             }
-           
-        
+
+        }
+
+
+
     </div>
     
 </div>

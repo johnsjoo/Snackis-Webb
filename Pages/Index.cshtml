@@ -40,7 +40,7 @@
                                                 @foreach (var cat in Model.Categories)
                                                 {
                                                     
-                                                    <a class="btn btn-info" asp-page="/PostsInCategoryPage" asp-route-CatId="@cat.Id" class="forum-item-title">@cat.Title</a><br />
+                                                    <a class="btn btn-info" asp-page="/PostsInCategoryPage" asp-route-CatId="@cat.Id" >@cat.Title</a><br />
                                                     @*<button class="btn btn-info my-2 my-sm-0" value="@cat.Id" id="CatId" onclick="setUrl();">@cat.Title</button>*@
                                                 }
 
@@ -55,16 +55,11 @@
                         <div class="simplebar-track simplebar-vertical" style="visibility: visible;"><div class="simplebar-scrollbar" style="height: 151px; display: block; transform: translate3d(0px, 0px, 0px);"></div></div>
                     </div>
                 </div>
-                <!-- /Inner sidebar body -->
+              
             </div>
-            <!-- /Inner sidebar -->
-            <!-- Inner main -->
+           
             <div class="inner-main">
-                <!-- Inner main header -->
-                
-                <!-- /Inner main header -->
-                <!-- Inner main body -->
-                <!-- Forum List -->
+              
                 <div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
                     @foreach (var item in Model.Posts)
                     {
@@ -78,13 +73,15 @@
                                     <div class="media forum-item">
                                         <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-circle" width="50" alt="User" /></a>
                                         <div class="media-body">
-                                            <h6><a href="#" data-toggle="collapse" data-target=".forum-content" class="text-body">@item.Title</a></h6>
+                                            <h6>
+                                                <a asp-page="/PostAndReplyView" asp-route-PostId="@item.Id" class="forum-item-title">@item.Title</a><br />
+                                            </h6>
                                             <p class="text-secondary">
                                                 @item.Content
                                             </p>
 
 
-                                            <p class="text-muted"><a href="javascript:void(0)"></a> <span class="text-secondary font-weight-bold"></span></p>
+                                            
                                         </div>
                                         <div class="text-muted small text-center align-self-center">
                                             <span class="d-none d-sm-inline-block"><i class="far fa-eye"></i> 70</span>
@@ -93,12 +90,11 @@
                                     </div>
                                 </div>
                             </div>
-                        
+                      
 
                     }
                 </div>
-                <!-- /Forum List -->
-                <!-- Forum Detail -->
+           
                 <div class="inner-main-body p-2 p-sm-3 collapse forum-content">
                     <a href="#" class="btn btn-light btn-sm mb-3 has-icon" data-toggle="collapse" data-target=".forum-content"><i class="fa fa-arrow-left mr-2"></i>Back</a>
                     <div class="card mb-2">

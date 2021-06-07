@@ -19,7 +19,7 @@ namespace SNACKIS___Webb.Pages.User
         private readonly IAuthGateway _authgateway;
         private readonly HttpClient _client;
         private readonly IConfiguration _configuration;
-        private readonly UserApi _api;
+        
         public UserPageModel(IAuthGateway authgateway, HttpClient client, IConfiguration configuration)
         {
             _authgateway = authgateway;
@@ -28,7 +28,6 @@ namespace SNACKIS___Webb.Pages.User
            
         }
 
-       
         public UserLoginResponseModel User { get; set; }
 
         public async Task<IActionResult> OnGetAsync()

@@ -28,7 +28,8 @@ namespace SNACKIS___Webb.Pages
             {
                 
                 ClickedPost = await _gateway.GetPostById(PostId);
-  
+
+                
                 return Page();
             }
             
