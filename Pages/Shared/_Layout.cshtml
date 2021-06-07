@@ -26,7 +26,7 @@
 
                     @if (returnTokenValue == true)
                     {
-                        @if (ToolBox.ActiveRole == "admin")
+                        @if (ToolBox.ActiveRole == "root")
                         {
                             <p>Välkommen @TokenChecker.UserName</p>
                             <div class="dropdown">
@@ -36,7 +36,7 @@
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" asp-page="/Admin/Index">Admin</a>
                                     <a class="dropdown-item" type="button" href="/User/LogOut">Logga ut</a>
-                                </div>
+                                </div>  
                             </div>
 
                         }
