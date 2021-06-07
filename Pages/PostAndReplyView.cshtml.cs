@@ -22,8 +22,12 @@ namespace SNACKIS___Webb.Pages
         [BindProperty(SupportsGet =true)]
         public Post ClickedPost { get; set; }
 
+        public List<Category> Categories;
+
         public async Task<IActionResult> OnGetAsync()
         {
+            Categories = await _gateway.GetAllCategories();
+
             if (!string.IsNullOrEmpty(PostId))
             {
                 

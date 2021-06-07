@@ -5,8 +5,6 @@
     ViewData["Title"] = "Home page";
     bool returnTokenValue = TokenChecker.UserStatus;
 
-
-
 }
 
 
@@ -41,7 +39,7 @@
                                                 {
                                                     
                                                     <a class="btn btn-info" asp-page="/PostsInCategoryPage" asp-route-CatId="@cat.Id" >@cat.Title</a><br />
-                                                    @*<button class="btn btn-info my-2 my-sm-0" value="@cat.Id" id="CatId" onclick="setUrl();">@cat.Title</button>*@
+                                                    
                                                 }
 
                                             </nav>
