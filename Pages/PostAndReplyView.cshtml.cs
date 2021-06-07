@@ -39,5 +39,9 @@ namespace SNACKIS___Webb.Pages
             
             return Page();
         }
+        public async Task<IActionResult> OnPostAsnyc() 
+        {
+            return Page();
+        }
     }
 }

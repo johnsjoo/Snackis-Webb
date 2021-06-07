@@ -73,10 +73,15 @@
                                 <div class="text-muted small text-center align-self-center">
                                     <span class="d-none d-sm-inline-block"><i class="far fa-eye"></i> 70</span>
                                     <span><i class="far fa-comment ml-2"></i> 3</span>
+                                    <form method="post">
+                                        <a class="btn btn-info">Svara</a>
+                                    </form>
                                 </div>
+                                
                             </div>
-                            
+
                         </div>
+                       
                     </div>
                     @if (Model.ClickedPost.PostDiscussions != null)
                     {
@@ -109,6 +114,9 @@
                                         </div>
                                     </div>
                                 </div>
+                                <form method="post">
+                                    <button class="btn btn-info">Svara</button>
+                                </form>
                             </div>
 
 
@@ -117,6 +125,7 @@
                     else
                     {
                         <h1>Det finns ingen diskussion i den här tråden ännu!</h1>
+                       
                     }
                 </div>
 

@@ -27,6 +27,7 @@ namespace SNACKIS___Webb.Pages.Auth
             _authGateway = ag;
             _client = client;
             
+            
         }
 
         [BindProperty (SupportsGet =true)]
@@ -48,7 +49,6 @@ namespace SNACKIS___Webb.Pages.Auth
             if (UploadFile != null)
             {
                 var file = "./wwwroot/img/" + UploadFile.FileName;
-                
 
                 using (var fileStream = new FileStream(file, FileMode.Create))
                 {
