@@ -24,36 +24,17 @@
 
                     @{bool returnTokenValue = TokenChecker.UserStatus;}
 
-                    @if (returnTokenValue == true)
-                    {
-                        @if (TokenChecker.UserName == "admin")
-                        {
-                            <p>Välkommen @TokenChecker.UserName</p>
-                            <div class="dropdown">
-                                <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Meny
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" asp-page="/Admin/Index">Admin</a>
-                                    <a class="dropdown-item" type="button" href="/User/LogOut">Logga ut</a>
-                                </div>  
-                            </div>
 
-                        }
-                        else
-                        {
-                            <p>Välkommen @TokenChecker.UserName</p>
-                            <div class="dropdown">
-                                <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Meny
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" asp-page="/User/UserPage">Min sida</a>
-                                    <a class="dropdown-item" type="button" href="/User/LogOut">Logga ut</a>
-                                </div>
+                        <p>Välkommen @TokenChecker.UserName</p>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Meny
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" asp-page="/User/UserPage">Min sida</a>
+                                <a class="dropdown-item" type="button" href="/User/LogOut">Logga ut</a>
                             </div>
-
-                        }
+                        </div>
 
                     }
                     else
@@ -71,18 +52,34 @@
 
 
                     }
-                </div>
+
+
+
+                    @*else
+        {
+        <p>Välkommen @TokenChecker.UserName</p>
+        <div class="dropdown">
+            <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Meny
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" asp-page="/User/UserPage">Min sida</a>
+                <a class="dropdown-item" type="button" href="/User/LogOut">Logga ut</a>
             </div>
+        </div>
+
+        }*@
 
 
 
-            
 
 
 
 
 
-        </nav>
+        </div>
+    </div>
+</nav>
     </header>
     <div class="container">
         <main role="main" class="pb-3">

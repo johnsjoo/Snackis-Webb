@@ -33,13 +33,15 @@ namespace SNACKIS___Webb.Gateway
         {
             var response = await _httpClient.GetAsync(_configuration["SnackisApi1"]);
             string apiResponse = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<List<Post>>(apiResponse);
+            var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Post>>(apiResponse);
+            return obj;
         }
         public async Task<List<Post>> GetPostsByCatId(string catId) 
         {
             var response = await _httpClient.GetAsync(_configuration["GetPostsBycatId"] + "/" + catId);
             string apiResponse = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<List<Post>>(apiResponse);
+            var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Post>>(apiResponse);
+            return obj;
         }
 
         public async Task<Post> GetPostById(string postId) 

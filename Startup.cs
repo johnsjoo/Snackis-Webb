@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using SNACKIS___Webb.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -30,6 +31,7 @@ namespace SNACKIS___Webb
             services.AddHttpClient<Services.IAuthGateway, Gateway.AuthGateway>();
             services.AddTransient<Services.IAuthGateway, Gateway.AuthGateway>();
             services.AddTransient<Services.IGateway, Gateway.Gateway>();
+            
             services.AddTransient<Tools.UserApi>();
 
             services.AddRazorPages();
