@@ -59,7 +59,15 @@
                             <div class="card-body p-2 p-sm-3">
                                 <p>@item.User.userName<small>@item.Date</small></p>
                                 <div class="media forum-item">
-                                    <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="/img/@item.User.Image" class="mr-3 rounded-circle" width="50" alt="User" /></a>
+                                    @if (item.User.Image == null)
+                                    {
+                                        <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-circle" width="50" alt="User" /></a>
+                                    }
+                                    else
+                                    {
+                                        <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="/img/@item.User.Image" class="mr-3 rounded-circle" width="50" alt="User" /></a>
+                                    }
+
                                     <div class="media-body">
 
                                         <a asp-page="/PostAndReplyView" asp-route-PostId="@item.Id" class="forum-item-title">@item.Title</a><br />
