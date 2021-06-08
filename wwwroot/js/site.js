@@ -6,3 +6,4 @@
 function setUrl() {
     window.location.href = 'PostsInCategoryPage/' + document.getElementById('CatId').value;
 }
+

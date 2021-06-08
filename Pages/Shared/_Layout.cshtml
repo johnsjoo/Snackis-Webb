@@ -26,6 +26,7 @@
 
                     @if (returnTokenValue == true)
                     {
+
                         <p>Välkommen @TokenChecker.UserName</p>
                         <div class="dropdown">
                             <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -34,8 +35,36 @@
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" asp-page="/User/UserPage">Min sida</a>
                                 <a class="dropdown-item" type="button"  href="/User/LogOut">Logga ut</a>
+
+                        @if (ToolBox.ActiveRole == "root")
+                        {
+                            <p>Välkommen @TokenChecker.UserName</p>
+                            <div class="dropdown">
+                                <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Meny
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" asp-page="/Admin/Index">Admin</a>
+                                    <a class="dropdown-item" type="button" href="/User/LogOut">Logga ut</a>
+                                </div>  
+
                             </div>
-                        </div>
+
+                        }
+                        else
+                        {
+                            <p>Välkommen @TokenChecker.UserName</p>
+                            <div class="dropdown">
+                                <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Meny
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" asp-page="/User/UserPage">Min sida</a>
+                                    <a class="dropdown-item" type="button" href="/User/LogOut">Logga ut</a>
+                                </div>
+                            </div>
+
+                        }
 
                     }
                     else
