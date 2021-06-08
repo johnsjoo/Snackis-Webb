@@ -1,6 +1,7 @@
 ﻿@page
 @model SNACKIS___Webb.Pages.PostAndReplyViewModel
 @{
+    bool loggedIn = Tools.TokenChecker.UserStatus;
 }
 
 <head>
@@ -73,15 +74,20 @@
                                 <div class="text-muted small text-center align-self-center">
                                     <span class="d-none d-sm-inline-block"><i class="far fa-eye"></i> 70</span>
                                     <span><i class="far fa-comment ml-2"></i> 3</span>
-                                    <form method="post">
-                                        <a class="btn btn-info">Svara</a>
-                                    </form>
+                                    @if (loggedIn)
+                                    {
+                                        <form method="Post">
+                                            <button type="submit" class="btn btn-danger">Anmäl</button>
+                                        </form>
+
+                                    }
+
                                 </div>
-                                
+
                             </div>
 
                         </div>
-                       
+
                     </div>
                     @if (Model.ClickedPost.PostDiscussions != null)
                     {
@@ -122,9 +128,17 @@
                                         </div>
                                     </div>
                                 </div>
-                                <form method="post">
-                                    <button class="btn btn-info">Svara</button>
-                                </form>
+                                @if (loggedIn)
+                                {
+                                    <form method="post">
+                                        <input class="btn btn-danger" type="submit" value="Anmäl" />
+                                    </form>
+                                    <form method="post">
+                                        <a class="btn btn-info">Svara</a>
+                                    </form>
+                                }
+
+
                             </div>
 
 
@@ -133,9 +147,11 @@
                     else
                     {
                         <h1>Det finns ingen diskussion i den här tråden ännu!</h1>
-                       
+
                     }
+                    <a class="btn btn-info" style="max-height : 100px ; max-width :200px ; align-content : center" href="/Index">Tillbaka</a>
                 </div>
+
 
                         <div class="inner-main-body p-2 p-sm-3 collapse forum-content">
                             <a href="#" class="btn btn-light btn-sm mb-3 has-icon" data-toggle="collapse" data-target=".forum-content"><i class="fa fa-arrow-left mr-2"></i>Back</a>
