@@ -1,0 +1,48 @@
+﻿@page
+@model SNACKIS___Webb.Pages.Admin.ReportedPostsModel
+@{
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                User Name
+            </th>
+            <th>
+                Title
+            </th>
+            <th>
+                Content
+            </th>
+            <th>
+                Date
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Posts)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.userName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Content)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+   
+                <td>
+                    <a class="btn btn-outline-primary btn-sm" asp-page="./Edit" asp-route-id="@item.Id">Toggla</a>
+                    <a class="btn btn-outline-danger btn-sm" asp-page="Delete" asp-route-id="@item.Id">Radera</a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

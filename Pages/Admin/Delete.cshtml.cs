@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace SNACKIS___Webb.Pages.Admin
 {
-    public class AdminReviewOrderModel : PageModel
+    public class DeleteModel : PageModel
     {
         public void OnGet()
         {

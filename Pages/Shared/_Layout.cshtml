@@ -26,7 +26,7 @@
 
                     @if (returnTokenValue == true)
                     {
-                        @if (ToolBox.ActiveRole == "root")
+                        @if (TokenChecker.UserName == "admin")
                         {
                             <p>Välkommen @TokenChecker.UserName</p>
                             <div class="dropdown">
