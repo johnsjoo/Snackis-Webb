@@ -3,3 +3,16 @@
 @{
 }
 <h1>Welcome to Admin View</h1>
+
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Alla anmällda poster: </h5>
+                <p class="card-text">@Model.Posts.Count</p>
+                <a class="btn btn-outline-primary btn-sm" asp-page="ReportedPosts">Granska</a>
+            </div>
+        </div>
+    </div>
+</div>

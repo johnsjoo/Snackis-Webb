@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;
@@ -14,14 +13,16 @@ using SNACKIS___Webb.Services;
 
 namespace SNACKIS___Webb.Pages.Admin
 {
-    public class IndexModel : PageModel
+    public class ReportedPostsModel : PageModel
     {
+
         private readonly HttpClient _client;
         private readonly IConfiguration _configuration;
         [BindProperty]
         public List<Post> Posts { get; set; }
-        public IndexModel(HttpClient client, IConfiguration configuration)
+        public ReportedPostsModel( HttpClient client, IConfiguration configuration)
         {
+
             _client = client;
             _configuration = configuration;
 
@@ -31,7 +32,6 @@ namespace SNACKIS___Webb.Pages.Admin
             byte[] tokenByte;
             HttpContext.Session.TryGetValue(ToolBox.TokenName, out tokenByte);
             string token = Encoding.ASCII.GetString(tokenByte);
-            string Id = HttpContext.Session.GetString("Id");
 
             if (!String.IsNullOrEmpty(token))
             {
@@ -40,7 +40,7 @@ namespace SNACKIS___Webb.Pages.Admin
 
                 var response = await _client.GetAsync(_configuration["getReportedPosts"]);
                 string apiResponse = await response.Content.ReadAsStringAsync();
-                Posts =  JsonSerializer.Deserialize<List<Post>>(apiResponse);
+                Posts = JsonSerializer.Deserialize<List<Post>>(apiResponse);
 
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
