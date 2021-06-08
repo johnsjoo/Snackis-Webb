@@ -70,7 +70,16 @@
                                     <p>@item.User.userName<small>@item.Date</small></p>
                                     
                                     <div class="media forum-item">
-                                        <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="/img/@item.User.Image" class="mr-3 rounded-circle" width="50" alt="User" /></a>
+                                        @if (item.User.Image == null)
+                                        {
+
+                                            <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-circle" width="50" alt="User" /></a>
+                                        }
+                                        else
+                                        {
+                                            <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="/img/@item.User.Image" class="mr-3 rounded-circle" width="50" alt="User" /></a>
+                                        }
+
                                         <div class="media-body">
                                             <h6>
                                                 <a asp-page="/PostAndReplyView" asp-route-PostId="@item.Id" class="forum-item-title">@item.Title</a><br />
@@ -80,7 +89,7 @@
                                             </p>
 
 
-                                            
+
                                         </div>
                                         <div class="text-muted small text-center align-self-center">
                                             <span class="d-none d-sm-inline-block"><i class="far fa-eye"></i> 70</span>
