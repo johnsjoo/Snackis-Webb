@@ -2,3 +2,45 @@
 @model SNACKIS___Webb.Pages.Admin.DeleteModel
 @{
 }
+
+<h1>Vill du verkligen radera posten?</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Post-Id
+            </th>
+            <th>
+                Titel
+            </th>
+            <th>
+                Text
+            </th>
+        </tr>
+
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Model.DeletedPost.Id
+            </td>
+            <td>
+                @Model.DeletedPost.Title
+            </td>
+            <td>
+                @Model.DeletedPost.Content
+            </td>
+            <td>
+                <form method="post">
+                    <input asp-for="DeletedId" style="visibility : hidden" value="@Model.DeletedPost.Id" />
+                    <button class="btn btn-danger btn-sm" type="submit">Radera</button>
+                </form>
+            </td>
+        </tr>
+        
+        
+    </tbody>
+</table>
+
+<a class="btn btn-info btn-sm" asp-page="Index">Tillbaka</a>

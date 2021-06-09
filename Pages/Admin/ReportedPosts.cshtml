@@ -40,12 +40,12 @@
 
                 <td>
                     <form method="post">
-                        <input  id="toggle" asp-for="@Model.postId"  style="visibility : hidden"  value="@item.Id" />
-                        <button class="btn btn-info" type="submit">Toggla</button>
+                        <input  id="toggle" asp-for="@Model.postId"  style="visibility : hidden"value="@item.Id" />
+                        <button class="btn btn-info btn-sm" type="submit">Toggla</button>
                     </form>
-                    
-                    <button class="btn btn-outline-danger btn-sm" asp-page="Delete" asp-route-id="@item.Id">Radera</button>
-
+                </td>
+                <td>
+                    <a asp-page="Delete" asp-route-DeletedId="@item.Id"  class="btn btn-danger">Radera</a>
                 </td>
             </tr>
         }

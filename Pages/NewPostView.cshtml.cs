@@ -68,7 +68,6 @@ namespace SNACKIS___Webb.Pages
             }
             catch (Exception)
             {
-                //Message = "Du måste logga in för att kunna se dina valda varor.";
                 return Page();
             }
 

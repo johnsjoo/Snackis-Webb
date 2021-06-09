@@ -18,5 +18,7 @@ namespace SNACKIS___Webb.Services
 
         Task<HttpResponseMessage> CreateNewPost(Post post);
 
+        Task<HttpResponseMessage> DeletePostById(string PostId);
+
     }
 }
