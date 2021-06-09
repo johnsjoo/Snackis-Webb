@@ -2,6 +2,7 @@
 @model SNACKIS___Webb.Pages.Admin.ReportedPostsModel
 @{
 }
+<h2>Alla anmälda poster: (@Model.Posts.Count)</h2>
 <table class="table">
     <thead>
         <tr>
@@ -36,9 +37,10 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Date)
                 </td>
-   
+
                 <td>
-                    <a class="btn btn-outline-primary btn-sm" asp-page="./Edit" asp-route-id="@item.Id">Toggla</a>
+                    <form method="post"><a class="btn btn-info" asp-page="/ReportedPosts" asp-route-postId="@item.Id">Toggle</a></form>
+                    
                     <a class="btn btn-outline-danger btn-sm" asp-page="Delete" asp-route-id="@item.Id">Radera</a>
 
                 </td>
@@ -46,3 +48,4 @@
         }
     </tbody>
 </table>
+<a class="btn btn-info btn-sm" asp-page="Index" >Tillbaka</a>
