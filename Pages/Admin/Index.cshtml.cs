@@ -18,6 +18,7 @@ namespace SNACKIS___Webb.Pages.Admin
     {
         private readonly HttpClient _client;
         private readonly IConfiguration _configuration;
+        public string message { get; set; }
         [BindProperty]
         public List<Post> Posts { get; set; }
         public IndexModel(HttpClient client, IConfiguration configuration)
@@ -28,28 +29,41 @@ namespace SNACKIS___Webb.Pages.Admin
         }
         public async Task<IActionResult> OnGetAsync()
         {
+           
             byte[] tokenByte;
             HttpContext.Session.TryGetValue(ToolBox.TokenName, out tokenByte);
             string token = Encoding.ASCII.GetString(tokenByte);
-            string Id = HttpContext.Session.GetString("Id");
+           
+
 
             if (!String.IsNullOrEmpty(token))
             {
-                _client.DefaultRequestHeaders.Accept.Clear();
-                _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
-
-                var response = await _client.GetAsync(_configuration["getReportedPosts"]);
-                string apiResponse = await response.Content.ReadAsStringAsync();
-                Posts =  JsonSerializer.Deserialize<List<Post>>(apiResponse);
-
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                try
                 {
+                    _client.DefaultRequestHeaders.Accept.Clear();
+                    _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
+
+                    var response = await _client.GetAsync(_configuration["getReportedPosts"]);
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    Posts = JsonSerializer.Deserialize<List<Post>>(apiResponse);
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        return Page();
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+
+                }
+                catch (Exception)
+                {
+                    message = "Get fucked";
                     return Page();
                 }
-                else
-                {
-                    return NotFound();
-                }
+
+
+               
             }
             return Page();
         }
