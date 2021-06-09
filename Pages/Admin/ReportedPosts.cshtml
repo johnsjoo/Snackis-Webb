@@ -39,9 +39,12 @@
                 </td>
 
                 <td>
-                    <form method="post"><a class="btn btn-info" asp-page="/ReportedPosts" asp-route-postId="@item.Id">Toggle</a></form>
+                    <form method="post">
+                        <input  id="toggle" asp-for="@Model.postId"  style="visibility : hidden"  value="@item.Id" />
+                        <button class="btn btn-info" type="submit">Toggla</button>
+                    </form>
                     
-                    <a class="btn btn-outline-danger btn-sm" asp-page="Delete" asp-route-id="@item.Id">Radera</a>
+                    <button class="btn btn-outline-danger btn-sm" asp-page="Delete" asp-route-id="@item.Id">Radera</button>
 
                 </td>
             </tr>

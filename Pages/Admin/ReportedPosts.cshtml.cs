@@ -22,6 +22,8 @@ namespace SNACKIS___Webb.Pages.Admin
         private readonly IGateway _gateway;
         public Post toggledPost { get; set; }
 
+
+        [BindProperty]
         public string postId { get; set; }
         [BindProperty]
         public List<Post> Posts { get; set; }
@@ -60,8 +62,9 @@ namespace SNACKIS___Webb.Pages.Admin
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string id)
         {
+            id = postId;
             byte[] tokenByte;
             HttpContext.Session.TryGetValue(ToolBox.TokenName, out tokenByte);
             string token = Encoding.ASCII.GetString(tokenByte);
@@ -73,12 +76,13 @@ namespace SNACKIS___Webb.Pages.Admin
                 _client.DefaultRequestHeaders.Accept.Clear();
                 _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
 
-                var response = await _client.PutAsJsonAsync(_configuration["toggleReportedPost"] + postId, toggledPost);
+                var response = await _client.PutAsJsonAsync(_configuration["toggleReportedPost"] + id, toggledPost);
                 string apiResponse = await response.Content.ReadAsStringAsync();
-                Posts = JsonSerializer.Deserialize<List<Post>>(apiResponse);
+                //Posts = JsonSerializer.Deserialize<List<Post>>(apiResponse);
 
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
+                    IActionResult result = await OnGetAsync();
                     return Page();
                 }
                 else
