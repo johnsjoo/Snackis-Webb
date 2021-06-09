@@ -58,6 +58,11 @@ namespace SNACKIS___Webb.Gateway
             // Post returnValue = await response.Content.ReadFromJsonAsync<Post>();
             return response;
         }
+        public async Task<HttpResponseMessage> DeletePostById(string PostId) 
+        {
+            var response = await _httpClient.DeleteAsync(_configuration["DeletePostById"] + "/" + PostId);
+            return response;
+        }
 
 
 
