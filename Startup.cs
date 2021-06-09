@@ -39,7 +39,7 @@ namespace SNACKIS___Webb
             services.AddSession(options =>
             {
                 options.Cookie.Name = ".Snackis.Session";
-                options.IdleTimeout = TimeSpan.FromMinutes(10);
+                options.IdleTimeout = TimeSpan.FromMinutes(60);
                 options.Cookie.IsEssential = true;
             });
             services.Configure<CookiePolicyOptions>(options =>

@@ -26,7 +26,8 @@ namespace SNACKIS___Webb.Pages
         [BindProperty(SupportsGet =true)]
         public Post NewPost { get; set; }
 
-
+        [BindProperty(SupportsGet =true)]
+        public Category CurrerntCategory { get; set; }
 
         public NewPostViewModel(IGateway gateway, HttpClient client, IConfiguration configuration)
         {
@@ -35,8 +36,39 @@ namespace SNACKIS___Webb.Pages
             _configuration = configuration;
         }
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
+            try
+            {
+                byte[] tokenByte;
+                HttpContext.Session.TryGetValue(ToolBox.TokenName, out tokenByte);
+                var token = Encoding.ASCII.GetString(tokenByte);
+
+                if (!String.IsNullOrEmpty(token))
+                {
+                    _client.DefaultRequestHeaders.Accept.Clear();
+                    _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
+
+                    var response = await _client.GetAsync(_configuration["GetCategoryById"] + "/" + NewCatId);
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    CurrerntCategory = Newtonsoft.Json.JsonConvert.DeserializeObject<Category>(apiResponse);
+
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        return Page();
+                    }
+                    else
+                    {
+                        return RedirectToPage("/Error");
+                    }
+
+                }
+                return Page();
+            }
+            catch (Exception)
+            {
+                return Page();
+            }
 
         }
         public async Task<IActionResult> OnPostAsync() 
