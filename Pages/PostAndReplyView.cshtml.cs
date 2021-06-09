@@ -26,7 +26,6 @@ namespace SNACKIS___Webb.Pages
             _configuration = configuration;
         }
 
-
         [BindProperty(SupportsGet = true)]
         public string PostId { get; set; }
 
@@ -36,9 +35,6 @@ namespace SNACKIS___Webb.Pages
         public List<Category> Categories;
 
         public UserLoginResponseModel User { get; set; }
-
-
-        
 
         public async Task<IActionResult> OnGetAsync()
         {

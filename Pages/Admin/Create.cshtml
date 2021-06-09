@@ -1,0 +1,24 @@
+﻿@page
+@model SNACKIS___Webb.Pages.Admin.CreateModel
+@{
+}
+
+<h1>Skapa kategori</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label for="title">Titel</label><br />
+        <input class="form-control" name="title" /><br />
+    </div>
+    <div class="form-group">
+        <label for="description">Beskrivning</label><br />
+        <input class="form-control" name="description" /><br />
+    </div>
+    <input class="btn btn-success" type="submit" value="Skapa kategori" />
+</form>
+<a asp-page="Index" class="btn btn-info">Tillbaka</a>
+
+@if (!String.IsNullOrEmpty(Model.Messasge))
+{
+    <h5 style="color : green">@Model.Messasge</h5>
+}
