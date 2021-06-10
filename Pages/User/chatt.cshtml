@@ -1,28 +1,21 @@
 ﻿@page
-@model IndexModel
-@using SNACKIS___Webb.Tools;
+@model SNACKIS___Webb.Pages.User.chattModel
 @{
-    ViewData["Title"] = "Home page";
-    bool returnTokenValue = TokenChecker.UserStatus;
-
 }
-
-
-
 
 <head>
     <link rel="stylesheet" href="~/css/IndexStyle.css">
-    
+
 </head>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css" integrity="sha256-46r060N2LrChLLb5zowXQ72/iKKNiw/lAmygmHExk/o=" crossorigin="anonymous" />
 <div class="container">
-    
+
     <div class="main-body p-0">
         <div class="inner-wrapper">
             <!-- Inner sidebar -->
             <div class="inner-sidebar text-center">
-                <h3>Kategorier</h3>
+                <h3>Meddelande:</h3>
                 <!-- /Inner sidebar header -->
                 <!-- Inner sidebar body -->
                 <div class="inner-sidebar-body p-0">
@@ -31,17 +24,18 @@
                             <div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div>
                             <div class="simplebar-mask">
                                 <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
-                                    <div class="simplebar-content-wrapper" style="height: 100%;">
+                                    <div class="simplebar-content-wrapper" style="height: 100%; overflow: hidden scroll;">
                                         <div class="simplebar-content" style="padding: 16px;">
                                             <nav class="nav nav-pills nav-gap-y-1 flex-column">
 
+                                                <!--Foreach-->
 
-                                                @foreach (var cat in Model.Categories)
-                                                {
-                                                    
-                                                    <a class="btn btn-info" asp-page="/PostsInCategoryPage" asp-route-CatId="@cat.Id" >@cat.Title</a><br />
-                                                    
-                                                }
+                                                <a class="btn btn-info" asp-page="/PostsInCategoryPage" asp-route-CatId="">John</a><br />
+                                                <a class="btn btn-info" asp-page="/PostsInCategoryPage" asp-route-CatId="">Azamat</a><br />
+                                                <a class="btn btn-info" asp-page="/PostsInCategoryPage" asp-route-CatId="">Markus</a><br />
+                                              
+
+
 
                                             </nav>
                                         </div>
@@ -54,49 +48,50 @@
                         <div class="simplebar-track simplebar-vertical" style="visibility: visible;"><div class="simplebar-scrollbar" style="height: 151px; display: block; transform: translate3d(0px, 0px, 0px);"></div></div>
                     </div>
                 </div>
-              
+
             </div>
-           
+
             <div class="inner-main">
-              
+
                 <div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
-                    @foreach (var item in Model.Posts)
-                    {
-                        
-                        
-                            
-                            <div class="card mb-2">
-                                <div class="card-body p-2 p-sm-3">
-                                    <p>@item.User.userName<small>@item.Date</small></p>
+                   <!--Foreach-->
+
+
+
+                        <div class="card mb-2">
+                            <div class="card-body p-2 p-sm-3">
+                                <p>John<small>2021-06-10</small></p>
+
+                                <div class="media forum-item">
+                                   
+
+                                        <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-circle" width="50" alt="User" /></a>
+                                   
+                                   
+                                        <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="/img/" class="mr-3 rounded-circle" width="50" alt="User" /></a>
                                     
-                                    <div class="media forum-item">
-                                        @if (item.User.Image == null)
-                                        {
 
-                                            <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-circle" width="50" alt="User" /></a>
-                                        }
-                                        else
-                                        {
-                                            <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="/img/@item.User.Image" class="mr-3 rounded-circle" width="50" alt="User" /></a>
-                                        }
+                                    <div class="media-body">
+                                        <h6>
+                                            <a asp-page="/PostAndReplyView" asp-route-PostId="" class="forum-item-title">John</a><br />
+                                        </h6>
+                                        <p class="text-secondary">
+                                            Svara! hallå?!
+                                        </p>
 
-                                        <div class="media-body">
-                                            <h6>
-                                                <a asp-page="/PostAndReplyView" asp-route-PostId="@item.Id" class="forum-item-title">@item.Title</a><br />
-                                            </h6>
-                                            <p class="text-secondary">
-                                                @item.Content
-                                            </p>
-                                        </div>
+
+
                                     </div>
+                                   
                                 </div>
                             </div>
-                      
+                        </div>
+
 
                     }
                 </div>
-           
-                
+
+
                 <!-- /Forum Detail -->
                 <!-- /Inner main body -->
             </div>
