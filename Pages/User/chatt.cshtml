@@ -98,8 +98,8 @@
                     </div>
                     <div class="form-group">
                         <label for="">Skriv ditt svar här</label>
-                        @*<textarea class="form-control" name="Message" id="exampleFormControlTextarea1" rows="3"></textarea>*@
-                        <input asp-for="NewMessage.Message" class="form-control" value="@Model.NewMessage.Message" />
+                        <textarea class="form-control"  asp-for="NewMessage.Message" id="exampleFormControlTextarea1" rows="3"></textarea>
+                       
                     </div>
                     <input class="btn btn-info" type="submit" value="Svara" />
                 </form>
