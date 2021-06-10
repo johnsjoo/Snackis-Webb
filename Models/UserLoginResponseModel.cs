@@ -11,7 +11,7 @@ namespace SNACKIS___Webb.Models
     public partial class UserLoginResponseModel
     {
         [JsonProperty("id")]
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         [JsonProperty("username")]
         public string Username { get; set; }
