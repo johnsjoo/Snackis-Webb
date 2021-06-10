@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
+using SNACKIS___Webb.Models;
 
 namespace SNACKIS___Webb.Pages.User
 {
@@ -21,11 +22,11 @@ namespace SNACKIS___Webb.Pages.User
 
         [BindProperty(SupportsGet =true)]
         public string UserId { get; set; }
-        [BindProperty]
-        public Models.Message NewMessage { get; set; }
+        [BindProperty(SupportsGet =true)]
+        public PrivateMessage NewMessage { get; set; }
 
         [BindProperty(SupportsGet =true)]
-        public List<Models.Message> Messages { get; set; }
+        public List<PrivateMessage> Messages { get; set; }
 
         public chattModel(HttpClient client, IConfiguration configuration)
         {
@@ -50,7 +51,7 @@ namespace SNACKIS___Webb.Pages.User
 
                     var response = await _client.GetAsync(_configuration["GetMessagesByUser"]);
                     var apiResponse = await response.Content.ReadAsStringAsync();
-                    Messages = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Models.Message>>(apiResponse);
+                    Messages = Newtonsoft.Json.JsonConvert.DeserializeObject<List<PrivateMessage>>(apiResponse);
                 }
 
             }
@@ -73,11 +74,12 @@ namespace SNACKIS___Webb.Pages.User
                     _client.DefaultRequestHeaders.Accept.Clear();
                     _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
 
-                    var response = await _client.PostAsJsonAsync(_configuration["GetMessagesByUser"],NewMessage);
+                    var response = await _client.PostAsJsonAsync(_configuration["CreateMessage"], NewMessage);
 
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {
-                        return RedirectToPage("/chatt");
+                        IActionResult resultPage = await OnGetAsync();
+                        return resultPage;
                     }
                     else
                     {
@@ -85,8 +87,9 @@ namespace SNACKIS___Webb.Pages.User
                     }
                 }
 
-                return Page();
+                
             }
+            return Page();
         }
     }
 }
