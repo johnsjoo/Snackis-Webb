@@ -28,14 +28,15 @@
                                         <div class="simplebar-content" style="padding: 16px;">
                                             <nav class="nav nav-pills nav-gap-y-1 flex-column">
 
-                                                <!--Foreach-->
 
-                                                <a class="btn btn-info" asp-page="/PostsInCategoryPage" asp-route-CatId="">John</a><br />
-                                                <a class="btn btn-info" asp-page="/PostsInCategoryPage" asp-route-CatId="">Azamat</a><br />
-                                                <a class="btn btn-info" asp-page="/PostsInCategoryPage" asp-route-CatId="">Markus</a><br />
-                                              
+                                                @foreach (var item in Model.Messages)
+                                                {
+                                                    @if (item.User.id != ToolBox.LoggedInUserID)
+                                                    {
+                                                        <a asp-route-UserId="@item.User.id" class="btn btn-info">@item.User.userName</a><br />
+                                                    }
 
-
+                                                }
 
                                             </nav>
                                         </div>
@@ -54,40 +55,36 @@
             <div class="inner-main">
 
                 <div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
-                   <!--Foreach-->
+                    <!--Foreach-->
 
 
-
-                        <div class="card mb-2">
-                            <div class="card-body p-2 p-sm-3">
-                                <p>John<small>2021-06-10</small></p>
-
-                                <div class="media forum-item">
-                                   
-
-                                        <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-circle" width="50" alt="User" /></a>
-                                   
-                                   
-                                        <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="/img/" class="mr-3 rounded-circle" width="50" alt="User" /></a>
-                                    
-
-                                    <div class="media-body">
-                                        <h6>
-                                            <a asp-page="/PostAndReplyView" asp-route-PostId="" class="forum-item-title">John</a><br />
-                                        </h6>
-                                        <p class="text-secondary">
-                                            Svara! hallå?!
-                                        </p>
+                    @foreach (var item in Model.Messages.Where(x=>x.MessageReceiver == Model.UserId || Model.UserId == x.UserId).OrderBy(x=>x.Date))
+                    {
 
 
+                            <div class="card mb-2">
+                                <div class="card-body p-2 p-sm-3">
+                                    <p>@item.User.userName<small>@item.Date</small></p>
+
+                                    <div class="media forum-item">
+                                        @if (item.User.Image == null)
+                                        {
+                                            <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-circle" width="50" alt="User" /></a>
+                                        }
+                                        else
+                                        {
+                                            <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="/img/@item.User.Image" class="mr-3 rounded-circle" width="50" alt="User" /></a>
+                                        }
+                                        <div class="media-body">
+                                            <p class="text-secondary">
+                                                @item.message
+                                            </p>
+                                        </div>
 
                                     </div>
-                                   
                                 </div>
                             </div>
-                        </div>
-
-
+                        
                     }
                 </div>
 
