@@ -18,7 +18,8 @@ namespace SNACKIS___Webb.Pages.User
         private readonly HttpClient _client;
         private readonly IConfiguration _configuration;
 
-
+        [BindProperty(SupportsGet =true)]
+        public string UserId { get; set; }
         [BindProperty]
         public Models.Message NewMessaged { get; set; }
 
