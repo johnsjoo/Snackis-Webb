@@ -28,6 +28,7 @@
                                         <div class="simplebar-content" style="padding: 16px;">
                                             <nav class="nav nav-pills nav-gap-y-1 flex-column">
 
+
                                                 @foreach (var item in Model.Messages)
                                                 {
                                                     @if (item.User.id != ToolBox.LoggedInUserID)
@@ -57,10 +58,10 @@
                     <!--Foreach-->
 
 
-                    @foreach (var item in Model.Messages.Where(x=>x.User.id == Model.UserId))
+                    @foreach (var item in Model.Messages.Where(x=>x.MessageReceiver == Model.UserId || Model.UserId == x.UserId).OrderBy(x=>x.Date))
                     {
 
-                        
+
                             <div class="card mb-2">
                                 <div class="card-body p-2 p-sm-3">
                                     <p>@item.User.userName<small>@item.Date</small></p>

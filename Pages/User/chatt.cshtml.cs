@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace SNACKIS___Webb.Pages.User
         [BindProperty(SupportsGet =true)]
         public string UserId { get; set; }
         [BindProperty]
-        public Models.Message NewMessaged { get; set; }
+        public Models.Message NewMessage { get; set; }
 
         [BindProperty(SupportsGet =true)]
         public List<Models.Message> Messages { get; set; }
@@ -40,7 +41,7 @@ namespace SNACKIS___Webb.Pages.User
             if (tokenByte != null)
             {
                 string token = Encoding.ASCII.GetString(tokenByte);
-                string Id = HttpContext.Session.GetString("Id");
+                
 
                 if (!String.IsNullOrEmpty(token))
                 {
@@ -58,7 +59,34 @@ namespace SNACKIS___Webb.Pages.User
         }
         public async Task<IActionResult> OnPostAsync() 
         {
-            return Page();
+
+            byte[] tokenByte;
+
+            HttpContext.Session.TryGetValue(ToolBox.TokenName, out tokenByte);
+            if (tokenByte != null)
+            {
+                string token = Encoding.ASCII.GetString(tokenByte);
+
+
+                if (!String.IsNullOrEmpty(token))
+                {
+                    _client.DefaultRequestHeaders.Accept.Clear();
+                    _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
+
+                    var response = await _client.PostAsJsonAsync(_configuration["GetMessagesByUser"],NewMessage);
+
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        return RedirectToPage("/chatt");
+                    }
+                    else
+                    {
+                        return RedirectToPage("/Error");
+                    }
+                }
+
+                return Page();
+            }
         }
     }
 }
