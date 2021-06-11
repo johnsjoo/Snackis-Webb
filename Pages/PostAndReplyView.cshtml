@@ -56,41 +56,45 @@
                     <h3>Tråd: @Model.ClickedPost.Title</h3>
                     <div class="card mb-2" style="outline : 3px solid lightblue">
                         <div class="card-body p-2 p-sm-3">
-                            <strong>@Model.ClickedPost.User.userName</strong>
-                            <div>
-                                <p></p>
-                            </div>
-                            <div class="media forum-item">
-                                @if (Model.ClickedPost.User.Image == null)
-                                {
-                                    <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-circle" width="50" alt="User" /></a>
-                                }
-                                else
-                                {
-                                    <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="/img/@Model.ClickedPost.User.Image" class="mr-3 rounded-circle" width="50" alt="User" /></a>
-                                }
-
-                                <div class="media-body">
-
-                                    <p class="text-secondary">
-                                        <strong>@Model.ClickedPost.Title</strong><br />
-                                        @Model.ClickedPost.Content
-
-                                    </p>
-                                    <small>@Model.ClickedPost.Date</small>
+                            @if (Model.ClickedPost.User != null)
+                            {
+                                <strong>@Model.ClickedPost.User.userName</strong>
+                                <div>
+                                    <p></p>
                                 </div>
-                                @if (loggedIn)
-                                {
-                                    <div class="text-muted small text-center align-self-center">
-                                        <form method="Post">
-                                            <input class="btn btn-danger" type="submit" value="Anmäl" />
-                                        </form>
+                                <div class="media forum-item">
+                                    @if (Model.ClickedPost.User.Image == null)
+                                    {
+                                        <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-circle" width="50" alt="User" /></a>
+                                    }
+                                    else
+                                    {
+                                        <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="/img/@Model.ClickedPost.User.Image" class="mr-3 rounded-circle" width="50" alt="User" /></a>
+                                    }
 
+                                    <div class="media-body">
+
+                                        <p class="text-secondary">
+                                            <strong>@Model.ClickedPost.Title</strong><br />
+                                            @Model.ClickedPost.Content
+
+                                        </p>
+                                        <small>@Model.ClickedPost.Date</small>
                                     </div>
-                                }
+                                    @if (loggedIn)
+                                    {
+                                        <div class="text-muted small text-center align-self-center">
+                                            <form method="Post">
+                                                <input class="btn btn-danger" type="submit" value="Anmäl" />
+                                            </form>
+
+                                        </div>
+                                    }
 
 
-                            </div>
+                                </div>
+                            }
+
 
 
                         </div>
@@ -122,19 +126,12 @@
                                             </p>
                                             <small>@item.Date</small>
                                         </div>
-                                        <div class="text-muted small text-center align-self-center">
-                                            <span class="d-none d-sm-inline-block"><i class="far fa-eye"></i> 70</span>
-                                            <span><i class="far fa-comment ml-2"></i> 3</span>
-                                        </div>
                                     </div>
                                 </div>
                                 @if (loggedIn)
                                 {
-                                    <form method="post">
-                                        <input class="btn btn-danger" type="submit" value="Anmäl" />
-                                    </form>
-                                    <form method="post">
-                                        <input class="btn btn-info" type="submit" value="Svara" />
+                                    <form asp-page-handler="ReportDiscussion" >
+                                        <input asp-for="DiscussionPostId" class="btn btn-danger" type="submit" value="@item.Id" />
                                     </form>
                                 }
                             </div>

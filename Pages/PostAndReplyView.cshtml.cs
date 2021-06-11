@@ -28,8 +28,12 @@ namespace SNACKIS___Webb.Pages
 
         [BindProperty(SupportsGet = true)]
         public string PostId { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string DiscussionPostId { get; set; }
 
         [BindProperty(SupportsGet =true)]
+        public PostDiscussion ClickedPostDiscussion { get; set; }
+        [BindProperty(SupportsGet = true)]
         public Post ClickedPost { get; set; }
 
         [BindProperty]
@@ -104,6 +108,35 @@ namespace SNACKIS___Webb.Pages
             }
             return Page();
                 
+        }
+        public async Task<IActionResult> OnPostReportDiscussion(string id)
+        {
+            id = DiscussionPostId;
+            byte[] tokenByte;
+            HttpContext.Session.TryGetValue(ToolBox.TokenName, out tokenByte);
+            string token = Encoding.ASCII.GetString(tokenByte);
+
+
+            if (!String.IsNullOrEmpty(token))
+            {
+                _client.DefaultRequestHeaders.Accept.Clear();
+                _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
+
+                var response = await _client.PutAsJsonAsync(_configuration["reportPostDiscussion"] + id, ClickedPostDiscussion);
+                string apiResponse = await response.Content.ReadAsStringAsync();
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    IActionResult resultPage = await OnGetAsync();
+                    return resultPage;
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            return Page();
+
         }
         public async Task<IActionResult> OnPostCreateDiscussion(string id) 
         {
