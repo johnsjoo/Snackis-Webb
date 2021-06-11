@@ -28,18 +28,21 @@ namespace SNACKIS___Webb.Pages
 
         [BindProperty(SupportsGet = true)]
         public string PostId { get; set; }
+
         [BindProperty(SupportsGet = true)]
         public string DiscussionPostId { get; set; }
 
-        [BindProperty(SupportsGet =true)]
+        [BindProperty(SupportsGet = true)]
         public PostDiscussion ClickedPostDiscussion { get; set; }
+
         [BindProperty(SupportsGet = true)]
         public Post ClickedPost { get; set; }
 
         [BindProperty]
         public PostDiscussion NewDiscussion { get; set; }
 
-        public List<Category> Categories;
+        [BindProperty]
+        public List<Category> Categories{ get; set; }
 
         public UserLoginResponseModel User { get; set; }
 
@@ -57,7 +60,7 @@ namespace SNACKIS___Webb.Pages
                 {
                     _client.DefaultRequestHeaders.Accept.Clear();
                     _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
-
+                    
                     var response = await _client.GetAsync(_configuration["GetLoggedInUser"] + "/" + Id);
                     string apiResponse = await response.Content.ReadAsStringAsync();
 
@@ -100,6 +103,7 @@ namespace SNACKIS___Webb.Pages
                 {
                     IActionResult resultPage = await OnGetAsync();
                     return resultPage;
+                    
                 }
                 else
                 {
@@ -109,9 +113,10 @@ namespace SNACKIS___Webb.Pages
             return Page();
                 
         }
-        public async Task<IActionResult> OnPostReportDiscussion(string id)
+        public async Task<IActionResult> OnPostReportDiscussion(string id, string postId)
         {
             id = DiscussionPostId;
+            postId = PostId;
             byte[] tokenByte;
             HttpContext.Session.TryGetValue(ToolBox.TokenName, out tokenByte);
             string token = Encoding.ASCII.GetString(tokenByte);
@@ -129,6 +134,7 @@ namespace SNACKIS___Webb.Pages
                 {
                     IActionResult resultPage = await OnGetAsync();
                     return resultPage;
+                    //return Page();
                 }
                 else
                 {
