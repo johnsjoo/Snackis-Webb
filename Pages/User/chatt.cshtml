@@ -55,53 +55,60 @@
 
                 <div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
                     <!--Foreach-->
-                    
-
-                    @foreach (var item in Model.Messages.Where(x => x.MessageReceiver == Model.UserId || Model.UserId == x.UserId).OrderBy(x => x.Date))
+                    @if (!string.IsNullOrEmpty(Model.UserId))
                     {
+                        @foreach (var item in Model.Messages.Where(x => x.MessageReceiver == Model.UserId || Model.UserId == x.UserId).OrderBy(x => x.Date))
+                        {
 
 
-                        <div class="card mb-2">
-                            <div class="card-body p-2 p-sm-3">
-                                <p>@item.User.userName<small>@item.Date</small></p>
+                            <div class="card mb-2">
+                                <div class="card-body p-2 p-sm-3">
+                                    <p>@item.User.userName<small>@item.Date</small></p>
 
-                                <div class="media forum-item">
-                                    @if (item.User.Image == null)
-                                    {
-                                        <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-circle" width="50" alt="User" /></a>
-                                    }
-                                    else
-                                    {
-                                        <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="/img/@item.User.Image" class="mr-3 rounded-circle" width="50" alt="User" /></a>
-                                    }
-                                    <div class="media-body">
-                                        <p class="text-secondary">
-                                            @item.Message
-                                        </p>
+                                    <div class="media forum-item">
+                                        @if (item.User.Image == null)
+                                        {
+                                            <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-circle" width="50" alt="User" /></a>
+                                        }
+                                        else
+                                        {
+                                            <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="/img/@item.User.Image" class="mr-3 rounded-circle" width="50" alt="User" /></a>
+                                        }
+                                        <div class="media-body">
+                                            <p class="text-secondary">
+                                                @item.Message
+                                            </p>
+                                        </div>
+
                                     </div>
-
                                 </div>
                             </div>
-                        </div>
+                        }
+
+
 
 
                     }
 
-                   
-                <form asp-page-handler="Post">
-                    <div class="form-group" style="visibility: hidden">
-                        <input asp-for="NewMessage.UserId" class="form-control" value="@ToolBox.LoggedInUserID" />
-                    </div>
-                    <div class="form-group" style="visibility: hidden">
-                        <input asp-for="NewMessage.MessageReceiver" class="form-control" value="@Model.UserId" />
-                    </div>
-                    <div class="form-group">
-                        <label for="">Skriv ditt svar här</label>
-                        <textarea class="form-control"  asp-for="NewMessage.Message" id="exampleFormControlTextarea1" rows="3"></textarea>
-                       
-                    </div>
-                    <input class="btn btn-info" type="submit" value="Svara" />
-                </form>
+                    @if (!string.IsNullOrEmpty(Model.UserId))
+                    {
+                        <form asp-page-handler="Post">
+                            <div class="form-group" style="visibility: hidden">
+                                <input asp-for="NewMessage.UserId" class="form-control" value="@ToolBox.LoggedInUserID" />
+                            </div>
+                            <div class="form-group" style="visibility: hidden">
+                                <input asp-for="NewMessage.MessageReceiver" class="form-control" value="@Model.UserId" />
+                            </div>
+                            <div class="form-group">
+                                <label for="">Skriv ditt svar här</label>
+                                <textarea class="form-control" asp-for="NewMessage.Message" id="exampleFormControlTextarea1" rows="3"></textarea>
+
+                            </div>
+                            <input class="btn btn-info" type="submit" value="Svara" />
+                        </form>
+
+                    }
+
                 </div>
 
 
