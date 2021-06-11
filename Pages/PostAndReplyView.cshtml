@@ -56,12 +56,9 @@
                     <h3>Tråd: @Model.ClickedPost.Title</h3>
                     <div class="card mb-2" style="outline : 3px solid lightblue">
                         <div class="card-body p-2 p-sm-3">
-                            @if (Model.ClickedPost.User != null)
-                            {
+                            
                                 <strong>@Model.ClickedPost.User.userName</strong>
-                                <div>
-                                    <p></p>
-                                </div>
+                                
                                 <div class="media forum-item">
                                     @if (Model.ClickedPost.User.Image == null)
                                     {
@@ -85,18 +82,11 @@
                                     {
                                         <div class="text-muted small text-center align-self-center">
                                             <form method="Post">
-                                                <input class="btn btn-danger" type="submit" value="Anmäl" />
+                                                <input class="btn btn-danger btn-sm" type="submit" value="Anmäl" />
                                             </form>
-
                                         </div>
                                     }
-
-
                                 </div>
-                            }
-
-
-
                         </div>
 
                     </div>
@@ -107,9 +97,6 @@
                             <div class="card mb-2">
                                 <div class="card-body p-2 p-sm-3">
                                     <strong>@item.User.userName</strong>
-                                    <div>
-                                        <p></p>
-                                    </div>
                                     <div class="media forum-item">
                                         @if (item.User.Image == null)
                                         {
@@ -126,14 +113,21 @@
                                             </p>
                                             <small>@item.Date</small>
                                         </div>
+                                            @if (loggedIn)
+                                            {
+                                                <div class="text-center align-self-center">    
+                                                    <form class="report-btn" asp-page-handler="ReportDiscussion">
+                                                        <div style="visibility : hidden">
+                                                                <input asp-for="PostId" value="@Model.PostId" />
+                                                                <input asp-for="DiscussionPostId" class="btn btn-danger" value="@item.Id" />
+                                                        </div>
+                                                        <input class="btn btn-danger btn-sm" type="submit" value="Anmäl" /> 
+                                                    </form>
+                                                            
+                                                </div>
+                                            }
                                     </div>
                                 </div>
-                                @if (loggedIn)
-                                {
-                                    <form asp-page-handler="ReportDiscussion" >
-                                        <input asp-for="DiscussionPostId" class="btn btn-danger" type="submit" value="@item.Id" />
-                                    </form>
-                                }
                             </div>
                         }
                     }
