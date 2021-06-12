@@ -28,6 +28,9 @@ namespace SNACKIS___Webb.Pages.User
         [BindProperty(SupportsGet =true)]
         public List<PrivateMessage> Messages { get; set; }
 
+        [BindProperty]
+        public List<Models.User> MessageUsers { get; set; }
+
         public chattModel(HttpClient client, IConfiguration configuration)
         {
             _client = client;
@@ -52,6 +55,13 @@ namespace SNACKIS___Webb.Pages.User
                     var response = await _client.GetAsync(_configuration["GetMessagesByUser"]);
                     var apiResponse = await response.Content.ReadAsStringAsync();
                     Messages = Newtonsoft.Json.JsonConvert.DeserializeObject<List<PrivateMessage>>(apiResponse);
+
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        var userResponse = await _client.GetAsync(_configuration["GetMessageUsers"]);
+                        var userApiResponse = await userResponse.Content.ReadAsStringAsync();
+                        MessageUsers = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Models.User>>(userApiResponse);
+                    }
                 }
 
             }

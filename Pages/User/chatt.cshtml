@@ -28,12 +28,9 @@
 
                                                 <a asp-page="NewMessage" class="btn btn-success">Nytt Meddelande</a><br />
 
-                                                @foreach (var item in Model.Messages)
+                                                @foreach (var item in Model.MessageUsers)
                                                 {
-                                                    @if (item.UserId != ToolBox.LoggedInUserID)
-                                                    {
-                                                        <a asp-route-UserId="@item.User.id" class="btn btn-info">@item.User.userName</a><br />
-                                                    }
+                                                    <a asp-route-UserId="@item.id" class="btn btn-info">@item.userName</a><br />
 
                                                 }
 
