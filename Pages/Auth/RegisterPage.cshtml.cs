@@ -20,12 +20,13 @@ namespace SNACKIS___Webb.Pages.Auth
         
         private readonly HttpClient _client;
         private readonly IAuthGateway _authGateway;
-        
+      
 
         public RegisterPageModel(IAuthGateway ag, HttpClient client)
         {
             _authGateway = ag;
             _client = client;
+            
             
             
         }
@@ -43,25 +44,19 @@ namespace SNACKIS___Webb.Pages.Auth
 
         public async Task<IActionResult> OnPostAsync()
         {
-            
-
             //Behöver Depency injection refactory
             if (UploadFile != null)
             {
                 var file = "./wwwroot/img/" + UploadFile.FileName;
 
-                using (var fileStream = new FileStream(file, FileMode.Create))
+                using (var filestream = new FileStream(file, FileMode.Create))
                 {
                     NewUser.Image = UploadFile.FileName;
-                    await UploadFile.CopyToAsync(fileStream);
+                    await UploadFile.CopyToAsync(filestream);
                 }
             }
             await _authGateway.RegisterNewUser(NewUser);
-
-            return RedirectToPage("/Index");
-            
+            return RedirectToPage("/Index");  
         }
-
-        
     }
 }

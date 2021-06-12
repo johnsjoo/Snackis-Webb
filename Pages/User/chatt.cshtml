@@ -28,9 +28,9 @@
 
                                                 <a asp-page="NewMessage" class="btn btn-success">Nytt Meddelande</a><br />
 
-                                                @foreach (var item in Model.Messages.GroupBy(x => x.User.userName).Select(h => h.First()).ToList())
+                                                @foreach (var item in Model.Messages)
                                                 {
-                                                    @if (item.User.id != ToolBox.LoggedInUserID)
+                                                    @if (item.UserId != ToolBox.LoggedInUserID)
                                                     {
                                                         <a asp-route-UserId="@item.User.id" class="btn btn-info">@item.User.userName</a><br />
                                                     }
