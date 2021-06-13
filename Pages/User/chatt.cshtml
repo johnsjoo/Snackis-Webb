@@ -28,12 +28,9 @@
 
                                                 <a asp-page="NewMessage" class="btn btn-success">Nytt Meddelande</a><br />
 
-                                                @foreach (var item in Model.Messages)
+                                                @foreach (var item in Model.MessageUsers)
                                                 {
-                                                    @if (item.UserId != ToolBox.LoggedInUserID)
-                                                    {
-                                                        <a asp-route-UserId="@item.User.id" class="btn btn-info">@item.User.userName</a><br />
-                                                    }
+                                                    <a asp-route-UserId="@item.id" class="btn btn-info">@item.userName</a><br />
 
                                                 }
 
@@ -85,37 +82,29 @@
                             </div>
                         }
 
-
-
-
                     }
 
                     @if (!string.IsNullOrEmpty(Model.UserId))
                     {
-                        <form asp-page-handler="Post">
-                            <div class="form-group" style="visibility: hidden">
-                                <input asp-for="NewMessage.UserId" class="form-control" value="@ToolBox.LoggedInUserID" />
-                            </div>
-                            <div class="form-group" style="visibility: hidden">
-                                <input asp-for="NewMessage.MessageReceiver" class="form-control" value="@Model.UserId" />
-                            </div>
-                            <div class="form-group">
-                                <label for="">Skriv ditt svar här</label>
-                                <textarea class="form-control" asp-for="NewMessage.Message" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <form asp-page-handler="Post">
+                    <div class="form-group" style="visibility: hidden">
+                        <input asp-for="NewMessage.UserId" class="form-control" value="@ToolBox.LoggedInUserID" />
+                    </div>
+                    <div class="form-group" style="visibility: hidden">
+                        <input asp-for="NewMessage.MessageReceiver" class="form-control" value="@Model.UserId" />
+                    </div>
+                    <div class="form-group">
+                        <label for="">Skriv ditt svar här</label>
+                        <textarea class="form-control" asp-for="NewMessage.Message" id="exampleFormControlTextarea1" rows="3">
+                                        </textarea>
+                    </div>
+                    <input class="btn btn-info" type="submit" value="Svara" />
+                       
+                </form>
 
-                            </div>
-                            <input class="btn btn-info" type="submit" value="Svara" />
-                        </form>
-
-                    }
-
+                     }
                 </div>
-
-
-                <!-- /Forum Detail -->
-                <!-- /Inner main body -->
             </div>
-            <!-- /Inner main -->
         </div>
     </div>
 </div>
