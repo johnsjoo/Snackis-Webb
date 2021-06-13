@@ -102,6 +102,8 @@ namespace SNACKIS___Webb.Pages.User
                        
                         IActionResult resultPage = await OnGetAsync();
                         ModelState.Clear();
+                        NewMessage.Message = null;
+                         
                         return Page();
                     }
                     else
