@@ -1,5 +1,4 @@
 ﻿body {
-    margin-top: 20px;
     color: #1a202c;
     text-align: left;
     background-color: #e2e8f0;
@@ -55,4 +54,21 @@
 
 .shadow-none {
     box-shadow: none !important;
+}
+@media (max-width: 767.98px) {
+    .inner-sidebar {
+        left: -135px;
+    }
+
+    .inner-main {
+        left: 0;
+    }
+
+    .inner-expand .main-body {
+        overflow: hidden;
+    }
+
+    .inner-expand .inner-wrapper {
+        transform: translate3d(135px, 0, 0);
+    }
 }
