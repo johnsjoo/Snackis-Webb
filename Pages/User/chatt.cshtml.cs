@@ -22,6 +22,7 @@ namespace SNACKIS___Webb.Pages.User
 
         [BindProperty(SupportsGet =true)]
         public string UserId { get; set; }
+
         [BindProperty(SupportsGet =true)]
         public PrivateMessage NewMessage { get; set; }
 
@@ -39,8 +40,9 @@ namespace SNACKIS___Webb.Pages.User
 
         public async Task<IActionResult> OnGetAsync()
         {
+        
             byte[] tokenByte;
-
+            
             HttpContext.Session.TryGetValue(ToolBox.TokenName, out tokenByte);
             if (tokenByte != null)
             {
@@ -55,17 +57,26 @@ namespace SNACKIS___Webb.Pages.User
                     var response = await _client.GetAsync(_configuration["GetMessagesByUser"]);
                     var apiResponse = await response.Content.ReadAsStringAsync();
                     Messages = Newtonsoft.Json.JsonConvert.DeserializeObject<List<PrivateMessage>>(apiResponse);
-
+                    
+                    
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {
+                       
                         var userResponse = await _client.GetAsync(_configuration["GetMessageUsers"]);
                         var userApiResponse = await userResponse.Content.ReadAsStringAsync();
                         MessageUsers = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Models.User>>(userApiResponse);
+                        
+                    }
+                    if (UserId == null)
+                    {
+                        UserId = NewMessage.MessageReceiver;
+                        
+                        return Page();
                     }
                 }
 
             }
-
+            
             return Page();
         }
         public async Task<IActionResult> OnPostAsync() 
@@ -85,12 +96,13 @@ namespace SNACKIS___Webb.Pages.User
                     _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
 
                     var response = await _client.PostAsJsonAsync(_configuration["CreateMessage"], NewMessage);
-
+                    
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {
+                       
                         IActionResult resultPage = await OnGetAsync();
-                        return resultPage;
-
+                        ModelState.Clear();
+                        return Page();
                     }
                     else
                     {
