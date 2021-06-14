@@ -42,8 +42,38 @@
                                     <input asp-for="UploadFile" class="form-control border-0 bg-light" type="file" />
                                     <span asp-validation-for="UploadFile" class="text-danger"></span>
                                 </div>
-                                <div class="text-center mt-3">
-                                    <input type="submit" value="Registrera" class="btn btn-primary" />
+
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" id="switch1" class="custom-control-input" name="c1" onclick="showMe('div1')">
+                                    <label class="custom-control-label" for="switch1">Du godkänner härmed behandlingen av dina personuppgifter.</label>
+                                </div>
+
+                                <script>
+                                    window.onload = function () {
+                                        document.getElementById("div1").style.display = 'none';
+
+                                    }
+
+                                    function showMe(box) {
+                                        var chboxs = document.getElementsByName("c1");
+                                        var vis = "none";
+
+                                        for (var i = 0; i < chboxs.length; i++) {
+                                            if (chboxs[i].checked) {
+                                                vis = "block";
+                                                break;
+                                            }
+                                        }
+                                        document.getElementById(box).style.display = vis;
+                                    }
+                                </script>
+
+
+
+                                <div id="div1">
+                                    <div class="text-center mt-3">
+                                        <input type="submit" value="Registrera" class="btn btn-primary" />
+                                    </div>
                                 </div>
                             </form>
 
