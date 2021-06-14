@@ -51,6 +51,13 @@ namespace SNACKIS___Webb.Gateway
             var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<Post>(apiResponse);
             return obj;
         }
+        public async Task<PostDiscussion> GetDiscussionById(string discussionId)
+        {
+            var response = await _httpClient.GetAsync(_configuration["DiscussionById"] + "/" + discussionId);
+            string apiResponse = await response.Content.ReadAsStringAsync();
+            var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<PostDiscussion>(apiResponse);
+            return obj;
+        }
 
         public async Task<HttpResponseMessage> CreateNewPost(Post post)
         {

@@ -2,7 +2,11 @@
 @model SNACKIS___Webb.Pages.Admin.ReportedPostsModel
 @{
 }
-<h2>Alla anmälda poster: (@Model.Posts.Count)</h2>
+
+<head>
+    <link rel="stylesheet" href="~/css/AdminStyleSheet.css" />
+</head>
+<h2>Alla anmälda poster: (@Model.PostCounter)</h2>
 <table class="table">
     <thead>
         <tr>
@@ -10,7 +14,7 @@
                 User Name
             </th>
             <th>
-                Title
+                Title/
             </th>
             <th>
                 Content
@@ -39,13 +43,44 @@
                 </td>
 
                 <td>
-                    <form method="post">
-                        <input  id="toggle" asp-for="@Model.postId"  style="visibility : hidden"value="@item.Id" />
+                    <form method="post" class="report-btn">
+                        <input id="toggle" asp-for="@Model.postId" style="visibility : hidden" value="@item.Id" />
                         <button class="btn btn-info btn-sm" type="submit">Toggla</button>
                     </form>
                 </td>
                 <td>
-                    <a asp-page="Delete" asp-route-DeletedId="@item.Id"  class="btn btn-danger">Radera</a>
+                    <a asp-page="Delete" asp-route-DeletedId="@item.Id" class="btn btn-danger">Radera</a>
+                </td>
+            </tr>
+        }
+        @foreach (var item in Model.ReportedPostDiscussions)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.userName)
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.)*@
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Discussion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+
+                <td>
+                    <div class="text-center align-self-center">
+                        <form class="report-btn" asp-page-handler="ReportDiscussion">
+                            <div style="visibility : hidden">
+                                <input asp-for="DiscussionId"  value="@item.Id" />
+                            </div>
+                            <input class="btn btn-info btn-sm" type="submit" value="Toogla" />
+                        </form>
+                    </div>
+                </td>
+                <td>
+                    <a asp-page="DeletePostDiscussionView" asp-route-DeletedDiscussionId="@item.Id" class="btn btn-danger">Radera</a>
                 </td>
             </tr>
         }

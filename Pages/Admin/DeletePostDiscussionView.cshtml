@@ -1,0 +1,47 @@
+﻿@page
+@model SNACKIS___Webb.Pages.Admin.DeletePostDiscussionViewModel
+@{
+}
+
+
+<h1>Vill du verkligen radera posten?</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Post-Id
+            </th>
+            <th>
+                Användare
+            </th>
+            <th>
+                Text
+            </th>
+        </tr>
+
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Model.DeletedPostDiscussion.Id
+            </td>
+            <td>
+                @Model.DeletedPostDiscussion.User.userName
+            </td>
+            <td>
+                @Model.DeletedPostDiscussion.Discussion
+            </td>
+            <td>
+                <form method="post">
+                    <input asp-for="DeletedDiscussionId" style="visibility : hidden" value="@Model.DeletedPostDiscussion.Id" />
+                    <button class="btn btn-danger btn-sm" type="submit">Radera</button>
+                </form>
+            </td>
+        </tr>
+
+
+    </tbody>
+</table>
+
+<a class="btn btn-info btn-sm" asp-page="Index">Tillbaka</a>
