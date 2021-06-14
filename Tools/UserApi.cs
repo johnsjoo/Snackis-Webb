@@ -8,13 +8,17 @@ namespace SNACKIS___Webb.Tools
 {
     public class UserApi
     {
-        
-       
+        private readonly HttpClient _client;
+
+
+        public UserApi(HttpClient client)
+        {
+            _client = client;
+        }
         public HttpClient Initial()
         {
-            HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:50249");
-            return client;
+            _client.BaseAddress = new Uri("http://localhost:50249");
+            return _client;
         }
     }
 }

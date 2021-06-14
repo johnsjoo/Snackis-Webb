@@ -6,84 +6,100 @@
 <head>
     <link rel="stylesheet" href="~/css/AdminStyleSheet.css" />
 </head>
-<h2>Alla anmälda poster: (@Model.PostCounter)</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                User Name
-            </th>
-            <th>
-                Title/
-            </th>
-            <th>
-                Content
-            </th>
-            <th>
-                Date
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Posts)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.User.userName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Content)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Date)
-                </td>
 
-                <td>
-                    <form method="post" class="report-btn">
-                        <input id="toggle" asp-for="@Model.postId" style="visibility : hidden" value="@item.Id" />
-                        <button class="btn btn-info btn-sm" type="submit">Toggla</button>
-                    </form>
-                </td>
-                <td>
-                    <a asp-page="Delete" asp-route-DeletedId="@item.Id" class="btn btn-danger">Radera</a>
-                </td>
-            </tr>
-        }
-        @foreach (var item in Model.ReportedPostDiscussions)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.User.userName)
-                </td>
-                <td>
-                    @*@Html.DisplayFor(modelItem => item.)*@
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Discussion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Date)
-                </td>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6">
+            <h2>Alla anmälda poster: (@Model.PostCounter)</h2>
+        </div>
+    </div>
+    
+    <table class="table">
 
-                <td>
-                    <div class="text-center align-self-center">
-                        <form class="report-btn" asp-page-handler="ReportDiscussion">
-                            <div style="visibility : hidden">
-                                <input asp-for="DiscussionId"  value="@item.Id" />
-                            </div>
-                            <input class="btn btn-info btn-sm" type="submit" value="Toogla" />
-                        </form>
-                    </div>
-                </td>
-                <td>
-                    <a asp-page="DeletePostDiscussionView" asp-route-DeletedDiscussionId="@item.Id" class="btn btn-danger">Radera</a>
-                </td>
+        <thead>
+            <tr>
+                <th>
+                    User Name
+                </th>
+                <th>
+                    Title/
+                </th>
+                <th>
+                    Content
+                </th>
+                <th>
+                    Date
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
-<a class="btn btn-info btn-sm" asp-page="Index" >Tillbaka</a>
+
+        </thead>
+        
+
+        <tbody>
+            @foreach (var item in Model.Posts)
+            {
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User.userName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Content)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+
+                    <td>
+                        <div class="text-center align-self-center">
+                            <form method="post">
+                                <input id="toggle" asp-for="@Model.postId" style="visibility : hidden" value="@item.Id" />
+                                <button class="btn btn-info btn-sm" style="margin-bottom: 5px" type="submit">Toggla</button>
+                            </form>
+                        </div>
+                        <div class="text-center align-self-center">
+                            <a asp-page="Delete" asp-route-DeletedId="@item.Id" style="margin-bottom: 5px" class="btn btn-danger btn-sm">Radera</a>
+                        </div>
+                    </td>
+                    
+                </tr>
+            }
+            @foreach (var item in Model.ReportedPostDiscussions)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User.userName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User.userName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Discussion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+
+                    <td>
+                        <div class="text-center align-self-center">
+                            <form asp-page-handler="ReportDiscussion">
+                                <div style="visibility : hidden">
+                                    <input asp-for="DiscussionId" value="@item.Id" />
+                                </div>
+                                <input class="btn btn-info btn-sm"  style="margin-bottom: 5px" type="submit" value="Toogla" />
+                            </form>
+                        </div>
+                        <div class="text-center align-self-center">
+                            <a asp-page="DeletePostDiscussionView" asp-route-DeletedDiscussionId="@item.Id"  style="margin-bottom: 5px" class="btn btn-danger btn-sm">Radera</a>
+                        </div>
+                    </td>
+                    
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a class="btn btn-info btn-sm" asp-page="Index">Tillbaka</a>
+</div>
