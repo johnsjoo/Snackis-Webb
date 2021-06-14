@@ -44,7 +44,9 @@ namespace SNACKIS___Webb
             });
             services.Configure<CookiePolicyOptions>(options =>
             {
+               
                 options.CheckConsentNeeded = context => true;
+                
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
         }

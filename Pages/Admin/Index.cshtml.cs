@@ -21,6 +21,14 @@ namespace SNACKIS___Webb.Pages.Admin
         public string message { get; set; }
         [BindProperty]
         public List<Post> Posts { get; set; }
+
+
+        [BindProperty]
+        public int PostCounter { get; set; }
+
+        [BindProperty]
+        public List<PostDiscussion> ReportedPostDiscussions { get; set; }
+
         public IndexModel(HttpClient client, IConfiguration configuration)
         {
             _client = client;
@@ -48,6 +56,10 @@ namespace SNACKIS___Webb.Pages.Admin
                     Posts = JsonSerializer.Deserialize<List<Post>>(apiResponse);
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {
+                        var discussionResponse = await _client.GetAsync(_configuration["GetreportedDiscussions"]);
+                        string discussionApiResponse = await discussionResponse.Content.ReadAsStringAsync();
+                        ReportedPostDiscussions = JsonSerializer.Deserialize<List<PostDiscussion>>(discussionApiResponse);
+                        PostCounter = Posts.Count + ReportedPostDiscussions.Count;
                         return Page();
                     }
                     else
