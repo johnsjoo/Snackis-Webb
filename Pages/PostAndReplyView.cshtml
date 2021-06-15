@@ -1,23 +1,19 @@
 ﻿@page
 @model SNACKIS___Webb.Pages.PostAndReplyViewModel
 @{
-    bool loggedIn = Tools.TokenChecker.UserStatus;
+    @using Microsoft.AspNetCore.Http
+    @inject IHttpContextAccessor HttpContextAccessor
+    bool returnTokenValue = HttpContextAccessor.HttpContext.Session.GetString("Role") is not null;
 }
 
 <head>
     <link rel="stylesheet" href="~/css/IndexStyle.css">
 </head>
-
-@*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css" integrity="sha256-46r060N2LrChLLb5zowXQ72/iKKNiw/lAmygmHExk/o=" crossorigin="anonymous" />*@
 <div class="container">
-
     <div class="main-body p-0">
         <div class="inner-wrapper">
-            <!-- Inner sidebar -->
             <div class="inner-sidebar text-center">
                 <h3>Kategorier</h3>
-                <!-- /Inner sidebar header -->
-                <!-- Inner sidebar body -->
                 <div class="inner-sidebar-body p-0">
                     <div class="p-3 h-100" data-simplebar="init">
                         <div class="simplebar-wrapper" style="margin: -16px;">
@@ -27,15 +23,12 @@
                                     <div class="simplebar-content-wrapper" style="height: 100%; overflow: hidden scroll;">
                                         <div class="simplebar-content" style="padding: 16px;">
                                             <nav class="nav nav-pills nav-gap-y-1 flex-column">
-
-
                                                 @foreach (var cat in Model.Categories)
                                                 {
 
                                                     <a class="btn btn-info" asp-page="/PostsInCategoryPage" asp-route-CatId="@cat.Id">@cat.Title</a><br />
 
                                                 }
-
                                             </nav>
                                         </div>
                                     </div>
@@ -47,46 +40,43 @@
                         <div class="simplebar-track simplebar-vertical" style="visibility: visible;"><div class="simplebar-scrollbar" style="height: 151px; display: block; transform: translate3d(0px, 0px, 0px);"></div></div>
                     </div>
                 </div>
-
             </div>
-
             <div class="inner-main">
-
                 <div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
                     <h3>Tråd: @Model.ClickedPost.Title</h3>
                     <div class="card mb-2" style="outline : 3px solid lightblue">
                         <div class="card-body p-2 p-sm-3">
-                            
-                                <strong>@Model.ClickedPost.User.userName</strong>
-                                
-                                <div class="media forum-item">
-                                    @if (Model.ClickedPost.User.Image == null)
-                                    {
-                                        <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-circle" width="50" alt="User" /></a>
-                                    }
-                                    else
-                                    {
-                                        <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="/img/@Model.ClickedPost.User.Image" class="mr-3 rounded-circle" width="50" alt="User" /></a>
-                                    }
 
-                                    <div class="media-body">
+                            <strong>@Model.ClickedPost.User.userName</strong>
 
-                                        <p class="text-secondary">
-                                            <strong>@Model.ClickedPost.Title</strong><br />
-                                            @Model.ClickedPost.Content
+                            <div class="media forum-item">
+                                @if (Model.ClickedPost.User.Image == null)
+                                {
+                                    <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-circle" width="50" alt="User" /></a>
+                                }
+                                else
+                                {
+                                    <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="/img/@Model.ClickedPost.User.Image" class="mr-3 rounded-circle" width="50" alt="User" /></a>
+                                }
 
-                                        </p>
-                                        <small>@Model.ClickedPost.Date</small>
-                                    </div>
-                                    @if (loggedIn)
-                                    {
-                                        <div class="text-muted small text-center align-self-center">
-                                            <form method="Post">
-                                                <input class="btn btn-danger btn-sm" type="submit" value="Anmäl" />
-                                            </form>
-                                        </div>
-                                    }
+                                <div class="media-body">
+
+                                    <p class="text-secondary">
+                                        <strong>@Model.ClickedPost.Title</strong><br />
+                                        @Model.ClickedPost.Content
+
+                                    </p>
+                                    <small>@Model.ClickedPost.Date</small>
                                 </div>
+                                @if (returnTokenValue)
+                                {
+                                    <div class="text-muted small text-center align-self-center">
+                                        <form method="Post">
+                                            <input class="btn btn-danger btn-sm" type="submit" value="Anmäl" />
+                                        </form>
+                                    </div>
+                                }
+                            </div>
                         </div>
 
                     </div>
@@ -113,19 +103,19 @@
                                             </p>
                                             <small>@item.Date</small>
                                         </div>
-                                            @if (loggedIn)
-                                            {
-                                                <div class="text-center align-self-center">    
-                                                    <form class="report-btn" asp-page-handler="ReportDiscussion">
-                                                        <div style="visibility : hidden">
-                                                                <input asp-for="PostId" value="@Model.PostId" />
-                                                                <input asp-for="DiscussionPostId" class="btn btn-danger" value="@item.Id" />
-                                                        </div>
-                                                        <input class="btn btn-danger btn-sm" type="submit" value="Anmäl" /> 
-                                                    </form>
-                                                            
-                                                </div>
-                                            }
+                                        @if (returnTokenValue)
+                                        {
+                                            <div class="text-center align-self-center">
+                                                <form class="report-btn" asp-page-handler="ReportDiscussion">
+                                                    <div style="visibility : hidden">
+                                                        <input asp-for="PostId" value="@Model.PostId" />
+                                                        <input asp-for="DiscussionPostId" class="btn btn-danger" value="@item.Id" />
+                                                    </div>
+                                                    <input class="btn btn-danger btn-sm" type="submit" value="Anmäl" />
+                                                </form>
+
+                                            </div>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -135,7 +125,7 @@
                     {
                         <h3>Bli den första med att svara på den här tråden!</h3>
                     }
-                    @if (loggedIn)
+                    @if (returnTokenValue)
                     {
                         <form asp-page-handler="CreateDiscussion">
                             <div class="form-group" style="visibility: hidden">
@@ -156,7 +146,7 @@
 
                     <a class="btn btn-info" style="max-height : 100px ; max-width :200px ; align-content : center" href="/Index">Tillbaka</a>
                 </div>
-            </div> 
-         </div>
+            </div>
+        </div>
     </div>
 </div>

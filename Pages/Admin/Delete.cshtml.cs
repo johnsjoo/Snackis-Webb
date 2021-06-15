@@ -17,6 +17,7 @@ namespace SNACKIS___Webb.Pages.Admin
         private readonly IGateway _gateway;
         private readonly HttpClient _client;
         private readonly IConfiguration _configuration;
+        
 
         [BindProperty(SupportsGet =true)]
         public Post DeletedPost { get; set; }
@@ -61,30 +62,35 @@ namespace SNACKIS___Webb.Pages.Admin
         public async Task<IActionResult> OnPostAsync() 
         {
             
-            byte[] tokenByte;
-            HttpContext.Session.TryGetValue(ToolBox.TokenName, out tokenByte);
-            string token = Encoding.ASCII.GetString(tokenByte);
+            //byte[] tokenByte;
+            //HttpContext.Session.TryGetValue(ToolBox.TokenName, out tokenByte);
+            //string token = Encoding.ASCII.GetString(tokenByte);
 
-            if (!String.IsNullOrEmpty(token))
+            try
             {
-                try
-                {
-                    _client.DefaultRequestHeaders.Accept.Clear();
-                    _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
-                    //var response = await _gateway.DeletePostById(DeletedId);
-                    var response = await _client.DeleteAsync(_configuration["DeletePostById"] + "/" + DeletedId);
-                    string apiResponse = await response.Content.ReadAsStringAsync();
+                //_client.DefaultRequestHeaders.Accept.Clear();
+                //_client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
+                var response = await _gateway.DeletePostById(DeletedId, HttpContext);
+                //var response = await _client.DeleteAsync(_configuration["DeletePostById"] + "/" + DeletedId);
+                string apiResponse = await response.Content.ReadAsStringAsync();
 
-                    return RedirectToPage("ReportedPosts");
+                return RedirectToPage("ReportedPosts");
 
 
-                }
-                catch (Exception)
-                {
-
-                    return RedirectToPage("/Error");
-                }
             }
+            catch (Exception)
+            {
+
+                return RedirectToPage("/Error");
+            }
+
+
+
+
+            //if (!String.IsNullOrEmpty(token))
+            //{
+                
+            //}
             return Page();
         }
     }

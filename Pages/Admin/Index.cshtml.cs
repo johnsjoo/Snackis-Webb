@@ -18,7 +18,8 @@ namespace SNACKIS___Webb.Pages.Admin
     {
         private readonly HttpClient _client;
         private readonly IConfiguration _configuration;
-        public string message { get; set; }
+
+       
         [BindProperty]
         public List<Post> Posts { get; set; }
 
@@ -64,14 +65,14 @@ namespace SNACKIS___Webb.Pages.Admin
                     }
                     else
                     {
-                        return NotFound();
+                        return RedirectToPage("/Error");
                     }
 
                 }
                 catch (Exception)
                 {
-                    message = "Get fucked";
-                    return Page();
+                   
+                    return RedirectToPage("/Error");
                 }
 
 

@@ -14,11 +14,7 @@ namespace SNACKIS___Webb.Pages.User
 
         public IActionResult OnGet()
         {
-
-            ToolBox.ActiveRole = null;
-            TokenChecker.UserStatus = false;
             HttpContext.Session.Clear();
-
             return RedirectToPage("/index");
         }
     }

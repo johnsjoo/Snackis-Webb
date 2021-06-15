@@ -24,9 +24,7 @@ namespace SNACKIS___Webb.Pages.Auth
         [BindProperty]
         public string Password { get; set; }
         public string Message { get; set; }
-        //public string MessageMail { get; set; }
-        //public string StoredID { get; set; }
-        //public string SessionInfoToken { get; private set; }
+  
 
 
         public LoginPageModel(UserApi api)
@@ -60,7 +58,7 @@ namespace SNACKIS___Webb.Pages.Auth
 
             string request = response.Content.ReadAsStringAsync().Result;
 
-            if (request == "No user or password matched, try again.")
+            if (request == $"No user or password matched, try again.")
             {
                 Message = "Fel e-post/användarnamn eller lösenord, försök igen.";
                 return Page();
@@ -73,20 +71,20 @@ namespace SNACKIS___Webb.Pages.Auth
             else
             {
                 LoginResponseModel result = JsonConvert.DeserializeObject<LoginResponseModel>(request);
-                TokenChecker.UserName = userName;   
-                ToolBox.LoggedInUserID = result.UserID;
-                ToolBox.ActiveRole = result.Role;
+              
+      
 
                 byte[] tokenInByte = Encoding.ASCII.GetBytes(result.Token);
-
-                HttpContext.Session.Set(ToolBox.TokenName, tokenInByte);
+                
+                HttpContext.Session.Set("_Token", tokenInByte);
                 HttpContext.Session.SetString("Id", result.UserID);
-
+                HttpContext.Session.SetString("Role", result.Role);
+                HttpContext.Session.SetString("Username", UserName);
             }
-            if (response.IsSuccessStatusCode)
-                TokenChecker.UserStatus = true;
-            else
-                TokenChecker.UserStatus = false;
+            //if (response.IsSuccessStatusCode)
+            //    TokenChecker.UserStatus = true;
+            //else
+            //    TokenChecker.UserStatus = false;
 
             return RedirectToPage("/index");
         }
