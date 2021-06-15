@@ -1,7 +1,9 @@
 ﻿@page
 @model SNACKIS___Webb.Pages.PostsInCategoryPageModel
 @{
-    bool loggedIn = Tools.TokenChecker.UserStatus;
+    @using Microsoft.AspNetCore.Http
+    @inject IHttpContextAccessor HttpContextAccessor
+    bool returnTokenValue = HttpContextAccessor.HttpContext.Session.GetString("Role") is not null;
 }
 
 
@@ -50,7 +52,7 @@
             <!-- /Inner sidebar -->
             <!-- Inner main -->
             <div class="inner-main">
-            
+
                 <div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
                     @foreach (var item in Model.Posts)
                     {
@@ -84,15 +86,15 @@
                         </div>
 
                     }
-                    @if (loggedIn)
+                    @if (returnTokenValue)
                     {
                         <a asp-page="/NewPostView" asp-route-NewCatId="@Model.CatId" class="btn btn-info">Skapa ny tråd</a>
                     }
                     <a class="btn btn-info" style="max-height : 100px ; max-width :200px ; align-content : center" href="/Index">Tillbaka</a>
                 </div>
 
-                
-               
+
+
                 <!-- /Forum List -->
                 <!-- Forum Detail -->
                 <div class="inner-main-body p-2 p-sm-3 collapse forum-content">

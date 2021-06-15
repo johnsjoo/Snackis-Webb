@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using SNACKIS___Webb.Models;
 using SNACKIS___Webb.Services;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -65,10 +67,28 @@ namespace SNACKIS___Webb.Gateway
             // Post returnValue = await response.Content.ReadFromJsonAsync<Post>();
             return response;
         }
-        public async Task<HttpResponseMessage> DeletePostById(string PostId) 
+        public async Task<HttpResponseMessage> DeletePostById(string PostId,HttpContext context) 
         {
+            string token = GetSession(context);
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
             var response = await _httpClient.DeleteAsync(_configuration["DeletePostById"] + "/" + PostId);
             return response;
+        }
+        public string GetSession(HttpContext context)
+        {
+            try
+            {
+                byte[] tokenByte;
+                context.Session.TryGetValue("_Token", out tokenByte);
+                string token = Encoding.ASCII.GetString(tokenByte);
+                
+                return token;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
 

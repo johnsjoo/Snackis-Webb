@@ -1,4 +1,5 @@
-﻿using SNACKIS___Webb.Models;
+﻿using Microsoft.AspNetCore.Http;
+using SNACKIS___Webb.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +19,11 @@ namespace SNACKIS___Webb.Services
 
         Task<HttpResponseMessage> CreateNewPost(Post post);
 
-        Task<HttpResponseMessage> DeletePostById(string PostId);
+        Task<HttpResponseMessage> DeletePostById(string PostId, HttpContext context);
 
         Task<PostDiscussion> GetDiscussionById(string discussionId);
+
+        public string GetSession(HttpContext context);
 
     }
 }

@@ -20,32 +20,47 @@
                     
                 </div>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    @using SNACKIS___Webb.Tools
-
-                    @{bool returnTokenValue = TokenChecker.UserStatus;}
-                    @if (returnTokenValue == true)
+                    @*@using SNACKIS___Webb.Tools*@
+                    @using Microsoft.AspNetCore.Http
+                    @inject IHttpContextAccessor HttpContextAccessor
+                    @{bool returnTokenValue = HttpContextAccessor.HttpContext.Session.GetString("Role") is not null;}
+                    @{string roleNAme = HttpContextAccessor.HttpContext.Session.GetString("Role");}
+                    @if (returnTokenValue == false)
                     {
-                        @if (TokenChecker.UserName == "admin")
+                        <p class="welcome-par">Välkommen</p>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Meny
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Auth/LoginPage">Logga in</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Auth/RegisterPage">Registrera</a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        @if (HttpContextAccessor.HttpContext.Session.GetString("Role") == "root")
                         {
-                            <p>Välkommen @TokenChecker.UserName</p>
+                            <p class="welcome-par">Välkommen @HttpContextAccessor.HttpContext.Session.GetString("Username")</p>
                             <div class="dropdown">
                                 <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Meny
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" asp-page="/Admin/Index">Admin</a>
+                                    <a class="dropdown-item" asp-page="/User/chatt">Meddelanden</a>
                                     <a class="dropdown-item" type="button" href="/User/LogOut">Logga ut</a>
                                 </div>
                             </div>
-
                         }
-                        else
+                        else if (HttpContextAccessor.HttpContext.Session.GetString("Role") == "User")
                         {
 
 
-                            <p>Välkommen @TokenChecker.UserName</p>
+                           <p class="welcome-par">Välkommen  @HttpContextAccessor.HttpContext.Session.GetString("Username") </p>
                             <div class="dropdown">
-                                <button class="btn btn-outline-info dropdown-toggle minknapp" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <button class="btn btn-outline-info dropdown-toggle minknapp" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Meny
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -58,23 +73,11 @@
 
                         }
 
-
                     }
-                    else 
-                    { 
-
-                    <div class="dropdown" >
-                        <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Meny
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Auth/LoginPage">Logga in</a>
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Auth/RegisterPage">Registrera</a>
-                        </div>
-                    </div>
 
 
-                    }
+
+
 
 
 

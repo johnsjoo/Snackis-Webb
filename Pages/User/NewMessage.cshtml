@@ -1,6 +1,8 @@
 ﻿@page
 @model SNACKIS___Webb.Pages.User.NewMessageModel
 @{
+    @using Microsoft.AspNetCore.Http
+    @inject IHttpContextAccessor HttpContextAccessor
 }
 
 <head>
@@ -12,7 +14,7 @@
         Dropdown
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-        @foreach (var item in Model.Users.Where(x => x.id != ToolBox.LoggedInUserID))
+        @foreach (var item in Model.Users.Where(x => x.id != @HttpContextAccessor.HttpContext.Session.GetString("Id")))
         {
             <form method="get">
                 <div style="visibility :hidden">
@@ -29,13 +31,13 @@
 @if (!string.IsNullOrEmpty(Model.UserId))
 {
     <form asp-page-handler="Post">
-        <div class="card" >  
+        <div class="card">
             <div class="card-header">
                 Till: @Model.User.userName
             </div>
         </div>
         <div class="form-group" style="visibility: hidden">
-            <input asp-for="NewMessage.UserId" class="form-control" value="@ToolBox.LoggedInUserID" />
+            <input asp-for="NewMessage.UserId" class="form-control" value="@HttpContextAccessor.HttpContext.Session.GetString("Id")" />
         </div>
         <div class="form-group" style="visibility: hidden">
             <input asp-for="NewMessage.MessageReceiver" class="form-control" value="@Model.UserId" />
