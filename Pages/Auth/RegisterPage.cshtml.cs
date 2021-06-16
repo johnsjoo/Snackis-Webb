@@ -53,6 +53,7 @@ namespace SNACKIS___Webb.Pages.Auth
                 await UploadFile.CopyToAsync(filestream);
             }
             await _authGateway.RegisterNewUser(NewUser);
+
             return RedirectToPage("/Index");  
         }
     }

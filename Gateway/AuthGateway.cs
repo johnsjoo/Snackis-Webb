@@ -30,6 +30,7 @@ namespace SNACKIS___Webb.Gateway
         }
 
         public RegisterModel User { get; set; }
+        public string RegestrationMessage { get; set; }
 
         public async Task<User> GetLoggedInUser(string Id)
         {
@@ -44,6 +45,7 @@ namespace SNACKIS___Webb.Gateway
             var response = await _client.PostAsJsonAsync(_configuration["RegisterNewUser"], user);
             Models.RegisterModel returnValue = await response.Content.ReadFromJsonAsync<RegisterModel>();
             return returnValue;
+            
 
         }
 

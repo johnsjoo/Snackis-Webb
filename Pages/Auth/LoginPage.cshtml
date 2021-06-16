@@ -32,11 +32,11 @@
                             <form method="post">
                                 <div class="form-group">
                                     <label>Användarnamn</label>
-                                    <input asp-for="UserName" class="form-control form-control-lg" placeholder="Skriv ditt användernamn">
+                                    <input autocomplete="off" asp-for="UserName" class="form-control form-control-lg" placeholder="Skriv ditt användernamn">
                                 </div>
                                 <div class="form-group">
                                     <label>Lösenord</label>
-                                    <input asp-for="Password" type="password" class="form-control form-control-lg" placeholder="Skriv ditt lösenord">
+                                    <input autocomplete="off" asp-for="Password" type="password" class="form-control form-control-lg" placeholder="Skriv ditt lösenord">
                                     @if (!string.IsNullOrEmpty(Model.Message))
                                     {
                                         <p class="alert-danger">@Model.Message</p>

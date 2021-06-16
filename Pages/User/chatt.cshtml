@@ -26,7 +26,7 @@
             <div class="inner-wrapper">
                 <!-- Side menu, all messages -->
                 <div class="inner-sidebar text-center desktop-view">
-                    <h3>Meddelande:</h3>
+                    <h3>Chattar</h3>
                     <div class="inner-sidebar-body p-0">
                         <div class="p-3 h-100" data-simplebar="init">
                             <div class="simplebar-wrapper" style="margin: -16px;">
@@ -37,7 +37,7 @@
                                             <div class="simplebar-content" style="padding: 16px;">
                                                 <nav class="nav nav-pills nav-gap-y-1 flex-column">
 
-                                                    <a asp-page="NewMessage" class="btn btn-success">Nytt Meddelande</a><br />
+                                                    <a asp-page="NewMessage" class="btn btn-success"> Nytt Meddelande</a><br />
                                                     @if (Model.MessageUsers != null)
                                                     {
                                                         @foreach (var item in Model.MessageUsers)
@@ -115,7 +115,7 @@
                                     <textarea class="form-control" asp-for="NewMessage.Message" id="exampleFormControlTextarea1" rows="3">
                                         </textarea>
                                 </div>
-                                <input class="btn btn-info" type="submit" value="Svara" />
+                                <input class="btn btn-success" type="submit" value="Svara" />
 
                             </form>
 
