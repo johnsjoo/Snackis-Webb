@@ -55,7 +55,7 @@
                     <div class="card mb-2" style="outline : 3px solid lightblue">
                         <div class="card-body p-2 p-sm-3">
 
-                            <strong>@Model.ClickedPost.User.userName</strong>
+                            <p>@Model.ClickedPost.User.userName</p>
 
                             <div class="media forum-item">
                                 @if (Model.ClickedPost.User.Image == null)
@@ -94,7 +94,7 @@
                         {
                             <div class="card mb-2">
                                 <div class="card-body p-2 p-sm-3">
-                                    <strong>@item.User.userName</strong>
+                                    <p>@item.User.userName</p>
                                     <div class="media forum-item">
                                         @if (item.User.Image == null)
                                         {
@@ -104,13 +104,15 @@
                                         {
                                             <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="/img/@item.User.Image" class="mr-3 rounded-circle" width="50" alt="User" /></a>
                                         }
-                                        <div class="media-body">
+                                    <div class="media-body">
 
-                                            <p class="text-secondary">
-                                                @item.Discussion
-                                            </p>
+                                        <p class="text-secondary">
+                                            @item.Discussion
+                                        </p>
+                                        <div class=" text-muted">
                                             <small>@item.Date</small>
                                         </div>
+                                    </div>
                                         @if (returnTokenValue)
                                         {
                                             <div class="text-center align-self-center">
