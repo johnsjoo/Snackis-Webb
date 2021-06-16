@@ -19,9 +19,17 @@
 <div class="container">
     
     <div class="main-body p-0">
+        <nav class="nav nav-pills nav-justified mobile-view justify-content-center">
+            @foreach (var cat in Model.Categories)
+            {
+
+                <a class="btn btn-info" style="margin:2px;" asp-page="/PostsInCategoryPage" asp-route-CatId="@cat.Id">@cat.Title</a><br />
+
+            }
+        </nav>
         <div class="inner-wrapper">
             <!-- Inner sidebar -->
-            <div class="inner-sidebar text-center">
+            <div class="inner-sidebar text-center desktop-view">
                 <h3>Kategorier</h3>
                 <!-- /Inner sidebar header -->
                 <!-- Inner sidebar body -->
@@ -38,9 +46,9 @@
 
                                                 @foreach (var cat in Model.Categories)
                                                 {
-                                                    
-                                                    <a class="btn btn-info" asp-page="/PostsInCategoryPage" asp-route-CatId="@cat.Id" >@cat.Title</a><br />
-                                                    
+
+                                                    <a class="btn btn-info" asp-page="/PostsInCategoryPage" asp-route-CatId="@cat.Id">@cat.Title</a><br />
+
                                                 }
 
                                             </nav>
@@ -54,49 +62,75 @@
                         <div class="simplebar-track simplebar-vertical" style="visibility: visible;"><div class="simplebar-scrollbar" style="height: 151px; display: block; transform: translate3d(0px, 0px, 0px);"></div></div>
                     </div>
                 </div>
-              
+
             </div>
-           
+
             <div class="inner-main">
-              
+
                 <div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
                     @foreach (var item in Model.Posts)
                     {
-                        
-                        
-                            
-                            <div class="card mb-2">
-                                <div class="card-body p-2 p-sm-3">
-                                    <p>@item.User.userName<small>@item.Date</small></p>
-                                    
-                                    <div class="media forum-item">
-                                        @if (item.User.Image == null)
-                                        {
 
-                                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-circle" width="50" alt="User" />
-                                        }
-                                        else
-                                        {
-                                            <img src="/img/@item.User.Image" class="mr-3 rounded-circle" width="50" alt="User" />
-                                        }
 
-                                        <div class="media-body">
-                                            <h6>
-                                                <a asp-page="/PostAndReplyView" asp-route-PostId="@item.Id" class="forum-item-title">@item.Title</a><br />
-                                            </h6>
-                                            <p class="text-secondary">
-                                                @item.Content
-                                            </p>
-                                        </div>
+
+                        <div class="card mb-2">
+                            <div class="card-body p-2 p-sm-3">
+                                <p>@item.User.userName</p>
+
+                                <div class="media forum-item">
+                                    @if (item.User.Image == null)
+                                    {
+
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-circle" width="50" alt="User" />
+                                    }
+                                    else
+                                    {
+                                        <img src="/img/@item.User.Image" class="mr-3 rounded-circle" width="50" alt="User" />
+                                    }
+
+                                    <div class="media-body">
+                                        <h5 class="card-title">
+                                            <a asp-page="/PostAndReplyView" asp-route-PostId="@item.Id" class="forum-item-title">@item.Title</a><br />
+                                        </h5>
+                                        <p class="text-secondary">
+                                            @item.Content
+                                        </p>
                                     </div>
+                                    <div class=" text-muted">
+                                        <small>@item.Date</small>
+                                    </div>
+                                    
                                 </div>
                             </div>
-                      
+                        </div>
+                        @*<div class="card">
+                            <div class="card-header">
+                                @item.User.userName
+                            </div>
+                            <div class="card-body">
+                                @if (item.User.Image == null)
+                                {
+
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-circle" width="50" alt="User" />
+                                }
+                                else
+                                {
+                                    <img src="/img/@item.User.Image" class="mr-3 rounded-circle" width="50" alt="User" />
+                                }
+                                <blockquote class="blockquote mb-0">
+                                    <h5 class="card-title">
+                                        <a asp-page="/PostAndReplyView" asp-route-PostId="@item.Id" class="forum-item-title">@item.Title</a><br />
+                                    </h5><div class="card-footer text-muted">
+                                        @item.Date
+                                    </div>
+                                </blockquote>
+                            </div>
+                        </div>*@
 
                     }
                 </div>
-           
-                
+
+
                 <!-- /Forum Detail -->
                 <!-- /Inner main body -->
             </div>

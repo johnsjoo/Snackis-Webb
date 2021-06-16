@@ -11,8 +11,16 @@
 </head>
 <div class="container">
     <div class="main-body p-0">
+        <nav class="nav nav-pills nav-justified mobile-view justify-content-center">
+            @foreach (var cat in Model.Categories)
+            {
+
+                <a class="btn btn-info" style="margin:2px;" asp-page="/PostsInCategoryPage" asp-route-CatId="@cat.Id">@cat.Title</a><br />
+
+            }
+        </nav>
         <div class="inner-wrapper">
-            <div class="inner-sidebar text-center">
+            <div class="inner-sidebar text-center desktop-view">
                 <h3>Kategorier</h3>
                 <div class="inner-sidebar-body p-0">
                     <div class="p-3 h-100" data-simplebar="init">
@@ -47,7 +55,7 @@
                     <div class="card mb-2" style="outline : 3px solid lightblue">
                         <div class="card-body p-2 p-sm-3">
 
-                            <strong>@Model.ClickedPost.User.userName</strong>
+                            <p>@Model.ClickedPost.User.userName</p>
 
                             <div class="media forum-item">
                                 @if (Model.ClickedPost.User.Image == null)
@@ -86,7 +94,7 @@
                         {
                             <div class="card mb-2">
                                 <div class="card-body p-2 p-sm-3">
-                                    <strong>@item.User.userName</strong>
+                                    <p>@item.User.userName</p>
                                     <div class="media forum-item">
                                         @if (item.User.Image == null)
                                         {
@@ -96,13 +104,15 @@
                                         {
                                             <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="/img/@item.User.Image" class="mr-3 rounded-circle" width="50" alt="User" /></a>
                                         }
-                                        <div class="media-body">
+                                    <div class="media-body">
 
-                                            <p class="text-secondary">
-                                                @item.Discussion
-                                            </p>
+                                        <p class="text-secondary">
+                                            @item.Discussion
+                                        </p>
+                                        <div class=" text-muted">
                                             <small>@item.Date</small>
                                         </div>
+                                    </div>
                                         @if (returnTokenValue)
                                         {
                                             <div class="text-center align-self-center">

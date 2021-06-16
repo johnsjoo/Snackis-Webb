@@ -6,6 +6,8 @@
     <title>@ViewData["Title"] - Snackis</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -27,48 +29,62 @@
                     @{string roleNAme = HttpContextAccessor.HttpContext.Session.GetString("Role");}
                     @if (returnTokenValue == false)
                     {
-                        <p class="welcome-par">Välkommen</p>
-                        <div class="dropdown">
-                            <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Meny
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                        <ul class="nav justify-content-center">
+                            <li class="nav-item">
+                                <a class="nav-link disabled" asp-page="/Index"  aria-disabled="true">Välkommen</a>
+                            </li>
+                        </ul>
+
+
+                        <ul class="nav justify-content-end">
+                            <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Auth/LoginPage">Logga in</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Auth/RegisterPage">Registrera</a>
-                            </div>
-                        </div>
+                            </li>
+                        </ul>
                     }
                     else
                     {
                         @if (HttpContextAccessor.HttpContext.Session.GetString("Role") == "root")
                         {
-                            <p class="welcome-par">Välkommen @HttpContextAccessor.HttpContext.Session.GetString("Username")</p>
-                            <div class="dropdown">
-                                <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Meny
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <ul class="nav justify-content-center">
+                                <li class="nav-item">
+                                    <a class="nav-link disabled" asp-page="/Admin/Index" tabindex="-1" aria-disabled="true">Välkommen @HttpContextAccessor.HttpContext.Session.GetString("Username")</a>
+                                </li>
+                            </ul>
+                            <ul class="nav justify-content-end">
+                                <li class="nav-item">
                                     <a class="dropdown-item" asp-page="/Admin/Index">Admin</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="dropdown-item" asp-page="/User/chatt">Meddelanden</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="dropdown-item" type="button" href="/User/LogOut">Logga ut</a>
-                                </div>
-                            </div>
+                                </li>
+                            </ul>
                         }
                         else if (HttpContextAccessor.HttpContext.Session.GetString("Role") == "User")
                         {
-
-
-                           <p class="welcome-par">Välkommen  @HttpContextAccessor.HttpContext.Session.GetString("Username") </p>
-                            <div class="dropdown">
-                                <button class="btn btn-outline-info dropdown-toggle minknapp" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Meny
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <ul class="nav justify-content-center">
+                                <li class="nav-item">
+                                    <a class="nav-link disabled" asp-page="User/UserPage" tabindex="-1" aria-disabled="true">Välkommen  @HttpContextAccessor.HttpContext.Session.GetString("Username")</a>
+                                </li>
+                            </ul>
+                            <ul class="nav justify-content-end">
+                                <li class="nav-item">
                                     <a class="dropdown-item" asp-page="/User/UserPage">Min sida</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="dropdown-item" asp-page="/User/Chatt">Meddelanden</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="dropdown-item" type="button" href="/User/LogOut">Logga ut</a>
-                                </div>
-                            </div>
+                                </li>
+                            </ul>
 
 
                         }
