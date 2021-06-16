@@ -14,105 +14,114 @@
 <div class="container-fluid">
 
     <div class="main-body p-0">
-        <div class="inner-wrapper">
-            <!-- Side menu, all messages -->
-            <div class="inner-sidebar text-center">
-                <h3>Meddelande:</h3>
-                <div class="inner-sidebar-body p-0">
-                    <div class="p-3 h-100" data-simplebar="init">
-                        <div class="simplebar-wrapper" style="margin: -16px;">
-                            <div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div>
-                            <div class="simplebar-mask">
-                                <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
-                                    <div class="simplebar-content-wrapper" style="height: 100%;">
-                                        <div class="simplebar-content" style="padding: 16px;">
-                                            <nav class="nav nav-pills nav-gap-y-1 flex-column">
+        <nav class="nav nav-pills nav-justified mobile-view justify-content-center">
+            <a asp-page="NewMessage" style="margin-right:2px;" class="btn btn-success">Nytt Meddelande</a><br />
+            @foreach (var item in Model.MessageUsers)
+            {
 
-                                                <a asp-page="NewMessage" class="btn btn-success">Nytt Meddelande</a><br />
-                                             @if(Model.MessageUsers!=null)
-                                             {
-                                                @foreach (var item in Model.MessageUsers)
-                                                {
-                                                    <a asp-route-UserId="@item.id" class="btn btn-info">@item.userName</a><br />
-                                                }
-                                             }
-                                             else
-                                             {
-                                                <p>Inga meddelanden</p>
-                                             }
+                <a asp-route-UserId="@item.id" class="btn btn-info">@item.userName</a><br />
+
+            }
+        </nav>
+            <div class="inner-wrapper">
+                <!-- Side menu, all messages -->
+                <div class="inner-sidebar text-center desktop-view">
+                    <h3>Meddelande:</h3>
+                    <div class="inner-sidebar-body p-0">
+                        <div class="p-3 h-100" data-simplebar="init">
+                            <div class="simplebar-wrapper" style="margin: -16px;">
+                                <div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div>
+                                <div class="simplebar-mask">
+                                    <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                                        <div class="simplebar-content-wrapper" style="height: 100%;">
+                                            <div class="simplebar-content" style="padding: 16px;">
+                                                <nav class="nav nav-pills nav-gap-y-1 flex-column">
+
+                                                    <a asp-page="NewMessage" class="btn btn-success">Nytt Meddelande</a><br />
+                                                    @if (Model.MessageUsers != null)
+                                                    {
+                                                        @foreach (var item in Model.MessageUsers)
+                                                        {
+                                                            <a asp-route-UserId="@item.id" class="btn btn-info">@item.userName</a><br />
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <p>Inga meddelanden</p>
+                                                    }
 
 
-                                            </nav>
+                                                </nav>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="simplebar-placeholder" style="width: 234px; height: 292px;"></div>
                             </div>
-                            <div class="simplebar-placeholder" style="width: 234px; height: 292px;"></div>
+                            <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar" style="width: 0px; display: none;"></div></div>
+                            <div class="simplebar-track simplebar-vertical" style="visibility: visible;"><div class="simplebar-scrollbar" style="height: 151px; display: block; transform: translate3d(0px, 0px, 0px);"></div></div>
                         </div>
-                        <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar" style="width: 0px; display: none;"></div></div>
-                        <div class="simplebar-track simplebar-vertical" style="visibility: visible;"><div class="simplebar-scrollbar" style="height: 151px; display: block; transform: translate3d(0px, 0px, 0px);"></div></div>
                     </div>
+
                 </div>
 
-            </div>
+                <div class="inner-main">
 
-            <div class="inner-main">
-
-                <div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
-                    <!--Foreach-->
-                    @if (!string.IsNullOrEmpty(Model.UserId))
-                    {
-                        @foreach (var item in Model.Messages.Where(x => x.MessageReceiver == Model.UserId || Model.UserId == x.UserId).OrderBy(x => x.Date))
+                    <div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
+                        <!--Foreach-->
+                        @if (!string.IsNullOrEmpty(Model.UserId))
                         {
+                            @foreach (var item in Model.Messages.Where(x => x.MessageReceiver == Model.UserId || Model.UserId == x.UserId).OrderBy(x => x.Date))
+                            {
 
 
-                            <div class="card mb-2">
-                                <div class="card-body p-2 p-sm-3">
-                                    <p>@item.User.userName<small>@item.Date</small></p>
+                                <div class="card mb-2">
+                                    <div class="card-body p-2 p-sm-3">
+                                        <p>@item.User.userName<small>@item.Date</small></p>
 
-                                    <div class="media forum-item">
-                                        @if (item.User.Image == null)
-                                        {
-                                            <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-circle" width="50" alt="User" /></a>
-                                        }
-                                        else
-                                        {
-                                            <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="/img/@item.User.Image" class="mr-3 rounded-circle" width="50" alt="User" /></a>
-                                        }
-                                        <div class="media-body">
-                                            <p class="text-secondary">
-                                                @item.Message
-                                            </p>
+                                        <div class="media forum-item">
+                                            @if (item.User.Image == null)
+                                            {
+                                                <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-circle" width="50" alt="User" /></a>
+                                            }
+                                            else
+                                            {
+                                                <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="/img/@item.User.Image" class="mr-3 rounded-circle" width="50" alt="User" /></a>
+                                            }
+                                            <div class="media-body">
+                                                <p class="text-secondary">
+                                                    @item.Message
+                                                </p>
+                                            </div>
+
                                         </div>
-
                                     </div>
                                 </div>
-                            </div>
+                            }
+
                         }
 
-                    }
-
-                    @if (!string.IsNullOrEmpty(Model.UserId))
-                    {
-                        <form asp-page-handler="Post">
-                            <div class="form-group" style="visibility: hidden">
-                                <input asp-for="NewMessage.UserId" class="form-control" value="@HttpContextAccessor.HttpContext.Session.GetString("Id")" />
-                            </div>
-                            <div class="form-group" style="visibility: hidden">
-                                <input asp-for="NewMessage.MessageReceiver"  class="form-control" value="@Model.UserId" />
-                            </div>
-                            <div class="form-group">
-                                <label for="">Skriv ditt svar här</label>
-                                <textarea class="form-control" asp-for="NewMessage.Message" id="exampleFormControlTextarea1" rows="3">
+                        @if (!string.IsNullOrEmpty(Model.UserId))
+                        {
+                            <form asp-page-handler="Post">
+                                <div class="form-group" style="visibility: hidden">
+                                    <input asp-for="NewMessage.UserId" class="form-control" value="@HttpContextAccessor.HttpContext.Session.GetString("Id")" />
+                                </div>
+                                <div class="form-group" style="visibility: hidden">
+                                    <input asp-for="NewMessage.MessageReceiver" class="form-control" value="@Model.UserId" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Skriv ditt svar här</label>
+                                    <textarea class="form-control" asp-for="NewMessage.Message" id="exampleFormControlTextarea1" rows="3">
                                         </textarea>
-                            </div>
-                            <input class="btn btn-info" type="submit" value="Svara" />
+                                </div>
+                                <input class="btn btn-info" type="submit" value="Svara" />
 
-                        </form>
+                            </form>
 
-                    }
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+</div>
 </div>

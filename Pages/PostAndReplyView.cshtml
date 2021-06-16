@@ -11,8 +11,16 @@
 </head>
 <div class="container">
     <div class="main-body p-0">
+        <nav class="nav nav-pills nav-justified mobile-view justify-content-center">
+            @foreach (var cat in Model.Categories)
+            {
+
+                <a class="btn btn-info" style="margin:2px;" asp-page="/PostsInCategoryPage" asp-route-CatId="@cat.Id">@cat.Title</a><br />
+
+            }
+        </nav>
         <div class="inner-wrapper">
-            <div class="inner-sidebar text-center">
+            <div class="inner-sidebar text-center desktop-view">
                 <h3>Kategorier</h3>
                 <div class="inner-sidebar-body p-0">
                     <div class="p-3 h-100" data-simplebar="init">
