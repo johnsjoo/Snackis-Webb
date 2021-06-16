@@ -27,12 +27,9 @@
 
             }
         </nav>
-        <div class="inner-wrapper">
-            <!-- Inner sidebar -->
+        <div class="inner-wrapper">           
             <div class="inner-sidebar text-center desktop-view">
-                <h3>Kategorier</h3>
-                <!-- /Inner sidebar header -->
-                <!-- Inner sidebar body -->
+                <h3>Kategorier</h3>                
                 <div class="inner-sidebar-body p-0">
                     <div class="p-3 h-100" data-simplebar="init">
                         <div class="simplebar-wrapper" style="margin: -16px;">
@@ -71,8 +68,6 @@
                     @foreach (var item in Model.Posts)
                     {
 
-
-
                         <div class="card mb-2">
                             <div class="card-body p-2 p-sm-3">
                                 <p>@item.User.userName</p>
@@ -103,41 +98,12 @@
                                 </div>
                             </div>
                         </div>
-                        @*<div class="card">
-                            <div class="card-header">
-                                @item.User.userName
-                            </div>
-                            <div class="card-body">
-                                @if (item.User.Image == null)
-                                {
-
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-circle" width="50" alt="User" />
-                                }
-                                else
-                                {
-                                    <img src="/img/@item.User.Image" class="mr-3 rounded-circle" width="50" alt="User" />
-                                }
-                                <blockquote class="blockquote mb-0">
-                                    <h5 class="card-title">
-                                        <a asp-page="/PostAndReplyView" asp-route-PostId="@item.Id" class="forum-item-title">@item.Title</a><br />
-                                    </h5><div class="card-footer text-muted">
-                                        @item.Date
-                                    </div>
-                                </blockquote>
-                            </div>
-                        </div>*@
-
                     }
                 </div>
-
-
-                <!-- /Forum Detail -->
-                <!-- /Inner main body -->
             </div>
-            <!-- /Inner main -->
+            
         </div>
 
-        <!-- New Thread Modal -->
         <div class="modal fade" id="threadModal" tabindex="-1" role="dialog" aria-labelledby="threadModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">

@@ -35,7 +35,7 @@
                                 <div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div>
                                 <div class="simplebar-mask">
                                     <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
-                                        <div class="simplebar-content-wrapper" style="height: 100%; overflow: hidden scroll;">
+                                        <div class="simplebar-content-wrapper" style="height: 100%;">
                                             <div class="simplebar-content" style="padding: 16px;">
                                                 <nav class="nav nav-pills nav-gap-y-1 flex-column">
 
@@ -67,7 +67,7 @@
 
                             <div class="card mb-2">
                                 <div class="card-body p-2 p-sm-3">
-                                    <p>@item.User.userName<small>@item.Date</small></p>
+                                    <p>@item.User.userName</p>
                                     <div class="media forum-item">
                                         @if (item.User.Image == null)
                                         {
@@ -85,9 +85,8 @@
                                                 @item.Content
                                             </p>
                                         </div>
-                                        <div class="text-muted small text-center align-self-center">
-                                            <span class="d-none d-sm-inline-block"><i class="far fa-eye"></i> 70</span>
-                                            <span><i class="far fa-comment ml-2"></i> 3</span>
+                                        <div class=" text-muted">
+                                            <small>@item.Date</small>
                                         </div>
                                     </div>
                                 </div>

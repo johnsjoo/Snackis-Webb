@@ -10,8 +10,8 @@
 </head>
 
 <div class="dropdown">
-    <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Dropdown
+    <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Användare
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
         @foreach (var item in Model.Users.Where(x => x.id != @HttpContextAccessor.HttpContext.Session.GetString("Id")))
@@ -46,6 +46,6 @@
             <label for="">Skriv ditt meddelande nedan</label>
             <textarea style="outline : 3px solid lightblue" class="form-control" asp-for="NewMessage.Message" id="exampleFormControlTextarea1" rows="3"></textarea>
         </div>
-        <input class="btn btn-info" type="submit" value="Skicka" />
+        <input class="btn btn-success" type="submit" value="Skicka" />
     </form>
 }
