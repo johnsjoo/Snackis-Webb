@@ -20,6 +20,9 @@ namespace SNACKIS___Webb.Pages.User
         private readonly HttpClient _client;
         private readonly IConfiguration _configuration;
 
+        [BindProperty]
+        public string ErrorMessage { get; set; }
+
         [BindProperty(SupportsGet =true)]
         public string UserId { get; set; }
 
@@ -94,22 +97,33 @@ namespace SNACKIS___Webb.Pages.User
                 {
                     _client.DefaultRequestHeaders.Accept.Clear();
                     _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
-
-                    var response = await _client.PostAsJsonAsync(_configuration["CreateMessage"], NewMessage);
-                    
-                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    if (string.IsNullOrEmpty(NewMessage.Message))
                     {
-                       
-                        IActionResult resultPage = await OnGetAsync();
-                        ModelState.Clear();
-                        NewMessage.Message = null;
-                         
+                        ErrorMessage = "Du kan inte skicka tomma meddelanden";
+                        IActionResult resultPage1 = await OnGetAsync();
                         return Page();
+
                     }
                     else
                     {
-                        return RedirectToPage("/Error");
+                        var response = await _client.PostAsJsonAsync(_configuration["CreateMessage"], NewMessage);
+
+                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                        {
+
+                            IActionResult resultPage = await OnGetAsync();
+                            ModelState.Clear();
+                            NewMessage.Message = null;
+
+                            return Page();
+                        }
+                        else
+                        {
+                            return RedirectToPage("/Error");
+                        }
                     }
+
+                    
                 }
 
                 

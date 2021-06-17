@@ -17,7 +17,6 @@ namespace SNACKIS___Webb.Pages.Auth
     {
 
         private readonly UserApi _api;
-        
 
         [BindProperty]
         public string UserName { get; set; }
@@ -42,7 +41,6 @@ namespace SNACKIS___Webb.Pages.Auth
             password = Password;
 
             HttpClient client = _api.Initial();
-            
 
             var values = new Dictionary<string, string>()
                  {
@@ -81,10 +79,7 @@ namespace SNACKIS___Webb.Pages.Auth
                 HttpContext.Session.SetString("Role", result.Role);
                 HttpContext.Session.SetString("Username", UserName);
             }
-            //if (response.IsSuccessStatusCode)
-            //    TokenChecker.UserStatus = true;
-            //else
-            //    TokenChecker.UserStatus = false;
+          
 
             return RedirectToPage("/index");
         }

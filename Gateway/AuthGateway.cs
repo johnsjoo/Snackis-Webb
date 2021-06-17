@@ -39,15 +39,38 @@ namespace SNACKIS___Webb.Gateway
             string apiResponse = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<User>(apiResponse);
         }
-        public async Task<RegisterModel> RegisterNewUser(RegisterModel user) 
+        public async Task<HttpResponseMessage> RegisterNewUser(RegisterModel user) 
         {
            
             var response = await _client.PostAsJsonAsync(_configuration["RegisterNewUser"], user);
-            Models.RegisterModel returnValue = await response.Content.ReadFromJsonAsync<RegisterModel>();
-            return returnValue;
+            string apiResponse = await response.Content.ReadAsStringAsync();
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                Models.RegisterModel returnValue = await response.Content.ReadFromJsonAsync<RegisterModel>();
+                return response;
+            }
+            else
+            {
+                return response;
+            }
+           
             
 
         }
+        public string GetSession(HttpContext context)
+        {
+            try
+            {
+                byte[] tokenByte;
+                context.Session.TryGetValue("_Token", out tokenByte);
+                string token = Encoding.ASCII.GetString(tokenByte);
 
+                return token;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
     }
 }
