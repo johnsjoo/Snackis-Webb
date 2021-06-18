@@ -102,7 +102,7 @@ namespace SNACKIS___Webb.Pages
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     IActionResult resultPage = await OnGetAsync();
-                    return resultPage;
+                    return Page();
                     
                 }
                 else
