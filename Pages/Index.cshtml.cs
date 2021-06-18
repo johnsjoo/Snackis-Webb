@@ -39,8 +39,6 @@ namespace SNACKIS___Webb.Pages
 
             Categories = await _gateway.GetAllCategories();
             Posts = await _gateway.GetAllPosts();
-
-       
         }
     }
 }

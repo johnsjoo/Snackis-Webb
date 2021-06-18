@@ -85,7 +85,7 @@ namespace SNACKIS___Webb.Pages.Admin
             HttpContext.Session.TryGetValue(ToolBox.TokenName, out tokenByte);
             string token = Encoding.ASCII.GetString(tokenByte);
 
-            toggledPost = await _gateway.GetPostById(postId);
+            toggledPost = await _gateway.GetPostById(postId, HttpContext);
 
             if (!String.IsNullOrEmpty(token))
             {
@@ -98,8 +98,6 @@ namespace SNACKIS___Webb.Pages.Admin
 
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-
-
                     IActionResult result = await OnGetAsync();
                     return Page();
                 }

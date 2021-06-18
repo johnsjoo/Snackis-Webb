@@ -15,13 +15,15 @@ namespace SNACKIS___Webb.Services
 
         Task<List<Post>> GetPostsByCatId(string catId);
 
-        Task<Post> GetPostById(string PostId);
+        Task<Post> GetPostById(string PostId, HttpContext context);
 
         Task<HttpResponseMessage> CreateNewPost(Post post);
 
         Task<HttpResponseMessage> DeletePostById(string PostId, HttpContext context);
 
         Task<PostDiscussion> GetDiscussionById(string discussionId);
+
+        Task<HttpResponseMessage> CreateNewCategory(Category NewCategory, HttpContext context);
 
         public string GetSession(HttpContext context);
 
