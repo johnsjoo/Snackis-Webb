@@ -122,11 +122,7 @@ namespace SNACKIS___Webb.Pages.User
                             return RedirectToPage("/Error");
                         }
                     }
-
-                    
                 }
-
-                
             }
             return Page();
         }

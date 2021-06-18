@@ -49,97 +49,51 @@ namespace SNACKIS___Webb.Pages.Admin
         }
         public async Task<IActionResult> OnGetAsync()
         {
-            byte[] tokenByte;
-            HttpContext.Session.TryGetValue(ToolBox.TokenName, out tokenByte);
-            string token = Encoding.ASCII.GetString(tokenByte);
-
-            if (!String.IsNullOrEmpty(token))
+            try
             {
-                _client.DefaultRequestHeaders.Accept.Clear();
-                _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
-
-                var response = await _client.GetAsync(_configuration["getReportedPosts"]);
-                string apiResponse = await response.Content.ReadAsStringAsync();
-                Posts = JsonSerializer.Deserialize<List<Post>>(apiResponse);
-
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    var discussionResponse = await _client.GetAsync(_configuration["GetreportedDiscussions"]);
-                    string discussionApiResponse = await discussionResponse.Content.ReadAsStringAsync();
-                    ReportedPostDiscussions = JsonSerializer.Deserialize<List<PostDiscussion>>(discussionApiResponse);
-                    PostCounter = Posts.Count + ReportedPostDiscussions.Count;
-                    return Page();
-                }
-                else
-                {
-                    return NotFound();
-                }
+                Posts = await _gateway.GetReportedPosts(HttpContext);
+                ReportedPostDiscussions = await _gateway.GetReportedPostDiscussions(HttpContext);
+                PostCounter = Posts.Count + ReportedPostDiscussions.Count;
+                return Page();
             }
-            return Page();
+            catch (Exception)
+            {
+
+                return NotFound();
+            }
         }
 
         public async Task<IActionResult> OnPostAsync(string id)
         {
             id = postId;
-            byte[] tokenByte;
-            HttpContext.Session.TryGetValue(ToolBox.TokenName, out tokenByte);
-            string token = Encoding.ASCII.GetString(tokenByte);
-
-            toggledPost = await _gateway.GetPostById(postId, HttpContext);
-
-            if (!String.IsNullOrEmpty(token))
+            toggledPost = await _gateway.GetPostById(id, HttpContext);
+            var response = await _gateway.ToggleReportedPost(HttpContext, id, toggledPost);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                _client.DefaultRequestHeaders.Accept.Clear();
-                _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
-
-                var response = await _client.PutAsJsonAsync(_configuration["toggleReportedPost"] + id, toggledPost);
-                string apiResponse = await response.Content.ReadAsStringAsync();
-                //Posts = JsonSerializer.Deserialize<List<Post>>(apiResponse);
-
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    IActionResult result = await OnGetAsync();
-                    return Page();
-                }
-                else
-                {
-                    return NotFound();
-                }
+                IActionResult result = await OnGetAsync();
+                return Page();
             }
-            return Page();
-
+            else
+            {
+                return NotFound();
+            }
         }
         public async Task<IActionResult> OnPostReportDiscussion(string id)
         {
-            id = DiscussionId;
             
-            byte[] tokenByte;
-            HttpContext.Session.TryGetValue(ToolBox.TokenName, out tokenByte);
-            string token = Encoding.ASCII.GetString(tokenByte);
-
-            ClickedPostDiscussion = await _gateway.GetDiscussionById(id);
-
-            if (!String.IsNullOrEmpty(token))
+            try
             {
-                _client.DefaultRequestHeaders.Accept.Clear();
-                _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
-
-                var response = await _client.PutAsJsonAsync(_configuration["ReportDiscussionById"] + id, ClickedPostDiscussion);
-                string apiResponse = await response.Content.ReadAsStringAsync();
-
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    IActionResult resultPage = await OnGetAsync();
-                    return resultPage;
-                    //return Page();
-                }
-                else
-                {
-                    return NotFound();
-                }
+                id = DiscussionId;
+                ClickedPostDiscussion = await _gateway.GetDiscussionById(id, HttpContext);
+                var response = await _gateway.ReportDiscussionById(id, HttpContext, ClickedPostDiscussion);
+                IActionResult resultPage = await OnGetAsync();
+                return resultPage;
             }
-            return Page();
-
+            catch (Exception)
+            {
+                return NotFound();
+            }
+               
         }
 
     }

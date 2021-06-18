@@ -56,8 +56,11 @@ namespace SNACKIS___Webb.Gateway
             var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<Post>(apiResponse);
             return obj;
         }
-        public async Task<PostDiscussion> GetDiscussionById(string discussionId)
+        public async Task<PostDiscussion> GetDiscussionById(string discussionId, HttpContext context)
         {
+            string token = GetSession(context);
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
             var response = await _httpClient.GetAsync(_configuration["DiscussionById"] + "/" + discussionId);
             string apiResponse = await response.Content.ReadAsStringAsync();
             var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<PostDiscussion>(apiResponse);
@@ -67,7 +70,6 @@ namespace SNACKIS___Webb.Gateway
         public async Task<HttpResponseMessage> CreateNewPost(Post post)
         {
             var response = await _httpClient.PostAsJsonAsync(_configuration["CreateNewPost"], post);
-            // Post returnValue = await response.Content.ReadFromJsonAsync<Post>();
             return response;
         }
         public async Task<HttpResponseMessage> DeletePostById(string PostId,HttpContext context) 
@@ -85,6 +87,54 @@ namespace SNACKIS___Webb.Gateway
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
             var response = await _httpClient.PostAsJsonAsync(_configuration["CreateNewCategory"], NewCategory);
             return response;
+        }
+        public async Task<HttpResponseMessage> DeleteDiscussionById(string deleteId, HttpContext context) 
+        {
+            string token = GetSession(context);
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
+            var response = await _httpClient.DeleteAsync(_configuration["DeleteDiscussionById"] + "/" + deleteId);
+            string apiResponse = await response.Content.ReadAsStringAsync();
+            return response;
+        }
+        public async Task<List<Post>> GetReportedPosts(HttpContext context) 
+        {
+            string token = GetSession(context);
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
+            var response = await _httpClient.GetAsync(_configuration["getReportedPosts"]);
+            string apiResponse = await response.Content.ReadAsStringAsync();
+            var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Post>>(apiResponse);
+            return obj;
+        }
+        public async Task<List<PostDiscussion>> GetReportedPostDiscussions(HttpContext context) 
+        {
+            string token = GetSession(context);
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
+            var discussionResponse = await _httpClient.GetAsync(_configuration["GetreportedDiscussions"]);
+            string discussionApiResponse = await discussionResponse.Content.ReadAsStringAsync();
+            var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<List<PostDiscussion>>(discussionApiResponse);
+            return obj;
+        }
+        public async Task<HttpResponseMessage> ToggleReportedPost(HttpContext context, string id, Post toggledPost) 
+        {
+            string token = GetSession(context);
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
+            var response = await _httpClient.PutAsJsonAsync(_configuration["toggleReportedPost"] + id, toggledPost);
+            string apiResponse = await response.Content.ReadAsStringAsync();
+            return response;
+        }
+        public async Task<HttpResponseMessage> ReportDiscussionById(string id, HttpContext context, PostDiscussion ClickedPostDiscussion)
+        {
+            string token = GetSession(context);
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
+            var response = await _httpClient.PutAsJsonAsync(_configuration["ReportDiscussionById"] + id, ClickedPostDiscussion);
+            string apiResponse = await response.Content.ReadAsStringAsync();
+            return response;
+
         }
         public string GetSession(HttpContext context)
         {
