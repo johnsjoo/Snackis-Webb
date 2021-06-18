@@ -75,7 +75,7 @@ namespace SNACKIS___Webb.Pages
             if (!string.IsNullOrEmpty(PostId))
             {
                 
-                ClickedPost = await _gateway.GetPostById(PostId);
+                ClickedPost = await _gateway.GetPostById(PostId,HttpContext);
 
                 
                 return Page();

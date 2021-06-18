@@ -9,12 +9,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;
 using SNACKIS___Webb.Models;
+using SNACKIS___Webb.Services;
 
 namespace SNACKIS___Webb.Pages.Admin
 {
     public class CreateModel : PageModel
     {
-
+        private readonly IGateway _gateway;
         private readonly HttpClient _client;
         private readonly IConfiguration _configuration;
 
@@ -23,9 +24,12 @@ namespace SNACKIS___Webb.Pages.Admin
 
         [BindProperty]
         public string Messasge { get; set; }
+        [BindProperty]
+        public string ErrorMessasge { get; set; }
 
-        public CreateModel(HttpClient client, IConfiguration configuration)
+        public CreateModel(IGateway gateway, HttpClient client, IConfiguration configuration)
         {
+            _gateway = gateway;
             _client = client;
             _configuration = configuration;
 
@@ -37,28 +41,26 @@ namespace SNACKIS___Webb.Pages.Admin
         }
         public async Task<IActionResult> OnPostAsync() 
         {
-            byte[] tokenByte;
-            HttpContext.Session.TryGetValue(ToolBox.TokenName, out tokenByte);
-            string token = Encoding.ASCII.GetString(tokenByte);
-
-            if (!String.IsNullOrEmpty(token))
+            try
             {
-                _client.DefaultRequestHeaders.Accept.Clear();
-                _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
-                var response = await _client.PostAsJsonAsync(_configuration["CreateNewCategory"], NewCategory);
-
+                var response = await _gateway.CreateNewCategory(NewCategory, HttpContext);
+                string request = response.Content.ReadAsStringAsync().Result;
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     Messasge = "Ny kategori skapades!";
-                    return Page();
                 }
-                else
+                if (request == "no content")
                 {
-                    return RedirectToPage("Error");
+                    ErrorMessasge = $"Du måste fylla i fältet 'Titel'";
                 }
+                return Page();
+
+            }
+            catch (Exception)
+            {
+                return RedirectToPage("Error");
             }
 
-            return Page();
         }
     }
 }

@@ -33,65 +33,30 @@ namespace SNACKIS___Webb.Pages.Admin
         }
         public async Task<IActionResult> OnGetAsync()
         {
-            byte[] tokenByte;
-            HttpContext.Session.TryGetValue(ToolBox.TokenName, out tokenByte);
-            string token = Encoding.ASCII.GetString(tokenByte);
-
-            if (!String.IsNullOrEmpty(token))
-            {
-                try
-                {
-                    _client.DefaultRequestHeaders.Accept.Clear();
-                    _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
-                    DeletedPost = await _gateway.GetPostById(DeletedId);
-
-                    return Page();
-                }
-                catch (Exception)
-                {
-                   
-                    return RedirectToPage("/Error");
-                }
-
-
-
-            }
-            return Page();
-            
-        }
-        public async Task<IActionResult> OnPostAsync() 
-        {
-            
-            //byte[] tokenByte;
-            //HttpContext.Session.TryGetValue(ToolBox.TokenName, out tokenByte);
-            //string token = Encoding.ASCII.GetString(tokenByte);
-
             try
             {
-                //_client.DefaultRequestHeaders.Accept.Clear();
-                //_client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
-                var response = await _gateway.DeletePostById(DeletedId, HttpContext);
-                //var response = await _client.DeleteAsync(_configuration["DeletePostById"] + "/" + DeletedId);
-                string apiResponse = await response.Content.ReadAsStringAsync();
-
-                return RedirectToPage("ReportedPosts");
-
-
+                DeletedPost = await _gateway.GetPostById(DeletedId, HttpContext);
+                return Page();
             }
             catch (Exception)
             {
-
                 return RedirectToPage("/Error");
             }
 
+        }
+        public async Task<IActionResult> OnPostAsync() 
+        {
 
-
-
-            //if (!String.IsNullOrEmpty(token))
-            //{
-                
-            //}
-            return Page();
+            try
+            {
+                var response = await _gateway.DeletePostById(DeletedId, HttpContext); 
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                return RedirectToPage("ReportedPosts");
+            }
+            catch (Exception)
+            {
+                return RedirectToPage("/Error");
+            }
         }
     }
 }

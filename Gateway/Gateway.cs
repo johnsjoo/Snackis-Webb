@@ -26,14 +26,14 @@ namespace SNACKIS___Webb.Gateway
         }
         public async Task<List<Category>> GetAllCategories()
         {
-            var response = await _httpClient.GetAsync(_configuration["SnackisApi"]);
+            var response = await _httpClient.GetAsync(_configuration["GetAllCategories"]);
             string apiResponse = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<List<Category>>(apiResponse);
         }
 
         public async Task<List<Post>> GetAllPosts()
         {
-            var response = await _httpClient.GetAsync(_configuration["SnackisApi1"]);
+            var response = await _httpClient.GetAsync(_configuration["GetAllPosts"]);
             string apiResponse = await response.Content.ReadAsStringAsync();
             var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Post>>(apiResponse);
             return obj;
@@ -46,8 +46,11 @@ namespace SNACKIS___Webb.Gateway
             return obj;
         }
 
-        public async Task<Post> GetPostById(string postId) 
+        public async Task<Post> GetPostById(string postId,HttpContext context) 
         {
+            string token = GetSession(context);
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
             var response = await _httpClient.GetAsync(_configuration["GetPostById"] + "/" + postId);
             string apiResponse = await response.Content.ReadAsStringAsync();
             var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<Post>(apiResponse);
@@ -73,6 +76,14 @@ namespace SNACKIS___Webb.Gateway
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
             var response = await _httpClient.DeleteAsync(_configuration["DeletePostById"] + "/" + PostId);
+            return response;
+        }
+        public async Task<HttpResponseMessage> CreateNewCategory(Category NewCategory, HttpContext context) 
+        {
+            string token = GetSession(context);
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
+            var response = await _httpClient.PostAsJsonAsync(_configuration["CreateNewCategory"], NewCategory);
             return response;
         }
         public string GetSession(HttpContext context)

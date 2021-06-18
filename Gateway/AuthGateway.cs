@@ -29,8 +29,8 @@ namespace SNACKIS___Webb.Gateway
             
         }
 
-        public RegisterModel User { get; set; }
-        public string RegestrationMessage { get; set; }
+   
+   
 
         public async Task<User> GetLoggedInUser(string Id)
         {
