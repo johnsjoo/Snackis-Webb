@@ -25,7 +25,6 @@ namespace SNACKIS___Webb.Pages.Admin
             _gateway = gateway;
         }
 
-
         [BindProperty(SupportsGet = true)]
         public PostDiscussion DeletedPostDiscussion { get; set; }
 
@@ -34,57 +33,28 @@ namespace SNACKIS___Webb.Pages.Admin
 
         public async Task<IActionResult> OnGetAsync()
         {
-            byte[] tokenByte;
-            HttpContext.Session.TryGetValue(ToolBox.TokenName, out tokenByte);
-            string token = Encoding.ASCII.GetString(tokenByte);
-
-            if (!String.IsNullOrEmpty(token))
+            try
             {
-                try
-                {
-                    _client.DefaultRequestHeaders.Accept.Clear();
-                    _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
-                    DeletedPostDiscussion = await _gateway.GetDiscussionById(DeletedDiscussionId);
-
-                    return Page();
-                }
-                catch (Exception)
-                {
-
-                    return RedirectToPage("/Error");
-                }
+                DeletedPostDiscussion = await _gateway.GetDiscussionById(DeletedDiscussionId, HttpContext);
+                return Page();
             }
-            return Page();
+            catch (Exception)
+            {
 
+                return RedirectToPage("/Error");
+            }
         }
         public async Task<IActionResult> OnPostAsync()
         {
-
-            byte[] tokenByte;
-            HttpContext.Session.TryGetValue(ToolBox.TokenName, out tokenByte);
-            string token = Encoding.ASCII.GetString(tokenByte);
-
-            if (!String.IsNullOrEmpty(token))
+            try
             {
-                try
-                {
-                    _client.DefaultRequestHeaders.Accept.Clear();
-                    _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
-                    //var response = await _gateway.DeletePostById(DeletedId);
-                    var response = await _client.DeleteAsync(_configuration["DeleteDiscussionById"] + "/" + DeletedDiscussionId);
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-
-                    return RedirectToPage("ReportedPosts");
-
-
-                }
-                catch (Exception)
-                {
-
-                    return RedirectToPage("/Error");
-                }
+                await _gateway.DeleteDiscussionById(DeletedDiscussionId, HttpContext);
+                return RedirectToPage("ReportedPosts");
             }
-            return Page();
+            catch (Exception)
+            {
+                return RedirectToPage("/Error");
+            }
         }
     }
 }

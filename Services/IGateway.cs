@@ -21,9 +21,14 @@ namespace SNACKIS___Webb.Services
 
         Task<HttpResponseMessage> DeletePostById(string PostId, HttpContext context);
 
-        Task<PostDiscussion> GetDiscussionById(string discussionId);
+        Task<PostDiscussion> GetDiscussionById(string discussionId, HttpContext context);
 
         Task<HttpResponseMessage> CreateNewCategory(Category NewCategory, HttpContext context);
+        Task<HttpResponseMessage> DeleteDiscussionById(string deleteId, HttpContext context);
+        Task<List<Post>> GetReportedPosts(HttpContext context);
+        Task<List<PostDiscussion>> GetReportedPostDiscussions(HttpContext context);
+        Task<HttpResponseMessage> ToggleReportedPost(HttpContext context, string id, Post toggledPost);
+        Task<HttpResponseMessage> ReportDiscussionById(string id, HttpContext context, PostDiscussion ClickedPostDiscussion);
 
         public string GetSession(HttpContext context);
 
