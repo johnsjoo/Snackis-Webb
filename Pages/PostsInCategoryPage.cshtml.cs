@@ -33,12 +33,6 @@ namespace SNACKIS___Webb.Pages
             }
             Categories = await _gateway.GetAllCategories();
         }
-        public async Task OnPostAsync() 
-        {
-
-
-
-
-        }
+        
     }
 }

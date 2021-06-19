@@ -136,6 +136,35 @@ namespace SNACKIS___Webb.Gateway
             return response;
 
         }
+        public async Task<List<PrivateMessage>> GetMessagesByUser(HttpContext context)
+        {
+            string token = GetSession(context);
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
+            var response = await _httpClient.GetAsync(_configuration["GetMessagesByUser"]);
+            var apiResponse = await response.Content.ReadAsStringAsync();
+            var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<List<PrivateMessage>>(apiResponse);
+            return obj;
+        }
+        public async Task<List<Models.User>> GetMessageUsers(HttpContext context) 
+        {
+            string token = GetSession(context);
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
+            var userResponse = await _httpClient.GetAsync(_configuration["GetMessageUsers"]);
+            var userApiResponse = await userResponse.Content.ReadAsStringAsync();
+            var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Models.User>>(userApiResponse);
+            return obj;
+        }
+        public async Task<HttpResponseMessage> CreateMessage(HttpContext context, PrivateMessage NewMessage) 
+        {
+            string token = GetSession(context);
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
+            var response = await _httpClient.PostAsJsonAsync(_configuration["CreateMessage"], NewMessage);
+            string apiResponse = await response.Content.ReadAsStringAsync();
+            return response;
+        }
         public string GetSession(HttpContext context)
         {
             try

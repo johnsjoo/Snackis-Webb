@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using SNACKIS___Webb.Models;
+using SNACKIS___Webb.Services;
 
 namespace SNACKIS___Webb.Pages.User
 {
@@ -19,6 +20,7 @@ namespace SNACKIS___Webb.Pages.User
     {
         private readonly HttpClient _client;
         private readonly IConfiguration _configuration;
+        private readonly IGateway _gateway;
 
         [BindProperty]
         public string ErrorMessage { get; set; }
@@ -35,96 +37,66 @@ namespace SNACKIS___Webb.Pages.User
         [BindProperty]
         public List<Models.User> MessageUsers { get; set; }
 
-        public chattModel(HttpClient client, IConfiguration configuration)
+        public chattModel(HttpClient client, IConfiguration configuration, IGateway gateway)
         {
             _client = client;
             _configuration = configuration;
+            _gateway = gateway;
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
-        
-            byte[] tokenByte;
-            
-            HttpContext.Session.TryGetValue(ToolBox.TokenName, out tokenByte);
-            if (tokenByte != null)
+            try
             {
-                string token = Encoding.ASCII.GetString(tokenByte);
-                
-
-                if (!String.IsNullOrEmpty(token))
+                Messages = await _gateway.GetMessagesByUser(HttpContext);
+                MessageUsers = await _gateway.GetMessageUsers(HttpContext);
+                if (UserId == null)
                 {
-                    _client.DefaultRequestHeaders.Accept.Clear();
-                    _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
+                    UserId = NewMessage.MessageReceiver;
 
-                    var response = await _client.GetAsync(_configuration["GetMessagesByUser"]);
-                    var apiResponse = await response.Content.ReadAsStringAsync();
-                    Messages = Newtonsoft.Json.JsonConvert.DeserializeObject<List<PrivateMessage>>(apiResponse);
-                    
-                    
-                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                    {
-                       
-                        var userResponse = await _client.GetAsync(_configuration["GetMessageUsers"]);
-                        var userApiResponse = await userResponse.Content.ReadAsStringAsync();
-                        MessageUsers = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Models.User>>(userApiResponse);
-                        
-                    }
-                    if (UserId == null)
-                    {
-                        UserId = NewMessage.MessageReceiver;
-                        
-                        return Page();
-                    }
+                    return Page();
                 }
-
             }
-            
+            catch (Exception)
+            {
+
+                return RedirectToPage("Error");
+            }     
             return Page();
         }
         public async Task<IActionResult> OnPostAsync() 
         {
-
-            byte[] tokenByte;
-
-            HttpContext.Session.TryGetValue(ToolBox.TokenName, out tokenByte);
-            if (tokenByte != null)
+            try
             {
-                string token = Encoding.ASCII.GetString(tokenByte);
-
-
-                if (!String.IsNullOrEmpty(token))
+                if (string.IsNullOrEmpty(NewMessage.Message))
                 {
-                    _client.DefaultRequestHeaders.Accept.Clear();
-                    _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
-                    if (string.IsNullOrEmpty(NewMessage.Message))
+                    ErrorMessage = "Du kan inte skicka tomma meddelanden";
+                    IActionResult resultPage1 = await OnGetAsync();
+                    return Page();
+                }
+                else
+                {
+                    var response = await _gateway.CreateMessage(HttpContext, NewMessage);
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {
-                        ErrorMessage = "Du kan inte skicka tomma meddelanden";
-                        IActionResult resultPage1 = await OnGetAsync();
-                        return Page();
 
+                        IActionResult resultPage = await OnGetAsync();
+                        ModelState.Clear();
+                        NewMessage.Message = null;
+
+                        return Page();
                     }
                     else
                     {
-                        var response = await _client.PostAsJsonAsync(_configuration["CreateMessage"], NewMessage);
-
-                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                        {
-
-                            IActionResult resultPage = await OnGetAsync();
-                            ModelState.Clear();
-                            NewMessage.Message = null;
-
-                            return Page();
-                        }
-                        else
-                        {
-                            return RedirectToPage("/Error");
-                        }
+                        return RedirectToPage("/Error");
                     }
                 }
             }
-            return Page();
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

@@ -29,21 +29,46 @@ namespace SNACKIS___Webb.Gateway
             
         }
 
-   
-   
 
-        public async Task<User> GetLoggedInUser(string Id)
+
+        public async Task<List<Models.User>> GetAllUsers(HttpContext context) 
         {
-            
+            string token = GetSession(context);
+            _client.DefaultRequestHeaders.Accept.Clear();
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
+            var response = await _client.GetAsync(_configuration["GetAllUsers"]);
+            var apiResponse = await response.Content.ReadAsStringAsync();
+            var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Models.User>>(apiResponse);
+            return obj;
+        }
+        public async Task<User> GetLoggedInUser(HttpContext context,string Id)
+        {
+            string token = GetSession(context);
+            _client.DefaultRequestHeaders.Accept.Clear();
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
             var response = await _client.GetAsync(_configuration["GetLoggedInUser"]+"/"+Id);
             string apiResponse = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<User>(apiResponse);
+            var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<Models.User>(apiResponse);
+            return obj;
+        }
+        public async Task<UserLoginResponseModel> GetLoggedInUserByModel(HttpContext context, string userId)
+        {
+            string token = GetSession(context);
+            _client.DefaultRequestHeaders.Accept.Clear();
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
+            var response = await _client.GetAsync(_configuration["GetLoggedInUser"] + "/" + userId);
+            string apiResponse = await response.Content.ReadAsStringAsync();
+            //var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<Models.User>(apiResponse);
+            var model = UserLoginResponseModel.FromJsonSingle(apiResponse);
+            return model;
+
         }
         public async Task<HttpResponseMessage> RegisterNewUser(RegisterModel user) 
         {
            
             var response = await _client.PostAsJsonAsync(_configuration["RegisterNewUser"], user);
             string apiResponse = await response.Content.ReadAsStringAsync();
+            
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 Models.RegisterModel returnValue = await response.Content.ReadFromJsonAsync<RegisterModel>();

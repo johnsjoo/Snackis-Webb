@@ -79,7 +79,10 @@
                                 @if (returnTokenValue)
                                 {
                                 <div class="text-muted small text-center align-self-center">
-                                    <form method="Post">
+                                    <form class="report-btn" asp-page-handler="Post">
+                                        <div  style="visibility : hidden">
+                                            <input  asp-for="PostId" value="@Model.ClickedPost.Id" />
+                                        </div>
                                         <input class="btn btn-danger btn-sm" type="submit" value="Anmäl" />
                                     </form>
                                 </div>
