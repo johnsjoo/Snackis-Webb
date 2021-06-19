@@ -40,67 +40,28 @@ namespace SNACKIS___Webb.Pages
         {
             try
             {
-                byte[] tokenByte;
-                HttpContext.Session.TryGetValue(ToolBox.TokenName, out tokenByte);
-                var token = Encoding.ASCII.GetString(tokenByte);
-
-                if (!String.IsNullOrEmpty(token))
-                {
-                    _client.DefaultRequestHeaders.Accept.Clear();
-                    _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
-
-                    var response = await _client.GetAsync(_configuration["GetCategoryById"] + "/" + NewCatId);
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-                    CurrerntCategory = Newtonsoft.Json.JsonConvert.DeserializeObject<Category>(apiResponse);
-
-                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                    {
-                        return Page();
-                    }
-                    else
-                    {
-                        return RedirectToPage("/Error");
-                    }
-
-                }
+                CurrerntCategory = await _gateway.GetCategoryById(HttpContext, NewCatId);
                 return Page();
             }
             catch (Exception)
             {
-                return Page();
+                return RedirectToPage("Error");
             }
 
         }
         public async Task<IActionResult> OnPostAsync() 
         {
-            string token = null;
+           
             try
             {
-                byte[] tokenByte;
-                HttpContext.Session.TryGetValue(ToolBox.TokenName, out tokenByte);
-                token = Encoding.ASCII.GetString(tokenByte);
-                
-                if (!String.IsNullOrEmpty(token))
-                {
-                    _client.DefaultRequestHeaders.Accept.Clear();
-                    _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
-                    NewPost.CategoryId = NewCatId;
-                    var response = await _client.PostAsJsonAsync(_configuration["CreateNewPost"], NewPost);
-                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                    {
-                        return RedirectToPage("/index");
-                    }
-                    else
-                    {
-                        return RedirectToPage("/Error");
-                    }
-                    
-                }
+                NewPost.CategoryId = NewCatId;   
+                var newPostResponse = await _gateway.CreateNewPost(HttpContext, NewPost);
                 return Page();
+               
             }
             catch (Exception)
             {
-                return Page();
+                return RedirectToPage("Error");
             }
 
         }
