@@ -19,11 +19,13 @@ namespace SNACKIS___Webb.Pages
         private readonly IGateway _gateway;
         private readonly HttpClient _client;
         private readonly IConfiguration _configuration;
-        public PostAndReplyViewModel(IGateway gateway, HttpClient client, IConfiguration configuration)
+        private readonly IAuthGateway _authgateway;
+        public PostAndReplyViewModel(IGateway gateway, HttpClient client, IConfiguration configuration, IAuthGateway authGateway)
         {
             _gateway = gateway;
             _client = client;
             _configuration = configuration;
+            _authgateway = authGateway;
         }
 
         [BindProperty(SupportsGet = true)]
@@ -102,7 +104,7 @@ namespace SNACKIS___Webb.Pages
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     IActionResult resultPage = await OnGetAsync();
-                    return Page();
+                    return resultPage;
                     
                 }
                 else
@@ -134,7 +136,6 @@ namespace SNACKIS___Webb.Pages
                 {
                     IActionResult resultPage = await OnGetAsync();
                     return resultPage;
-                    //return Page();
                 }
                 else
                 {

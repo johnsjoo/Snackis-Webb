@@ -32,32 +32,18 @@ namespace SNACKIS___Webb.Pages.User
 
         public async Task<IActionResult> OnGetAsync()
         {
-            byte[] tokenByte;
-            HttpContext.Session.TryGetValue(ToolBox.TokenName, out tokenByte);
-            string token = Encoding.ASCII.GetString(tokenByte);
-            string Id = HttpContext.Session.GetString("Id");
-
-            if (!String.IsNullOrEmpty(token))
+            try
             {
-                _client.DefaultRequestHeaders.Accept.Clear();
-                _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
-               
-                var response = await _client.GetAsync(_configuration["GetLoggedInUser"] + "/" + Id);
-                string apiResponse = await response.Content.ReadAsStringAsync();
-
-                var model = UserLoginResponseModel.FromJsonSingle(apiResponse);
-                User = model;
-                
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    return Page();
-                }
-                else
-                {
-                    return NotFound();
-                }
+                string Id = HttpContext.Session.GetString("Id");
+                User = await _authgateway.GetLoggedInUserByModel(HttpContext, Id);
+                return Page();
             }
-            return Page();
+            catch (Exception)
+            {
+
+                return NotFound();
+            }   
+     
         }
     }
 }

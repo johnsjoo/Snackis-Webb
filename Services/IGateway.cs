@@ -29,6 +29,9 @@ namespace SNACKIS___Webb.Services
         Task<List<PostDiscussion>> GetReportedPostDiscussions(HttpContext context);
         Task<HttpResponseMessage> ToggleReportedPost(HttpContext context, string id, Post toggledPost);
         Task<HttpResponseMessage> ReportDiscussionById(string id, HttpContext context, PostDiscussion ClickedPostDiscussion);
+        Task<List<PrivateMessage>> GetMessagesByUser(HttpContext context);
+        Task<List<Models.User>> GetMessageUsers(HttpContext context);
+        Task<HttpResponseMessage> CreateMessage(HttpContext context, PrivateMessage NewMessage);
 
         public string GetSession(HttpContext context);
 
