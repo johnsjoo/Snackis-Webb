@@ -56,6 +56,34 @@ namespace SNACKIS___Webb.Gateway
             var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<Post>(apiResponse);
             return obj;
         }
+        public async Task<HttpResponseMessage> CreateNewPostDiscussion(HttpContext context, PostDiscussion NewDiscussion) 
+        {
+            
+            string token = GetSession(context);
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
+            var response = await _httpClient.PostAsJsonAsync(_configuration["CreateDiscussion"], NewDiscussion);
+            string apiResponse = await response.Content.ReadAsStringAsync();
+            return response;
+        }
+        public async Task<HttpResponseMessage> ReportPostDiscussion(HttpContext context, string Id, PostDiscussion ClickedPostDiscussion) 
+        {
+            string token = GetSession(context);
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
+            var response = await _httpClient.PutAsJsonAsync(_configuration["reportPostDiscussion"] + Id, ClickedPostDiscussion);
+            string apiResponse = await response.Content.ReadAsStringAsync();
+            return response;
+        }
+        public async Task<HttpResponseMessage> ReportPostById(HttpContext context, string Id, Post ClickedPost) 
+        {
+            string token = GetSession(context);
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
+            var response = await _httpClient.PutAsJsonAsync(_configuration["ReportPostById"] + "/" + Id, ClickedPost);
+            string apiResponse = await response.Content.ReadAsStringAsync();
+            return response;
+        }
         public async Task<PostDiscussion> GetDiscussionById(string discussionId, HttpContext context)
         {
             string token = GetSession(context);
@@ -67,9 +95,12 @@ namespace SNACKIS___Webb.Gateway
             return obj;
         }
 
-        public async Task<HttpResponseMessage> CreateNewPost(Post post)
+        public async Task<HttpResponseMessage> CreateNewPost(HttpContext context, Post NewPost)
         {
-            var response = await _httpClient.PostAsJsonAsync(_configuration["CreateNewPost"], post);
+            string token = GetSession(context);
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
+            var response = await _httpClient.PostAsJsonAsync(_configuration["CreateNewPost"], NewPost);
             return response;
         }
         public async Task<HttpResponseMessage> DeletePostById(string PostId,HttpContext context) 
@@ -164,6 +195,17 @@ namespace SNACKIS___Webb.Gateway
             var response = await _httpClient.PostAsJsonAsync(_configuration["CreateMessage"], NewMessage);
             string apiResponse = await response.Content.ReadAsStringAsync();
             return response;
+        }
+        public async Task<Category> GetCategoryById(HttpContext context,string NewCatId) 
+        {
+            string token = GetSession(context);
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
+            var response = await _httpClient.GetAsync(_configuration["GetCategoryById"] + "/" + NewCatId);
+            string apiResponse = await response.Content.ReadAsStringAsync();
+            var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<Category>(apiResponse);
+            return obj;
+
         }
         public string GetSession(HttpContext context)
         {

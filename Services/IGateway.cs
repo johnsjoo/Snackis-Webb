@@ -17,10 +17,10 @@ namespace SNACKIS___Webb.Services
 
         Task<Post> GetPostById(string PostId, HttpContext context);
 
-        Task<HttpResponseMessage> CreateNewPost(Post post);
-
+        Task<HttpResponseMessage> ReportPostDiscussion(HttpContext context, string Id, PostDiscussion ClickedPostDiscussion);
+        Task<HttpResponseMessage> ReportPostById(HttpContext context, string Id, Post ClickedPost);
         Task<HttpResponseMessage> DeletePostById(string PostId, HttpContext context);
-
+        Task<HttpResponseMessage> CreateNewPostDiscussion(HttpContext context, PostDiscussion NewDiscussion);
         Task<PostDiscussion> GetDiscussionById(string discussionId, HttpContext context);
 
         Task<HttpResponseMessage> CreateNewCategory(Category NewCategory, HttpContext context);
@@ -32,6 +32,8 @@ namespace SNACKIS___Webb.Services
         Task<List<PrivateMessage>> GetMessagesByUser(HttpContext context);
         Task<List<Models.User>> GetMessageUsers(HttpContext context);
         Task<HttpResponseMessage> CreateMessage(HttpContext context, PrivateMessage NewMessage);
+        Task<Category> GetCategoryById(HttpContext context, string NewCatId);
+        Task<HttpResponseMessage> CreateNewPost(HttpContext context, Post NewPost);
 
         public string GetSession(HttpContext context);
 
