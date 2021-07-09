@@ -27,11 +27,19 @@ namespace SNACKIS___Webb.Pages
         
         public async Task OnGetAsync()
         {
-            if (!string.IsNullOrEmpty(CatId))
+            try
             {
-                Posts = await _gateway.GetPostsByCatId(CatId);
+                if (!string.IsNullOrEmpty(CatId))
+                {
+                    Posts = await _gateway.GetPostsByCatId(CatId);
+                }
+                Categories = await _gateway.GetAllCategories();
             }
-            Categories = await _gateway.GetAllCategories();
+            catch (Exception)
+            {
+                RedirectToPage("Error");
+            }
+            
         }
         
     }

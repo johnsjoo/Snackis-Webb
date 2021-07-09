@@ -15,6 +15,7 @@ namespace SNACKIS___Webb.Services
         public string GetSession(HttpContext context);
         Task<List<Models.User>> GetAllUsers(HttpContext context);
         Task<UserLoginResponseModel> GetLoggedInUserByModel(HttpContext context, string userId);
+        Task<UserLoginResponseModel> GetLoggedInUserResponseModel(HttpContext context, string Id);
 
     }
 }

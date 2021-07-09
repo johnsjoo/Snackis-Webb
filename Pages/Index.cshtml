@@ -20,12 +20,17 @@
     
     <div class="main-body p-0">
         <nav class="nav nav-pills nav-justified mobile-view justify-content-center">
-            @foreach (var cat in Model.Categories)
+            @if (Model.Categories != null)
             {
+                @foreach (var cat in Model.Categories)
+                {
 
-                <a class="btn btn-info" style="margin:2px;" asp-page="/PostsInCategoryPage" asp-route-CatId="@cat.Id">@cat.Title</a><br />
+                    <a class="btn btn-info" style="margin:2px;" asp-page="/PostsInCategoryPage" asp-route-CatId="@cat.Id">@cat.Title</a><br />
+
+                }
 
             }
+
         </nav>
         <div class="inner-wrapper">           
             <div class="inner-sidebar text-center desktop-view">

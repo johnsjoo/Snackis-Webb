@@ -51,6 +51,17 @@ namespace SNACKIS___Webb.Gateway
             var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<Models.User>(apiResponse);
             return obj;
         }
+        public async Task<UserLoginResponseModel> GetLoggedInUserResponseModel(HttpContext context, string Id)
+        {
+            string token = GetSession(context);
+            _client.DefaultRequestHeaders.Accept.Clear();
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
+            var response = await _client.GetAsync(_configuration["GetLoggedInUser"] + "/" + Id);
+            string apiResponse = await response.Content.ReadAsStringAsync();
+            var model = UserLoginResponseModel.FromJsonSingle(apiResponse);
+            //var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<UserLoginResponseModel>(apiResponse);
+            return model;
+        }
         public async Task<UserLoginResponseModel> GetLoggedInUserByModel(HttpContext context, string userId)
         {
             string token = GetSession(context);
