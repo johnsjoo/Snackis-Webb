@@ -18,7 +18,8 @@ namespace SNACKIS___Webb.Tools
         public HttpClient Initial()
         {
             //_client.BaseAddress = new Uri("http://localhost:50249");
-            _client.BaseAddress = new Uri("https://codecaveapi.azurewebsites.net");
+           // _client.BaseAddress = new Uri("https://codecaveapi.azurewebsites.net");
+            _client.BaseAddress = new Uri("http://localhost:50249");
             return _client;
         }
     }

@@ -79,8 +79,6 @@ namespace SNACKIS___Webb.Pages.Auth
                 HttpContext.Session.SetString("Role", result.Role);
                 HttpContext.Session.SetString("Username", UserName);
             }
-          
-
             return RedirectToPage("/index");
         }
     }

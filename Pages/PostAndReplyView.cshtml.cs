@@ -50,40 +50,27 @@ namespace SNACKIS___Webb.Pages
 
         public async Task<IActionResult> OnGetAsync()
         {
-            byte[] tokenByte;
-            
-            HttpContext.Session.TryGetValue(ToolBox.TokenName, out tokenByte);
-            if (tokenByte != null)
+            try
             {
-                string token = Encoding.ASCII.GetString(tokenByte);
                 string Id = HttpContext.Session.GetString("Id");
-
-                if (!String.IsNullOrEmpty(token))
-                {
-                    _client.DefaultRequestHeaders.Accept.Clear();
-                    _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{token}");
-                    
-                    var response = await _client.GetAsync(_configuration["GetLoggedInUser"] + "/" + Id);
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-
-                    var model = UserLoginResponseModel.FromJsonSingle(apiResponse);
-                    User = model;
-                }
-
-            }
-
+                User = await _authgateway.GetLoggedInUserByModel(HttpContext, Id);
                 Categories = await _gateway.GetAllCategories();
 
-            if (!string.IsNullOrEmpty(PostId))
-            {
-                
-                ClickedPost = await _gateway.GetPostById(PostId,HttpContext);
+                if (!string.IsNullOrEmpty(PostId))
+                {
 
-                
+                    ClickedPost = await _gateway.GetPostById(PostId, HttpContext);
+
+
+                    return Page();
+                }
                 return Page();
             }
-            
-            return Page();
+            catch (Exception)
+            {
+                return RedirectToPage("Error");
+            }
+
         }
         public async Task<IActionResult> OnPost(string id)
         {
@@ -99,10 +86,7 @@ namespace SNACKIS___Webb.Pages
             {
 
                 return RedirectToPage("Error");
-            }
-
-                
-                
+            }     
         }
         public async Task<IActionResult> OnPostReportDiscussion(string id, string postId)
         {
@@ -121,15 +105,9 @@ namespace SNACKIS___Webb.Pages
 
                 return RedirectToPage("Error");
             }
-        
-          
-
-                
-
         }
         public async Task<IActionResult> OnPostCreateDiscussion(string id) 
         {
-
             try
             {
                 id = PostId;
@@ -141,11 +119,6 @@ namespace SNACKIS___Webb.Pages
             {
                 return RedirectToPage("Error");
             }
-
-            
-
-
-         
         }
         
     }
